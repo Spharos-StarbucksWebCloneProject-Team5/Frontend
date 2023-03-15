@@ -7,7 +7,7 @@ export default function ChunsikWidget(props: { title: string, eventId: number })
   const [chunsikItemList, setChunsikItemList] = useState<eventProductListType[]>()
 
   useEffect(() => {
-    fetch(`http://localhost:3001/chunsik-event-product-list?eventId=${props.eventId}`)
+    fetch(`http://localhost:3001/event-product-list?eventId=${props.eventId}`)
       .then(res => res.json())
       .then(data => setChunsikItemList(data))
   }, [])
