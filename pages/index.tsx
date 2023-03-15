@@ -25,23 +25,21 @@ const Home: NextPageWithLayout = () => {
         <div className="event-banner">
           <div className="event-banner__item">
             <div className="event-banner__item__img">
-              <img src="assets/images/banner/banner01.png" width="100%" height="100%" alt="" />
+              <img src="assets/images/banner/banner01.png" alt="" />
             </div>
           </div>
         </div>
       </section>
       {
         eventListData && eventListData.map(event => (
-          <RecommandWidget
+          event.eventId === 5 ?
+          <ChunsikWidget
             key={event.id}
             title={event.title}
             eventId={event.eventId}
           />
-        ))
-      }
-      {
-        chunsikListData && chunsikListData.map(event => (
-          <ChunsikWidget
+          :
+          <RecommandWidget
             key={event.id}
             title={event.title}
             eventId={event.eventId}
