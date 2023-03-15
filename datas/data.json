@@ -1,0 +1,195 @@
+{
+  "nav" : [
+    {
+      "id": 1,
+      "name": "메인",
+      "link": "/"
+    },
+    {
+      "id": 2,
+      "name": "기획전",
+      "link": "/event"
+    },
+    {
+      "id": 3,
+      "name": "베스트",
+      "link": "/best"
+    },
+    {
+      "id": 4,
+      "name": "마이페이지",
+      "link": "/mypage"
+    }
+  ],
+  "sub-nav" : [
+    {
+      "id": 1,
+      "name": "케이크",
+      "link": "/cake"
+    },
+    {
+      "id": 2,
+      "name": "4+1 기획전",
+      "link": "/5event"
+    },
+    {
+      "id": 3,
+      "name": "바리스타 춘식",
+      "link": "/barista"
+    },
+    {
+      "id": 4,
+      "name": "핸디 데스크",
+      "link": "/handydesk"
+    },
+    {
+      "id": 5,
+      "name": "선물하기",
+      "link": "/to-gift"
+    }
+  ],
+  "main-event-list": [
+    {
+      "id": 1,
+      "title": "미리 만나는 봄, 체리블라썸 MD🌸",
+      "eventId" : 1
+    },
+    {
+      "id": 2,
+      "title": "미리 만나는 봄, 체리블라썸 MD💜",
+      "eventId" : 2
+    },
+    {
+      "id": 3,
+      "title": "미리 만나는 봄, 체리블라썸 MD",
+      "eventId" : 3
+    },
+    {
+      "id": 4,
+      "title": "이미왔어 봄, 체리블라썸 MD",
+      "eventId" : 4
+    }
+  ],
+  "chunsik-event" :[
+    {
+      "id": 1,
+      "title": "바리스타 춘식 MD",
+      "eventId" : 5
+    }
+  ],
+  "products" : [
+    {
+      "id" : 1,
+      "title" : "23 체리 아이코닉 글리터 텀블러 473ml",
+      "imgUrl" : "https://shop-phinf.pstatic.net/20230213_195/1676251036143rKN01_JPEG/77386819855230701_560737894.jpg?type=m510",
+      "price" : 23000,
+      "isNew" : true
+    },
+    {
+      "id" : 2,
+      "title" : "23 체리 플로런스 로맨틱 텀블러 473ml",
+      "imgUrl" : "https://shop-phinf.pstatic.net/20230213_200/1676251009069F0Yc8_JPEG/77386792779074247_671977658.jpg?type=m510",
+      "price" : 19000,
+      "isNew" : false
+    },
+    {
+      "id" : 3,
+      "title" : "23 체리블라썸 젤로 로맨틱 콜드컵 473ml",
+      "imgUrl" : "https://shop-phinf.pstatic.net/20230213_204/1676251077462CQzig_JPEG/77386861175312757_1951332417.jpg?type=m510",
+      "price" : 29000,
+      "isNew" : true
+    },
+    {
+      "id" : 4,
+      "title" : "23 체리블라썸 팝핸들 로맨틱 콜드컵 473ml",
+      "imgUrl" : "https://shop-phinf.pstatic.net/20230213_73/1676251092472ifM7p_JPEG/77386876185010259_1625652650.jpg?type=m510",
+      "price" : 22000,
+      "isNew" : true
+    },
+    {
+      "id" : 5,
+      "title" : "버라이어티로고 리유저블컵 세트 473ml(3P)",
+      "imgUrl" : "https://shop-phinf.pstatic.net/20220421_11/1650529450873a6Sg2_JPEG/51665296589126083_1355640414.jpg?type=m510",
+      "price" : 23000,
+      "isNew" : true
+    },
+    {
+      "id" : 6,
+      "title" : "SS 바리스타춘식 데비 텀블러 414ml",
+      "imgUrl" : "assets/images/products/chunsik.png",
+      "price" : 30000,
+      "isNew" : false
+    },
+    {
+      "id" : 7,
+      "title" : "SS SS 바리스타춘식 DW 투고 텀블러 473ml",
+      "imgUrl" : "assets/images/products/chunsik.png",
+      "price" : 50000,
+      "isNew" : false
+    }
+  ],
+  "event-product-list" : [
+    {
+      "id" : 1,
+      "eventId": 1,
+      "productId" : 1
+    },
+    {
+      "id" : 2,
+      "eventId": 1,
+      "productId" : 2
+    },
+    {
+      "id" : 3,
+      "eventId": 1,
+      "productId" : 3
+    },
+    {
+      "id" : 4,
+      "eventId": 1,
+      "productId" : 4
+    },
+    {
+      "id" : 5,
+      "eventId": 2,
+      "productId" : 1
+    },
+    {
+      "id" : 6,
+      "eventId": 2,
+      "productId" : 5
+    },
+    {
+      "id" : 7,
+      "eventId": 3,
+      "productId" : 1
+    },
+    {
+      "id" : 8,
+      "eventId": 3,
+      "productId" : 3
+    },
+    {
+      "id" : 9,
+      "eventId": 4,
+      "productId" : 2
+    },
+    {
+      "id" : 10,
+      "eventId": 4,
+      "productId" : 3
+    }
+  ],
+  "chunsik-event-product-list": [
+    {
+      "id" : 1,
+      "eventId": 5,
+      "productId" : 6
+    },
+    {
+      "id" : 2,
+      "eventId": 5,
+      "productId" : 7
+    }
+  ]
+}
