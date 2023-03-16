@@ -128,3 +128,8 @@ header {
   color: var(--color-primary);
   font-weight: bold;
 }
+
+.header-sub nav ul li a{
+  text-decoration: none;
+  color: #6e6e6e;
+}

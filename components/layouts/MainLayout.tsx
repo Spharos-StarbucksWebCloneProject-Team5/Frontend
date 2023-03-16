@@ -1,11 +1,23 @@
-import { bottomNavMenuType } from '@/types/navMenuType'
+//react
+import React, { useEffect, useState } from 'react'
+
+//next
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import Login from '../modals/Login'
-import { useRecoilValue } from 'recoil'
+
+//component
+import Modal from '../modals/Modal'
+import SubNavigation from '../widgets/SubNavigation'
+import { bottomNavMenuType, bottomSubCategoryList, bottomSubNavMenuType } from '@/types/navMenuType'
 import { cartState } from '@/state/cartState'
+import { filterMenuType, filterSubCategoryType } from '@/types/header/filterType'
+import Signup from '../modals/Signup'
+import Login from '../modals/Login'
+
+//recoil
+import { useRecoilValue } from 'recoil'
+
 // import { bottomNavData } from '../../datas/navData'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
@@ -17,12 +29,22 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   // const [ isCart, setIsCart ] = useState<Boolean>(false)
 
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
-  const [isLoginView, setIsLoginView] = useState<Boolean>(false)
+  const [isModal, setIsModal] = useState<string>("")
+
 
   // 회원가입 모달창 테스트
+  // const [isLoginView, setIsLoginView] = useState<Boolean>(false)
   // const [ isSignupView, setIsSignupView ] = useState<Boolean>(false)
 
   const cartCnt = useRecoilValue(cartState)
+
+  // const [headerMenus, setHeaderMenus] = useState<bottomSubNavMenuType[]>()
+  // const [category, setCategory] = useState<filterMenuType[]>()
+  // const [subCategory, setSubCategory] = useState<filterSubCategoryType[]>()
+
+  // const handleFilter = (name: string) => {
+  //   setSubCategory(category?.filter((item: filterMenuType) => item.name === name))
+  // }
 
   useEffect(() => {
     // if(router.pathname === cartPathName) {
@@ -35,14 +57,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <Login
-        isLoginView={isLoginView}
-        setIsLoginView={setIsLoginView}
+      <Modal
+        isModal={isModal}
+        setIsModal={setIsModal}
       />
-      {/* <Signup
-        isSignupView = {isSignupView}
-        setIsSignupView = {setIsSignupView}
-      /> */}
       <Head>
         <meta name="description" content="StarBucks Clone Site" />
         <meta name="keywords" content="StarBucks, Clone, Site" />
@@ -54,7 +72,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         <header>
           <div className="header-top">
             <div className="menu-icon">
-              <a href="menu.html"><img src="assets/images/icons/menu.svg" alt="" /></a>
+              <Link href="menu.html"><img src="assets/images/icons/menu.svg" alt="" /></Link>
             </div>
             <h1>온라인 스토어</h1>
             <nav>
@@ -64,13 +82,13 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   <p className='cart-badge'>{cartCnt}</p>
                   <img src="assets/images/icons/shopping-cart.svg" />
                 </li>
-                <li onClick={() => setIsLoginView(true)}><img src="assets/images/icons/user.svg" /></li>
+                <li onClick={() => setIsModal("login")}><img src="assets/images/icons/user.svg" /></li>
                 {/* <li onClick={()=>setIsSignupView(true)}><img src="assets/images/icons/user.svg" /></li> */}
               </ul>
             </nav>
           </div>
           {
-            router.pathname !== '/cart' ?
+            router.pathname === '/' || router.pathname === '/event' || router.pathname === '/best' || router.pathname === '/mypage' ?
               <div className="header-bottom">
                 <nav>
                   <ul>
@@ -87,11 +105,21 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   </ul>
                 </nav>
               </div>
-              //  : 
-              //  router.pathname !== '/best'?
-
               : ""
           }
+          {
+            router.pathname === '/event' ?
+              <SubNavigation />
+              :
+              router.pathname === '/best' ?
+                <SubNavigation />
+                : ""
+          }
+          {/* {
+            router.pathname === "/listview" ? {
+
+            }
+          } */}
 
         </header>
       </div>
