@@ -17,10 +17,10 @@ export default function Signup({ isSignupView, setIsSignupView }: IsSignupProps)
 
   return (
     <>
-      <div className='modal'>
+      {/* <div className='modal'>
         <div onClick={() => setIsSignupView(false)}>
           <img src="./assets/images/icons/close.png" className="back-button" />
-        </div>
+        </div> */}
         <div>
           <section className="greeting first-section margin-top">
             <img id="starbucks-logo" src="./assets/images/starbucks-logo.png" />
@@ -48,13 +48,13 @@ export default function Signup({ isSignupView, setIsSignupView }: IsSignupProps)
               <label>SMS</label>
             </div>
           </section>
-          <section className="submit-container">
+          {/* <section className="submit-container">
             <Link href="/signup_certified.html">
               <button type="submit">다음</button>
             </Link>
-          </section>
+          </section> */}
         </div>
-      </div>
+      {/* </div> */}
     </>
   )
 }

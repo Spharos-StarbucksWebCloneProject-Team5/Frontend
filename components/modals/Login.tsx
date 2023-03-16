@@ -9,7 +9,7 @@ export interface ChildProps {
 
 export default function Login({ isLoginView, setIsLoginView }: ChildProps) {
 
-  const [ isSignupView, setIsSignupView ] = useState<Boolean>(false)
+  // const [ isSignupView, setIsSignupView ] = useState<Boolean>(false)
 
   console.log(isLoginView)
 
@@ -19,14 +19,14 @@ export default function Login({ isLoginView, setIsLoginView }: ChildProps) {
   
   return (
     <>
-      <Signup
+      {/* <Signup
         isSignupView = {isSignupView}
         setIsSignupView = {setIsSignupView}
-      />
-      <div className='modal'>
+      /> */}
+      {/* <div className='modal'>
         <div onClick={() => setIsLoginView(false)}>
           <img src="./assets/images/icons/close.png" className="back-button" />
-        </div>
+        </div> */}
         <section className="login-section">
           <div className="login-top">
             <h2>로그인</h2>
@@ -46,19 +46,18 @@ export default function Login({ isLoginView, setIsLoginView }: ChildProps) {
                 <li><Link href="">아이디 찾기</Link></li>
                 <li><Link href="">비밀번호 찾기</Link></li>
                 <li onClick={() => {
-                  setIsLoginView(false)
-                  setIsSignupView(true)
+                  // setIsSignupView(true)
                 }}><Link href="">회원가입</Link></li>
               </ul>
             </div>
           </div>
         </section>
-        <section className="submit-container">
+        {/* <section className="submit-container">
           <Link href="/signup_certified.html">
             <button type="submit">다음</button>
           </Link>
         </section>
-      </div>
+      </div> */}
     </>
   )
 }

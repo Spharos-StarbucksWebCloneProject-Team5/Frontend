@@ -9,3 +9,9 @@ export interface bottomSubNavMenuType {
   name: string;
   link: string;
 }
+
+export interface bottomSubCategoryList {
+  id: number;
+  name: string;
+  categoryId: number;
+}
