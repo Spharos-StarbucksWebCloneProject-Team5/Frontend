@@ -132,6 +132,11 @@ header {
   font-weight: bold;
 }
 
+.header-sub nav ul li.active p {
+  color: var(--color-primary) !important;
+  font-weight: bold;
+}
+
 .header-sub nav ul li a {
   text-decoration: none;
   color: #6e6e6e;

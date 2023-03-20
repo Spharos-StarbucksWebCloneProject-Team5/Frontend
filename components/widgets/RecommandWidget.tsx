@@ -21,7 +21,7 @@ export default function RecommandWidget(props: { title: string, eventId: number 
             eventItemList && eventItemList.map(item => (
               <ProductListCard
                 key={item.id}
-                producId={item.productId}
+                productId={item.productId}
               />
             ))
           }

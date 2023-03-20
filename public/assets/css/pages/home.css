@@ -2,7 +2,7 @@ section#event-banner {
   padding: 0px;
 }
 
-section h2{
+section h2 {
   font-size: 1.2rem;
   font-weight: bold;
 }
@@ -11,12 +11,12 @@ section h2{
   margin-top: 125px !important;
 }
 
-.event-banner__item__img img{
+.event-banner__item__img img {
   width: 100%;
   height: 100%;
 }
 
-section .recommand-md-products{
+section .recommand-md-products {
   padding-left: 5%;
 }
 
@@ -48,10 +48,12 @@ section .recommand-product-list .recommand-product-item:first-child {
 section .recommand-product-list .recommand-product-item:last-child {
   margin-right: 0px;
 }
-section .recommand-product-list .recommand-product-item .recommand-product-item__img{
+
+section .recommand-product-list .recommand-product-item .recommand-product-item__img {
   width: 160px;
 }
-section .recommand-product-list .recommand-product-item .recommand-product-item__img img{
+
+section .recommand-product-list .recommand-product-item .recommand-product-item__img img {
   width: 100%;
   border-radius: 5px;
 }

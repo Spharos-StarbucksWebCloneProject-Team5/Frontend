@@ -75,7 +75,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         <header>
           <div className="header-top">
             <div className="menu-icon">
-              <Link href="/">
+              <Link href="/menu">
                 <img src="assets/images/icons/menu.svg" alt="" />
               </Link>
             </div>

@@ -2,21 +2,21 @@ import { productListCardType } from "@/types/fetchDataType";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-export default function ProductListCard(prosps: { producId: number }) {
+export default function ProductListCard(prosps: { productId: number }) {
   const [productData, setProductData] = useState<productListCardType>();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/products/${prosps.producId}`)
+    fetch(`http://localhost:3001/products/${prosps.productId}`)
       .then((res) => res.json())
       .then((data) => setProductData(data));
-  }, [prosps.producId]);
+  }, [prosps.productId]);
 
   return (
     <>
       {productData && (
         <div className="recommand-product-item">
           <div className="recommand-product-item__img">
-            <Link href={`/product/${prosps.producId}`}>
+            <Link href={`/product/${prosps.productId}`}>
               <img src={productData.imgUrl} alt={productData.title} />
             </Link>
           </div>

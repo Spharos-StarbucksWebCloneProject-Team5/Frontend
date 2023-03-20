@@ -35,7 +35,7 @@
   font-weight: bold;
   text-align: center;
   margin: 10px;
-  
+
 }
 
 .sort-box {
@@ -48,4 +48,14 @@
   margin-top: 200px;
   margin-bottom: 20px;
   border: none;
+}
+
+.event-product-list .recommand-product-item {
+  width: 160px;
+  height: 300px;
+  padding: 0px 17px;
+}
+
+.event-product-list .recommand-product-item img {
+  width: 160px;
 }
