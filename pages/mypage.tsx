@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 
 export default function mypage() {
@@ -8,6 +9,9 @@ export default function mypage() {
 
   return (
     <>
+      <Head>
+        <title>Mypage</title>
+      </Head>
       <section className="order-delivery-status-list">
         <div className="status-text">
           <p>주문/배송 현황</p>

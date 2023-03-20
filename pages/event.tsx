@@ -5,7 +5,7 @@ export default function Event() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Event</title>
       </Head>
       <section>
         <div className="event-image">

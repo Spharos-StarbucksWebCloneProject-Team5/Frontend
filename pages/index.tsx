@@ -19,7 +19,7 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>StarBucks Clone Site</title>
       </Head>
       <section id="event-banner">
         <div className="event-banner">
@@ -33,17 +33,17 @@ const Home: NextPageWithLayout = () => {
       {
         eventListData && eventListData.map(event => (
           event.eventId === 5 ?
-          <ChunsikWidget
-            key={event.id}
-            title={event.title}
-            eventId={event.eventId}
-          />
-          :
-          <RecommandWidget
-            key={event.id}
-            title={event.title}
-            eventId={event.eventId}
-          />
+            <ChunsikWidget
+              key={event.id}
+              title={event.title}
+              eventId={event.eventId}
+            />
+            :
+            <RecommandWidget
+              key={event.id}
+              title={event.title}
+              eventId={event.eventId}
+            />
         ))
       }
     </>

@@ -16,17 +16,21 @@ header {
 }
 
 .header-top .menu-icon {
-  width: 35%;
+  width: 30%;
 }
 
 .header-top .back-icon-class {
-  width: 35%;
+  width: 30%;
+}
+
+.header-top a {
+  text-decoration-line: none;
+  width: 40%;
 }
 
 .header-top h1 {
   text-align: center;
   font-size: 1.0rem;
-  width: 30%;
 }
 
 .header-top nav {

@@ -5,7 +5,7 @@ export default function Best() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Best</title>
       </Head>
       <section>
         <div>

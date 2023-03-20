@@ -69,19 +69,17 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       <Head>
         <meta name="description" content="StarBucks Clone Site" />
         <meta name="keywords" content="StarBucks, Clone, Site" />
-        <meta name="author" content="Jason Ahn" />
         <link rel="stylesheet" href="assets/css/style.css" />
-        <title>StarBucks Clone Site</title>
       </Head>
       <div className="container">
         <header>
           <div className="header-top">
             <div className="menu-icon">
-              <Link href="menu.html">
+              <Link href="/">
                 <img src="assets/images/icons/menu.svg" alt="" />
               </Link>
             </div>
-            <h1>온라인 스토어</h1>
+            <Link href={'/'}><h1>온라인 스토어</h1></Link>
             <nav>
               <ul>
                 <li>
@@ -98,9 +96,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             </nav>
           </div>
           {router.pathname === "/" ||
-          router.pathname === "/event" ||
-          router.pathname === "/best" ||
-          router.pathname === "/mypage" ? (
+            router.pathname === "/event" ||
+            router.pathname === "/best" ||
+            router.pathname === "/mypage" ? (
             <div className="header-bottom">
               <nav>
                 <ul>

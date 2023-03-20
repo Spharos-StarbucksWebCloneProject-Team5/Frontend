@@ -1,9 +1,13 @@
 import MiddleLine from '@/components/ui/MiddleLine'
+import Head from 'next/head'
 import React from 'react'
 
 export default function payment() {
   return (
     <>
+      <Head>
+        <title>Payment</title>
+      </Head>
       <section className="padding-lr-20">
         <div id="payment">
           <p>결제하기</p>
