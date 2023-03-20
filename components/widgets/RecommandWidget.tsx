@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ProductListCard from "../ui/ProductListCard";
 import { eventProductListType } from "@/types/fetchDataType";
+import { eventType } from "@/types/main/eventDataType";
+import Config from "@/configs/config.export";
 
 export default function RecommandWidget(props: {
-  title: string;
-  eventId: number;
+  data: eventType
 }) {
   const [eventItemList, setEventItemList] = useState<eventProductListType[]>();
 
+  const baseUrl = Config().baseUrl;
+
   useEffect(() => {
-    fetch(`http://localhost:3001/event-product-list?eventId=${props.eventId}`)
+    fetch(`/v1/api/event-products/${props.data.id}`)
       .then((res) => res.json())
       .then((data) => setEventItemList(data));
   }, []);
@@ -17,7 +20,7 @@ export default function RecommandWidget(props: {
   return (
     <section id="recommand-md-1">
       <div className="recommand-md-products">
-        <h2>{props.title}</h2>
+        <h2>{props.data.name}</h2>
         <div className="recommand-product-list">
           {eventItemList &&
             eventItemList.map((item) => (

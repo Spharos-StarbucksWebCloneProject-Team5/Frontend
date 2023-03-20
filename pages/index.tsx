@@ -4,16 +4,23 @@ import RecommandWidget from '@/components/widgets/RecommandWidget'
 import ChunsikWidget from '@/components/widgets/ChunsikWidget'
 import { useEffect, useState } from 'react'
 import { mainEventListType } from '@/types/fetchDataType'
+import Config from '@/configs/config.export'
+import axios from 'axios'
+import { eventType } from '@/types/main/eventDataType'
 
 const Home: NextPageWithLayout = () => {
 
-  const [eventListData, setEventListData] = useState<mainEventListType[]>()
-  const [chunsikListData, setChunsikListData] = useState<mainEventListType[]>()
+  const [eventListData, setEventListData] = useState<eventType[]>()
+  const [chunsikListData, setChunsikListData] = useState<eventType[]>()
+
+  const baseUrl = Config().baseUrl;
 
   useEffect(() => {
-    fetch('http://localhost:3001/main-event-list')
-      .then(res => res.json())
-      .then(data => setEventListData(data))
+    axios(`${baseUrl}/v1/api/events/all`)
+      .then(res => {
+        console.log(res.data)
+        setEventListData(res.data)
+      })
   }, [])
 
   return (
@@ -31,18 +38,16 @@ const Home: NextPageWithLayout = () => {
         </div>
       </section>
       {
-        eventListData && eventListData.map(event => (
-          event.eventId === 5 ?
+        eventListData && eventListData.map((event: eventType) => (
+          event.id === 5 ?
             <ChunsikWidget
               key={event.id}
-              title={event.title}
-              eventId={event.eventId}
+              data={event}
             />
             :
             <RecommandWidget
               key={event.id}
-              title={event.title}
-              eventId={event.eventId}
+              data={event}
             />
         ))
       }

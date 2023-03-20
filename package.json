@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "local": "env-cmd -f .env.localhost next dev -p 6600",
-    "dev": "env-cmd -f .env.dev next dev -p 6601",
+    "dev": "env-cmd -f .env.dev next dev -p 6600",
+    "devlocal": "env-cmd -f .env.devlocal next dev -p 6600",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

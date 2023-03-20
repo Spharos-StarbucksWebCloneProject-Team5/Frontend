@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { eventProductListType } from '@/types/fetchDataType'
 import ColProductListCard from '../ui/ColProductListCard'
+import { eventType } from '@/types/main/eventDataType'
 
-export default function ChunsikWidget(props: { title: string, eventId: number }) {
+export default function ChunsikWidget(props: { data: eventType }) {
 
   const [chunsikItemList, setChunsikItemList] = useState<eventProductListType[]>()
 
