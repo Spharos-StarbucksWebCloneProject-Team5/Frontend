@@ -23,6 +23,7 @@ export default function SubNavigation() {
       .then(data => setSubNavBottomData(data))
   }, [router.pathname])
 
+  console.log(router.query)
   return (
     <>
       <div className="header-sub">
@@ -32,9 +33,9 @@ export default function SubNavigation() {
               subNavBottomData && subNavBottomData.map(nav => (
                 <li
                   key={nav.id}
-                  className={router.pathname === nav.link ? "active" : ""}
+                  className={router.query.category === nav.name ? "active" : ""}
                 >
-                  <Link href={nav.link}>{nav.name}</Link>
+                  <Link href={`${router.pathname}?category=${encodeURIComponent(nav.name)}`}>{nav.name}</Link>
                 </li>
               ))
             }

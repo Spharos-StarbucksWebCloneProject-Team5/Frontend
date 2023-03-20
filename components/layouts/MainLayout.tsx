@@ -7,16 +7,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 //component
-import Modal from '../modals/Modal'
 import SubNavigation from '../widgets/SubNavigation'
 import { bottomNavMenuType, bottomSubCategoryList, bottomSubNavMenuType } from '@/types/navMenuType'
 import { cartState } from '@/state/cartState'
 import { filterMenuType, filterSubCategoryType } from '@/types/header/filterType'
-import Signup from '../modals/Signup'
-import Login from '../modals/Login'
 
 //recoil
 import { useRecoilValue } from 'recoil'
+import LoginModal from '../modals/LoginModal'
+import SignupModal from '../modals/SignupModal'
 
 // import { bottomNavData } from '../../datas/navData'
 
@@ -29,12 +28,11 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   // const [ isCart, setIsCart ] = useState<Boolean>(false)
 
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
-  const [isModal, setIsModal] = useState<string>("")
 
-
-  // 회원가입 모달창 테스트
-  // const [isLoginView, setIsLoginView] = useState<Boolean>(false)
-  // const [ isSignupView, setIsSignupView ] = useState<Boolean>(false)
+  // Modal
+  const [isLoginView, setIsLoginView] = useState<boolean>(false);
+  const [isSignupView, setIsSignupView] = useState<boolean>(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState<boolean>(false);
 
   const cartCnt = useRecoilValue(cartState)
 
@@ -57,9 +55,13 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <Modal
-        isModal={isModal}
-        setIsModal={setIsModal}
+      <LoginModal
+        isLoginView={isLoginView}
+        setIsLoginView={setIsLoginView}
+      />
+      <SignupModal
+        isSignupView={isSignupView}
+        setIsSignupView={setIsSignupView}
       />
       <Head>
         <meta name="description" content="StarBucks Clone Site" />
@@ -82,8 +84,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   <p className='cart-badge'>{cartCnt}</p>
                   <img src="assets/images/icons/shopping-cart.svg" />
                 </li>
-                <li onClick={() => setIsModal("login")}><img src="assets/images/icons/user.svg" /></li>
-                {/* <li onClick={()=>setIsSignupView(true)}><img src="assets/images/icons/user.svg" /></li> */}
+                <li onClick={() => setIsLoginView(true)}><img src="assets/images/icons/user.svg" /></li>
               </ul>
             </nav>
           </div>
@@ -108,18 +109,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               : ""
           }
           {
-            router.pathname === '/event' ?
+            router.pathname === '/event' || router.pathname === '/best' ?
               <SubNavigation />
-              :
-              router.pathname === '/best' ?
-                <SubNavigation />
-                : ""
+              : ""
           }
-          {/* {
-            router.pathname === "/listview" ? {
-
-            }
-          } */}
 
         </header>
       </div>
