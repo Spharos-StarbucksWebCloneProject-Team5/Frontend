@@ -18,6 +18,7 @@ import {
   filterMenuType,
   filterSubCategoryType,
 } from "@/types/header/filterType";
+import Category from "../ui/productCategory";
 
 //recoil
 import { useRecoilValue } from "recoil";
@@ -25,6 +26,7 @@ import LoginModal from "../modals/LoginModal";
 import SignupModal from "../modals/SignupModal";
 import Modals from "../ui/ModalUi";
 import ModalUi from "../ui/ModalUi";
+//import {} from "../../";
 
 // import { bottomNavData } from '../../datas/navData'
 
@@ -79,7 +81,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                 <img src="assets/images/icons/menu.svg" alt="" />
               </Link>
             </div>
-            <Link href={'/'}><h1>온라인 스토어</h1></Link>
+            <Link href={"/"}>
+              <h1>온라인 스토어</h1>
+            </Link>
             <nav>
               <ul>
                 <li>
@@ -96,9 +100,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             </nav>
           </div>
           {router.pathname === "/" ||
-            router.pathname === "/event" ||
-            router.pathname === "/best" ||
-            router.pathname === "/mypage" ? (
+          router.pathname === "/event" ||
+          router.pathname === "/best" ||
+          router.pathname === "/mypage" ? (
             <div className="header-bottom">
               <nav>
                 <ul>
@@ -122,6 +126,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           ) : (
             ""
           )}
+          {router.pathname === "/listview" ? <Category /> : ""}
         </header>
       </div>
       <div className="container">{props.children}</div>
