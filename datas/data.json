@@ -25,59 +25,59 @@
     {
       "id": 1,
       "name": "케이크",
-      "link": "/cake"
+      "link": "/event/1"
     },
     {
       "id": 2,
       "name": "4+1 기획전",
-      "link": "/5event"
+      "link": "/event/2"
     },
     {
       "id": 3,
       "name": "바리스타 춘식",
-      "link": "/barista"
+      "link": "/event/3"
     },
     {
       "id": 4,
       "name": "핸디 데스크",
-      "link": "/handydesk"
+      "link": "/event/4"
     },
     {
       "id": 5,
       "name": "선물하기",
-      "link": "/to-gift"
+      "link": "/event/5"
     }
   ],
   "sub-nav-best" : [
     {
       "id": 1,
       "name": "케이크",
-      "link": "/best-cake"
+      "link": "/best/1"
     },
     {
       "id": 2,
       "name": "텀블러/보온병",
-      "link": "/tumbler"
+      "link": "/best/2"
     },
     {
       "id": 3,
       "name": "머그/컵",
-      "link": "/mugcup"
+      "link": "/best/3"
     },
     {
       "id": 4,
       "name": "라이프스타일",
-      "link": "/lifestyle"
+      "link": "/best/4"
     },
     {
       "id": 5,
       "name": "티/커피용품",
-      "link": "/tea"
+      "link": "/best/5"
     },
     {
       "id": 6,
       "name": "세트",
-      "link": "/set"
+      "link": "/best/6"
     }
   ],
   "main-event-list": [

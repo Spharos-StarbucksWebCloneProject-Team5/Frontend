@@ -93,7 +93,6 @@ header {
 }
 
 .header-bottom nav ul li.active {
- 
   font-weight: bold;
   border-bottom: 3px;
   border-bottom-style: solid;
@@ -124,12 +123,12 @@ header {
   color: #6e6e6e;
 }
 
-.header-sub nav ul li.active {
-  color: var(--color-primary);
+.header-sub nav ul li.active a {
+  color: var(--color-primary) !important;
   font-weight: bold;
 }
 
-.header-sub nav ul li a{
+.header-sub nav ul li a {
   text-decoration: none;
   color: #6e6e6e;
 }
