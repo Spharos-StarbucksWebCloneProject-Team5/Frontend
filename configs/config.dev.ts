@@ -1,9 +1,8 @@
-
 import getConfigs from "./config.common";
 
 // backend 서버 URL
-const baseUrl = 'http://10.10.10.89:8081/';
-const mode = 'dev';
+const baseUrl = "http://10.10.10.205:8081";
+const mode = "dev";
 
 const configDev = getConfigs({
   baseUrl,
