@@ -22,9 +22,6 @@ import Category from "../ui/productCategory";
 
 //recoil
 import { useRecoilValue } from "recoil";
-import LoginModal from "../modals/LoginModal";
-import SignupModal from "../modals/SignupModal";
-import Modals from "../ui/ModalUi";
 import ModalUi from "../ui/ModalUi";
 //import {} from "../../";
 
@@ -100,9 +97,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             </nav>
           </div>
           {router.pathname === "/" ||
-          router.pathname === "/event" ||
-          router.pathname === "/best" ||
-          router.pathname === "/mypage" ? (
+            router.pathname === "/event" ||
+            router.pathname === "/best" ||
+            router.pathname === "/mypage" ? (
             <div className="header-bottom">
               <nav>
                 <ul>

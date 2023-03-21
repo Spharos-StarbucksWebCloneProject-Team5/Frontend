@@ -1,25 +1,29 @@
-import { productListCardType } from '@/types/fetchDataType'
 import React, { useEffect, useState } from 'react'
+import { productListCardType } from '@/types/fetchDataType';
 
-export default function ColProductListCard(prosps: { producId: number }) {
+export default function ColProductListCard(props: { data: productListCardType }) {
 
-  const [productData, setProductData] = useState<productListCardType>()
-  
-  useEffect(() => {
-    fetch(`http://localhost:3001/products/${prosps.producId}`)
-      .then(res => res.json())
-      .then(data => setProductData(data))
-  }, [prosps.producId])
+  // const [productData, setProductData] = useState<productListCardType>()
+
+  // const baseUrl = Config().baseUrl;
+
+  // useEffect(() => {
+  //   axios(`${baseUrl}/v1/api/event-products/${props.productId}`)
+  //     .then(res => {
+  //       console.log(res.data)
+  //       setProductData(res.data)
+  //     })
+  // }, [props.productId]);
 
   return (
     <>
       {
-        productData &&
+        props.data &&
         <div className="chunsik-item">
-          <img src={productData.imgUrl} alt={productData.title} />
+          <img src={props.data.thumbnail} alt={props.data.description} />
           <div className="chunsik-item-info">
-            <p className="item-title">{productData.title}</p>
-            <p className="item-price"><span>{productData.price}</span>원</p>
+            <p className="item-title">{props.data.name}</p>
+            <p className="item-price"><span>{props.data.price}</span>원</p>
           </div>
         </div>
       }

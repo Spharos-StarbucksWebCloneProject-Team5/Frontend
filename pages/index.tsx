@@ -39,14 +39,14 @@ const Home: NextPageWithLayout = () => {
       </section>
       {
         eventListData && eventListData.map((event: eventType) => (
-          event.id === 5 ?
+          event.eventId === 7 ?
             <ChunsikWidget
-              key={event.id}
+              key={event.index}
               data={event}
             />
             :
             <RecommandWidget
-              key={event.id}
+              key={event.index}
               data={event}
             />
         ))

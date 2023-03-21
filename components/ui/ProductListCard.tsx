@@ -1,30 +1,27 @@
-import { productListCardType } from "@/types/fetchDataType";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import axios from 'axios'
+import Config from "@/configs/config.export";
+import { productListCardType } from "@/types/fetchDataType";
 
-export default function ProductListCard(prosps: { productId: number }) {
-  const [productData, setProductData] = useState<productListCardType>();
+export default function ProductListCard(props: { data: productListCardType }) {
 
-  useEffect(() => {
-    fetch(`http://localhost:3001/products/${prosps.productId}`)
-      .then((res) => res.json())
-      .then((data) => setProductData(data));
-  }, [prosps.productId]);
+  console.log(props.data)
 
   return (
     <>
-      {productData && (
+      {props.data && (
         <div className="recommand-product-item">
           <div className="recommand-product-item__img">
-            <Link href={`/product/${prosps.productId}`}>
-              <img src={productData.imgUrl} alt={productData.title} />
+            <Link href={`/product/${props.data.id}`}>
+              <img src={props.data.thumbnail} alt={props.data.description} />
             </Link>
           </div>
           <div className="recommand-product-item__info">
-            {productData.isNew ? <p className="item-new">New</p> : null}
-            <p className="item-title">{productData.title}</p>
+            {props.data.isNew ? <p className="item-new">New</p> : null}
+            <p className="item-title">{props.data.name}</p>
             <p className="item-price">
-              <span>{productData.price}</span>원
+              <span>{props.data.price}</span>원
             </p>
           </div>
         </div>
