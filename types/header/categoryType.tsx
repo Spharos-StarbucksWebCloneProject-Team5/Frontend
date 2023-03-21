@@ -1,6 +1,7 @@
 export interface categoryType {
   id: number;
   name: string;
+  thumbNail: string;
 }
 export interface subCategoryType {
   id: number;
