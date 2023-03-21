@@ -20,16 +20,22 @@ export default function Category() {
   const [categoryId, SetCategoryId] = useState(0);
   const [subCategoryId, SetSubCategoryId] = useState([""]);
 
-  const [categoryList, SetCategoryList] = useState<categoryType[]>([]);
+  const [categoryData, SetCategoryData] = useState<categoryType[]>([]);
   const [subCategoryList, SetSubCategoryList] = useState<subCategoryType[]>([]);
 
   const baseUrl = Config().baseUrl;
-  const query = subCategoryId.map((element) => "&subCategoryId=" + element);
+  //const query = subCategoryId.map((element) => "&subCategoryId=" + element);
 
-  const url = `${baseUrl}/v1/api/listview?categoryId=${categoryId}`;
+  //const url = `${baseUrl}/v1/api/listview?categoryId=${categoryId}`;
+
+  // useEffect(() => {
+  //   axios(url).then((res) => SetCategoryData(res.data));
+  // }, []);
 
   useEffect(() => {
-    axios(url).then((res) => SetCategoryList(res.data));
+    axios(`${baseUrl}/v1/api/categories/main`).then((res) =>
+      SetCategoryData(res.data)
+    );
   }, []);
 
   // `http://localhost:6601//listview?categoryid=${categoryId}` + query;
@@ -41,6 +47,7 @@ export default function Category() {
   // useEffect(() => {
   //   router.replace(url);
   // }, [categoryId, subCategoryId]);
+
   useEffect(() => {
     // router.replace(url);
   }, [categoryId]);
@@ -50,7 +57,7 @@ export default function Category() {
       <div className="header-sub">
         <nav>
           <ul className="allProducts-ul">
-            {categoryList.map((element: categoryType) => (
+            {categoryData.map((element: categoryType) => (
               <li
                 key={element.id}
                 onClick={() => {
@@ -66,7 +73,7 @@ export default function Category() {
         </nav>
       </div>
 
-      {subCategoryList
+      {/* {subCategoryList
         .filter((element1) => element1.id === 0 || element1.id === categoryId)
         .map((element2) => (
           <div className="header-sub">
@@ -105,7 +112,7 @@ export default function Category() {
               </ul>
             </nav>
           </div>
-        ))}
+        ))} */}
     </>
   );
 }

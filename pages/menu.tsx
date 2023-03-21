@@ -1,12 +1,28 @@
-import Link from 'next/link'
-import React from 'react'
+import Config from "@/configs/config.export";
+import { productListCardType } from "@/types/fetchDataType";
+import { categoryType } from "@/types/header/categoryType";
+import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 export default function menu() {
+  const baseUrl = Config().baseUrl;
+  const [categoryData, SetCategoryData] = useState<categoryType[]>([]);
+  //const [productData, SetProductData] = useState<productListCardType[]>([]);
+
+  useEffect(() => {
+    axios(`${baseUrl}/v1/api/categories/main`).then((res) =>
+      SetCategoryData(res.data)
+    );
+  }, []);
+
   return (
     <>
       <div className="welcome">
         <div className="welcome-top">
-          <Link href="./index.html"><img src="assets/images/icons/close.svg" /></Link>
+          <Link href="./index.html">
+            <img src="assets/images/icons/close.svg" />
+          </Link>
         </div>
         <div className="welcome-bottom">
           <h1>Welcome !</h1>
@@ -20,62 +36,21 @@ export default function menu() {
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </Link>
         </div>
-        <div className="menu-product-list">
-          <div className="menu-product-item">
-            <div className="menu-product-item__img">
-              <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-            </div>
-            <div className="menu-product-item__info">
-              <p className="item-title">케이크</p>
-            </div>
-          </div>
-          <div className="menu-product-item">
-            <div className="menu-product-item">
-              <div className="menu-product-item__img">
-                <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-              </div>
-              <div className="menu-product-item__info">
-                <p className="item-title">케이크</p>
-              </div>
-            </div>
-          </div>
-          <div className="menu-product-item">
-            <div className="menu-product-item">
-              <div className="menu-product-item__img">
-                <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-              </div>
-              <div className="menu-product-item__info">
-                <p className="item-title">케이크</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="menu-product-item">
-            <div className="menu-product-item__img">
-              <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
+        <div className="menu-product-list">
+          {categoryData.map((element) => (
+            <div className="menu-product-item">
+              <div className="menu-product-item__img">
+                <img src={element.thumbNail} alt="" />
+              </div>
+              <div className="menu-product-item__info">
+                <p className="item-title">{element.name}</p>
+              </div>
             </div>
-            <div className="menu-product-item__info">
-              <p className="item-title">케이크</p>
-            </div>
-          </div>
-          <div className="menu-product-item">
-            <div className="menu-product-item__img">
-              <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-            </div>
-            <div className="menu-product-item__info">
-              <p className="item-title">케이크</p>
-            </div>
-          </div>
-          <div className="menu-product-item">
-            <div className="menu-product-item__img">
-              <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-            </div>
-            <div className="menu-product-item__info">
-              <p className="item-title">케이크</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
+
       <section className="section-bottom">
         <div className="menu-bottom">
           <div className="menu-bottom-list">
@@ -84,15 +59,17 @@ export default function menu() {
               <p>진행중인 기획전을 만나보세요</p>
             </div>
             <div className="menu-bottom-list-item-right">
-              <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
+              <img
+                src="./assets/images/icons/arrow-point-to-right.png"
+                alt=""
+              />
             </div>
           </div>
-
         </div>
         <div className="menu-bottom-list">
           <div className="menu-bottom-list-item-left">
-            <h3>기획전</h3>
-            <p>진행중인 기획전을 만나보세요</p>
+            <h3>베스트</h3>
+            <p>스타벅스의 베스트 상품을 만나보세요.</p>
           </div>
           <div className="menu-bottom-list-item-right">
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
@@ -100,5 +77,5 @@ export default function menu() {
         </div>
       </section>
     </>
-  )
+  );
 }

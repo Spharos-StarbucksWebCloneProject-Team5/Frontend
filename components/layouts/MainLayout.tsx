@@ -23,6 +23,8 @@ import {
 import { useRecoilValue } from "recoil";
 import ModalUi from "../ui/ModalUi";
 import Category from "../widgets/ProductCategory";
+import Config from "@/configs/config.export";
+import axios from "axios";
 //import {} from "../../";
 
 // import { bottomNavData } from '../../datas/navData'
@@ -49,13 +51,16 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   //   setSubCategory(category?.filter((item: filterMenuType) => item.name === name))
   // }
 
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/nav")
+  //     .then((res) => res.json())
+  //     .then((data) => setNavBottomData(data));
+  // }, []);
+
+  const baseUrl = Config().baseUrl;
+
   useEffect(() => {
-    // if(router.pathname === cartPathName) {
-    //   setIsCart(true)
-    // }
-    fetch("http://localhost:3001/nav")
-      .then((res) => res.json())
-      .then((data) => setNavBottomData(data));
+    axios(`${baseUrl}/nav`).then((res) => setNavBottomData(res.data));
   }, []);
 
   return (
