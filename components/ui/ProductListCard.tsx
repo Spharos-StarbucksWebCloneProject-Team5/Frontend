@@ -2,11 +2,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import Config from "@/configs/config.export";
-import { productListCardType } from "@/types/fetchDataType";
+import { productListCardType } from "@/types/product/fetchDataType";
 
 export default function ProductListCard(props: { data: productListCardType }) {
-
-  console.log(props.data)
 
   return (
     <>

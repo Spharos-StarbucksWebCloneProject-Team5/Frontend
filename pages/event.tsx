@@ -1,7 +1,26 @@
+import ProductListCard from '@/components/ui/ProductListCard'
+import Config from '@/configs/config.export';
+import { productListCardType } from '@/types/product/fetchDataType';
+import axios from 'axios';
 import Head from 'next/head'
-import React from 'react'
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
 
 export default function Event() {
+  const [eventItemList, setEventItemList] = useState<productListCardType[]>();
+
+  const router = useRouter()
+  const baseUrl = Config().baseUrl;
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    axios(`${baseUrl}/v1/api/event-products/${router.query.category}`)
+      .then(res => {
+        console.log(res.data)
+        setEventItemList(res.data)
+      })
+  }, [router.query.category]);
+
   return (
     <>
       <Head>
@@ -13,42 +32,12 @@ export default function Event() {
         </div>
         <div>
           <div className="event-product-list">
-            <div className="event-product-item">
-              <div className="event-product-item__img">
-                <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-              </div>
-              <div className="event-product-item__info">
-                <p className="item-title">부드러운 티라미수 롤케이크</p>
-                <p className="item-price"><span>32,000</span>원</p>
-              </div>
-            </div>
-            <div className="event-product-item">
-              <div className="event-product-item__img">
-                <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-              </div>
-              <div className="event-product-item__info">
-                <p className="item-title">부드러운 티라미수 롤케이크</p>
-                <p className="item-price"><span>32,000</span>원</p>
-              </div>
-            </div>
-            <div className="event-product-item">
-              <div className="event-product-item__img">
-                <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-              </div>
-              <div className="event-product-item__info">
-                <p className="item-title">부드러운 티라미수 롤케이크</p>
-                <p className="item-price"><span>32,000</span>원</p>
-              </div>
-            </div>
-            <div className="event-product-item">
-              <div className="event-product-item__img">
-                <img src="assets/images/products/01.png" alt="23 SS 체리 밸류 로맨틱 텀블러 355ml" />
-              </div>
-              <div className="event-product-item__info">
-                <p className="item-title">부드러운 티라미수 롤케이크</p>
-                <p className="item-price"><span>32,000</span>원</p>
-              </div>
-            </div>
+            {
+              eventItemList &&
+              eventItemList.map((item) => (
+                <ProductListCard key={item.id} data={item} />
+              ))
+            }
           </div>
         </div>
       </section>

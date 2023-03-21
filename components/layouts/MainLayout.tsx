@@ -1,5 +1,5 @@
 //react
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 //next
 import Head from "next/head";
@@ -8,60 +8,25 @@ import { useRouter } from "next/router";
 
 //component
 import SubNavigation from "../widgets/SubNavigation";
-import {
-  bottomNavMenuType,
-  bottomSubCategoryList,
-  bottomSubNavMenuType,
-} from "@/types/navMenuType";
+import { bottomNavMenuType } from "@/types/header/navMenuType";
 import { cartState } from "@/state/cartState";
-import {
-  filterMenuType,
-  filterSubCategoryType,
-} from "@/types/header/filterType";
+import { bottomNavData } from "@/datas/navData";
 
 //recoil
 import { useRecoilValue } from "recoil";
 import ModalUi from "../ui/ModalUi";
 import Category from "../widgets/ProductCategory";
-import Config from "@/configs/config.export";
-import axios from "axios";
-//import {} from "../../";
-
-// import { bottomNavData } from '../../datas/navData'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
   const router = useRouter();
   console.log(router.pathname);
 
-  // const cartPathName:String = '/cart';
-  // const [ isCart, setIsCart ] = useState<Boolean>(false)
-
-  const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>();
+  const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData)
 
   // Modal
   const [isView, setIsView] = useState<boolean>(false);
 
   const cartCnt = useRecoilValue(cartState);
-
-  // const [headerMenus, setHeaderMenus] = useState<bottomSubNavMenuType[]>()
-  // const [category, setCategory] = useState<filterMenuType[]>()
-  // const [subCategory, setSubCategory] = useState<filterSubCategoryType[]>()
-
-  // const handleFilter = (name: string) => {
-  //   setSubCategory(category?.filter((item: filterMenuType) => item.name === name))
-  // }
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/nav")
-  //     .then((res) => res.json())
-  //     .then((data) => setNavBottomData(data));
-  // }, []);
-
-  const baseUrl = Config().baseUrl;
-
-  useEffect(() => {
-    axios(`${baseUrl}/nav`).then((res) => setNavBottomData(res.data));
-  }, []);
 
   return (
     <>
@@ -102,20 +67,33 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             </nav>
           </div>
           {router.pathname === "/" ||
-          router.pathname === "/event" ||
-          router.pathname === "/best" ||
-          router.pathname === "/mypage" ? (
+            router.pathname === "/event" ||
+            router.pathname === "/best" ||
+            router.pathname === "/mypage" ? (
             <div className="header-bottom">
               <nav>
                 <ul>
                   {navBottomData &&
                     navBottomData.map((nav) => (
-                      <li
-                        key={nav.id}
-                        className={router.pathname === nav.link ? "active" : ""}
-                      >
-                        <Link href={nav.link}>{nav.name}</Link>
-                      </li>
+
+                      nav.link === '/event?category=1' || nav.link === '/best?category=1' ?
+                        <li
+                          key={nav.id}
+                          className={
+                            router.pathname === nav.link.split('?')[0] ? "active" : ""}
+                        >
+                          <Link href={nav.link}>{nav.name}</Link>
+                        </li>
+                        :
+                        <li
+                          key={nav.id}
+                          className={
+                            router.pathname === nav.link ? "active" : ""}
+                        >
+                          <Link href={nav.link}>{nav.name}</Link>
+                        </li>
+
+
                     ))}
                 </ul>
               </nav>

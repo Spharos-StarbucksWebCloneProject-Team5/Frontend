@@ -1,9 +1,3 @@
-export interface mainEventListType {
-  id: number;
-  title: string;
-  eventId: number;
-}
-
 export interface productListCardType {
   id: number;
   description: string;
