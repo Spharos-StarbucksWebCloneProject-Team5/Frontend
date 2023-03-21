@@ -7,12 +7,12 @@ export const bottomNavData = [
   {
     id: 2,
     name: "기획전",
-    link: "/event",
+    link: "/event?category=1",
   },
   {
     id: 3,
     name: "베스트",
-    link: "/best",
+    link: "/best?category=1",
   },
   {
     id: 4,

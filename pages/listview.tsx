@@ -1,5 +1,5 @@
 import ProductListCard from "@/components/ui/ProductListCard";
-import { productListCardType } from "@/types/fetchDataType";
+import { productListCardType } from "@/types/product/fetchDataType";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";

@@ -3,7 +3,6 @@ import { NextPageWithLayout } from './_app'
 import RecommandWidget from '@/components/widgets/RecommandWidget'
 import ChunsikWidget from '@/components/widgets/ChunsikWidget'
 import { useEffect, useState } from 'react'
-import { mainEventListType } from '@/types/fetchDataType'
 import Config from '@/configs/config.export'
 import axios from 'axios'
 import { eventType } from '@/types/main/eventDataType'
@@ -11,7 +10,6 @@ import { eventType } from '@/types/main/eventDataType'
 const Home: NextPageWithLayout = () => {
 
   const [eventListData, setEventListData] = useState<eventType[]>()
-  const [chunsikListData, setChunsikListData] = useState<eventType[]>()
 
   const baseUrl = Config().baseUrl;
 
@@ -41,12 +39,12 @@ const Home: NextPageWithLayout = () => {
         eventListData && eventListData.map((event: eventType) => (
           event.eventId === 7 ?
             <ChunsikWidget
-              key={event.index}
+              key={event.id}
               data={event}
             />
             :
             <RecommandWidget
-              key={event.index}
+              key={event.id}
               data={event}
             />
         ))

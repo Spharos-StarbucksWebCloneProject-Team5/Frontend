@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { productListCardType } from '@/types/fetchDataType';
+import { productListCardType } from '@/types/product/fetchDataType';
 
 export default function ColProductListCard(props: { data: productListCardType }) {
 
