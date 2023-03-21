@@ -5,12 +5,12 @@ export interface mainEventListType {
 }
 
 export interface productListCardType {
-  id: number,
-  description: string,
-  name: string,
-  price: number,
-  thumbnail: string,
-  isNew: boolean
+  id: number;
+  description: string;
+  name: string;
+  price: number;
+  thumbnail: string;
+  isNew: boolean;
 }
 
 export interface eventProductListType {

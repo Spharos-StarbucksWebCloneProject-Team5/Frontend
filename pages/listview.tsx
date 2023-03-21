@@ -1,17 +1,20 @@
-import ProductListCard from '@/components/ui/ProductListCard'
-import { productListCardType } from '@/types/fetchDataType'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import ProductListCard from "@/components/ui/ProductListCard";
+import { productListCardType } from "@/types/fetchDataType";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Config from "@/configs/config.export";
 
 export default function ProductListView() {
+  const baseUrl = Config().baseUrl;
 
-  const [productData, setProductData] = useState<productListCardType[]>()
+  const [productData, setProductData] = useState<productListCardType[]>();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/products`)
-      .then(res => res.json())
-      .then(data => setProductData(data))
-  }, [])
+    axios(`${baseUrl}/v1/api/products/all`).then((res) =>
+      setProductData(res.data)
+    );
+  }, []);
 
   return (
     <section>
@@ -25,16 +28,12 @@ export default function ProductListView() {
       </div>
       <div className="product-list">
         <div className="event-product-list">
-          {
-            productData && productData.map(item => (
-              <ProductListCard
-                key={item.id}
-                productId={item.id}
-              />
-            ))
-          }
+          {productData &&
+            productData.map((item) => (
+              <ProductListCard key={item.id} data={item} />
+            ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

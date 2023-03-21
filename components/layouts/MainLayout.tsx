@@ -18,7 +18,7 @@ import {
   filterMenuType,
   filterSubCategoryType,
 } from "@/types/header/filterType";
-import Category from "../ui/productCategory";
+import Category from "../ui/ProductCategory";
 
 //recoil
 import { useRecoilValue } from "recoil";
@@ -97,9 +97,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             </nav>
           </div>
           {router.pathname === "/" ||
-            router.pathname === "/event" ||
-            router.pathname === "/best" ||
-            router.pathname === "/mypage" ? (
+          router.pathname === "/event" ||
+          router.pathname === "/best" ||
+          router.pathname === "/mypage" ? (
             <div className="header-bottom">
               <nav>
                 <ul>
