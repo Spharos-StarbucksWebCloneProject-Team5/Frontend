@@ -17,7 +17,6 @@ import { useRecoilValue } from "recoil";
 import ModalUi from "../ui/ModalUi";
 import Category from "../widgets/ProductCategory";
 
-
 export default function MainLayout(props: { children: React.ReactNode }) {
   const router = useRouter();
   console.log(router.pathname);
