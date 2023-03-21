@@ -18,11 +18,11 @@ import {
   filterMenuType,
   filterSubCategoryType,
 } from "@/types/header/filterType";
-import Category from "../ui/ProductCategory";
 
 //recoil
 import { useRecoilValue } from "recoil";
 import ModalUi from "../ui/ModalUi";
+import Category from "../widgets/ProductCategory";
 //import {} from "../../";
 
 // import { bottomNavData } from '../../datas/navData'
