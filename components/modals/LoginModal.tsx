@@ -18,6 +18,7 @@ export default function LoginModal(props: {
   //setIsModalOpen: Function;
   thisModalName: string;
   setThisModalName: Dispatch<SetStateAction<string>>;
+  setIsModalView: Function;
 }) {
   const BASE_URL = Config().baseUrl;
   const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
@@ -68,7 +69,7 @@ export default function LoginModal(props: {
             icon: "success",
             text: "Welcome!",
           });
-          props.setThisModalName("finish");
+          props.setIsModalView(false);
         })
         .catch((err) => {
           console.log(err);
@@ -77,8 +78,6 @@ export default function LoginModal(props: {
   };
 
   //console.log(loginData);
-
-  if (props.thisModalName === "finish") console.log("Success Login");
 
   return (
     <>
@@ -118,21 +117,7 @@ export default function LoginModal(props: {
             <button type="submit">로그인</button>
           </form>
         </div>
-        {/* <div className="login-btn">
-          <div className="login-btn-inner">
-            <ul>
-              <li>
-                <Link href="">아이디 찾기</Link>
-              </li>
-              <li>
-                <Link href="">비밀번호 찾기</Link>
-              </li>
-              <li>
-                <p onClick={() => props.setThisModalName("signup")}>회원가입</p>
-              </li>
-            </ul>
-          </div>
-        </div> */}
+        <section className="submit-container"></section>
       </section>
     </>
   );

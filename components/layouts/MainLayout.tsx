@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 //component
 import SubNavigation from "../widgets/SubNavigation";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
-import { cartState } from "@/state/cartState";
+import { cartState } from "@/state/atom/cartState";
 import { bottomNavData } from "@/datas/navData";
 
 //recoil

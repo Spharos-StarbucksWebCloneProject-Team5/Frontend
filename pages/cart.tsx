@@ -1,7 +1,9 @@
 import MiddleLine from "@/components/ui/MiddleLine";
 import Config from "@/configs/config.export";
-import { cartState } from "@/state/cartState";
-import { cartType, productListCardType } from "@/types/fetchDataType";
+import { cartIsCheckState } from "@/state/atom/cartIsCheckState";
+import { freezeIsCheckState } from "@/state/atom/freezeIsCheckState";
+import { generalIsCheckState } from "@/state/atom/generalIsCheckState";
+import { cartType, productListCardType } from "@/types/product/fetchDataType";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
@@ -10,19 +12,21 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 export default function cart() {
-  const [cart, setCart] = useRecoilState(cartState);
-
-  function btnClick() {
-    //console.log("Click Button");
+  function btnAllClick() {
+    SelectAll ? setAllSelect(false) : setAllSelect(true);
   }
   const { query } = useRouter();
   const baseUrl = Config().baseUrl;
-  const [cartData, setCartData] = useState<cartType>();
-  const [productData, setProductData] = useState<productListCardType>();
-
+  const [cartData, setCartData] = useState<cartType[]>();
+  const [productData, setProductData] = useState<productListCardType[]>();
+  const [select, setSelect] = useRecoilState(cartIsCheckState);
+  const [SelectAll, setAllSelect] = useRecoilState(cartIsCheckState);
+  const [freeze, setFreeze] = useRecoilState(freezeIsCheckState);
+  const [general, setGeneral] = useRecoilState(generalIsCheckState);
+  //`${baseUrl}/v1/api/carts/get/${query}`
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/carts/get/${query}`).then((res) => {
-      console.log(query);
+    axios(`${baseUrl}/v1/api/carts/get/1}`).then((res) => {
+      //console.log(query);
       setCartData(res.data);
     });
   }, []);
@@ -44,7 +48,7 @@ export default function cart() {
             </div>
             <div id="btn-cart-delete">
               <div className="btn-delete-inner">
-                <p onClick={btnClick} id="select-delete">
+                <p onClick={btnAllClick} id="select-delete">
                   선택삭제
                 </p>
                 <p>|</p>
@@ -57,9 +61,49 @@ export default function cart() {
             <input type="checkbox" id="product-normal" />
             <label>일반 상품</label>
           </div>
-          {/* <MiddleLine
-          gutterSize={10}
-        /> */}
+          <MiddleLine />
+          <div className="advertising-info box-cart">
+            <input type="checkbox" id="select-product" />
+            <div className="box-cart-product">
+              <div className="cart-product-info">
+                <img
+                  className="img-cart-product"
+                  src="./assets/images/products/01.png"
+                  alt="product"
+                />
+                <div className="cart-product-info-text">
+                  <p>23 체리 컬러체인징 컨페티 콜드컵 710ml 5p</p>
+                  <p className="price-bold">35,000원</p>
+                </div>
+                <img
+                  className="img-cart-close"
+                  src="./assets/images/icons/close.png"
+                  alt="close"
+                />
+              </div>
+              <div className="cart-product-quantity">
+                <p>수량: 1개</p>
+              </div>
+              <div className="text-order-amount">
+                <p>주문 금액</p>
+                <p>35,000원</p>
+              </div>
+              <div className="box-button">
+                <button id="box-button-01" onClick={() => setCart(cart + 1)}>
+                  주문 수정
+                </button>
+                <button id="box-button-02" onClick={btnClick}>
+                  바로 구매
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <MiddleLine />
+          <div className="advertising-info">
+            <input type="checkbox" id="product-normal" />
+            <label>냉동 상품</label>
+          </div>
           <MiddleLine />
           <div className="advertising-info box-cart">
             <input type="checkbox" id="select-product" />

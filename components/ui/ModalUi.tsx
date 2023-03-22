@@ -5,7 +5,7 @@ import SignupModal from "../modals/SignupModal";
 
 export default function ModalUi(props: {
   isModalView: boolean;
-  setIsModalView: Dispatch<SetStateAction<boolean>>;
+  setIsModalView: Function;
   modalName: string;
 }) {
   const [thisModalName, setThisModalName] = useState<string>(props.modalName);
@@ -18,6 +18,7 @@ export default function ModalUi(props: {
       <LoginModal
         thisModalName={thisModalName}
         setThisModalName={setThisModalName}
+        setIsModalView={props.setIsModalView}
       />
     ),
     signup: <SignupModal />,

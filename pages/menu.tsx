@@ -1,5 +1,5 @@
 import Config from "@/configs/config.export";
-import { productListCardType } from "@/types/fetchDataType";
+import { productListCardType } from "@/types/product/fetchDataType";
 import { categoryType } from "@/types/header/categoryType";
 import axios from "axios";
 import Link from "next/link";

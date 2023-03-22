@@ -3,7 +3,7 @@ import { NextPageWithLayout } from "./_app";
 import RecommandWidget from "@/components/widgets/RecommandWidget";
 import ChunsikWidget from "@/components/widgets/ChunsikWidget";
 import { useEffect, useState } from "react";
-import { mainEventListType } from "@/types/fetchDataType";
+//import { mainEventListType } from "@/types/main/eventDataType";
 import Config from "@/configs/config.export";
 import axios from "axios";
 import { eventType } from "@/types/main/eventDataType";
