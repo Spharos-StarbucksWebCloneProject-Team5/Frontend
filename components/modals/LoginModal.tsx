@@ -1,10 +1,17 @@
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
+import StButton from "../ui/StButton";
 
 export default function LoginModal(props: {
   thisModalName: string;
   setThisModalName: Dispatch<SetStateAction<string>>;
+  setIsModalView: Function;
 }) {
+
+  const handleStepNext = () => {
+    console.log(handleStepNext)
+  }
+
   return (
     <>
       <section className="login-section">
@@ -39,6 +46,13 @@ export default function LoginModal(props: {
             </ul>
           </div>
         </div>
+      </section>
+      <section className="submit-container">
+        <StButton
+          buttonText='NEXT'
+          textSize='1.1rem'
+          handler={handleStepNext}
+        />
       </section>
     </>
   );

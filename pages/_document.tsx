@@ -3,6 +3,7 @@ import { Html, Head, Main, NextScript } from 'next/document'
 export default function Document() {
   return (
     <Html lang="ko">
+      <link rel="stylesheet" href="assets/css/style.css" />
       <Head />
       <body>
         <Main />

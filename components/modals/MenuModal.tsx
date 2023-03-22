@@ -1,10 +1,11 @@
-import Config from "@/configs/config.export";
-import { categoryType } from "@/types/header/categoryType";
-import axios from "axios";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import Config from '@/configs/config.export';
+import { categoryType } from '@/types/header/categoryType';
+import axios from 'axios';
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
-export default function menu() {
+export default function MenuModal() {
+
   const baseUrl = Config().baseUrl;
   const [categoryData, SetCategoryData] = useState<categoryType[]>([]);
 
@@ -75,5 +76,5 @@ export default function menu() {
         </div>
       </section>
     </>
-  );
+  )
 }
