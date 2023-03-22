@@ -1,9 +1,10 @@
 import ProductListCard from "@/components/ui/ProductListCard";
-import { productListCardType } from "@/types/product/fetchDataType";
+import { productListCardType } from "@/types/fetchDataType";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Config from "@/configs/config.export";
+import Product from "./products/[productId]";
 
 export default function ProductListView() {
   const baseUrl = Config().baseUrl;
@@ -11,7 +12,7 @@ export default function ProductListView() {
   const [productData, setProductData] = useState<productListCardType[]>();
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/products/all`).then((res) =>
+    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) =>
       setProductData(res.data)
     );
   }, []);

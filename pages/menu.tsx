@@ -39,7 +39,7 @@ export default function menu() {
 
         <div className="menu-product-list">
           {categoryData.map((element) => (
-            <div className="menu-product-item">
+            <div key={element.id} className="menu-product-item">
               <div className="menu-product-item__img">
                 <img src={element.thumbNail} alt="" />
               </div>

@@ -32,12 +32,6 @@ export default function ModalUi(props: {
       </div>
 
       {modalComponent[thisModalName]}
-
-      <section className="submit-container">
-        <Link href="/">
-          <button type="submit">다음</button>
-        </Link>
-      </section>
     </div>
   );
 }
