@@ -75,6 +75,7 @@ export default function LoginModal(props: {
     }
   };
 
+
   return (
     <>
       <section className="login-section">
@@ -114,6 +115,13 @@ export default function LoginModal(props: {
           </form>
         </div>
         <section className="submit-container"></section>
+      </section>
+      <section className="submit-container">
+        <StButton
+          buttonText='NEXT'
+          textSize='1.1rem'
+          handler={handleStepNext}
+        />
       </section>
     </>
   );

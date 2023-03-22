@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import LoginModal from "../modals/LoginModal";
 import SignupModal from "../modals/SignupModal";
@@ -31,7 +30,6 @@ export default function ModalUi(props: {
       <div onClick={() => props.setIsModalView(false)}>
         <img src="./assets/images/icons/close.png" className="back-button" />
       </div>
-
       {modalComponent[thisModalName]}
     </div>
   );

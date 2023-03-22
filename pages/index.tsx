@@ -15,11 +15,11 @@ const Home: NextPageWithLayout = () => {
   const baseUrl = Config().baseUrl;
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/events/all`).then((res) => {
-      console.log(res.data);
-      setEventListData(res.data);
-    });
-  }, []);
+    axios(`${baseUrl}/v1/api/events/all`)
+      .then(res => {
+        setEventListData(res.data)
+      })
+  }, [])
 
   return (
     <>

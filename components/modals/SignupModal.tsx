@@ -1,59 +1,87 @@
-import MiddleLine from "@/components/ui/MiddleLine";
-import Link from "next/link";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { useEffect, useState } from "react";
+import StButton from "../ui/StButton";
+import { inputRegisterType } from "@/types/UserRequest/Request";
+import Swal from "sweetalert2";
+import Step01 from "../page/signup/Step01";
+import Step02 from "../page/signup/Step02";
+import Step03 from "../page/signup/Step03";
+import Step04 from "../page/signup/Step04";
+import Step05 from "../page/signup/Step05";
 
 export default function SignupModal() {
+
+  const [stepId, setStepId] = useState<number>(1);
+  const [inputData, setInputData] = useState<inputRegisterType>({
+    userEmail: '',
+    userName: '',
+    userNickname: '',
+    birthday: new Date(),
+    password: '',
+    confirmPassword: '',
+    phone: '',
+    isUserConfirm: false,
+    privateAgree: {
+      isAgree: false,
+      isUseConfirm: false,
+      isAdvertisingConfirm: false,
+    },
+  });
+
+  const steps: any = [
+    { 1: <Step01 inputData={inputData} setInputData={setInputData} /> },
+    { 2: <Step02 inputData={inputData} setInputData={setInputData} /> },
+    { 3: <Step03 inputData={inputData} setInputData={setInputData} /> },
+    { 4: <Step04 inputData={inputData} setInputData={setInputData} /> },
+    { 5: <Step05 inputData={inputData} setInputData={setInputData} /> }
+  ]
+
+  useEffect(() => {
+    console.log(inputData)
+  }, [inputData])
+
+  const handleStepNext = () => {
+    console.log(inputData.privateAgree)
+    if (stepId === 1 && inputData.privateAgree) {
+      if (!inputData.privateAgree.isAgree || !inputData.privateAgree.isUseConfirm) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '필수 항목을 동의 해주세요.',
+          customClass: {
+            confirmButton: 'swal-confirm-button',
+          }
+        })
+        return;
+      }
+      setStepId(stepId + 1);
+    };
+
+    if (stepId === 2 && inputData.privateAgree) {
+      if (!inputData.privateAgree.isAgree || !inputData.privateAgree.isUseConfirm) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '필수 항목을 동의 해주세요.',
+          customClass: {
+            confirmButton: 'swal-confirm-button',
+          }
+        })
+        return;
+      }
+      setStepId(stepId + 1);
+    };
+  }
+
   return (
     <>
-      <div>
-        <section className="greeting first-section margin-top">
-          <img id="starbucks-logo" src="./assets/images/starbucks-logo.png" />
-          <h2 className="signup-info">
-            고객님
-            <br />
-            환영합니다!
-          </h2>
-        </section>
-        <section className="agree-input" id="agree-main">
-          <input type="checkbox" id="all-agree" name="all-agree" />
-          <label>약관 전체동의</label>
-          <MiddleLine />
-          <input type="checkbox" id="tos-agree" name="" />
-          <label>이용약관 동의(필수)</label>
-          <Link href="/best_cake.html">
-            <img
-              className="arrow"
-              src="./assets/images/icons/arrow-point-to-right.png"
-            />
-          </Link>
-          <br />
-          <input type="checkbox" id="personal-agree" name="" />
-          <label>개인정보 수집 및 이용동의(필수)</label>
-          <Link href="">
-            <img
-              className="arrow"
-              src="assets/images/icons/arrow-point-to-right.png"
-            />
-          </Link>
-          <br />
-          <input type="checkbox" id="advertising-agree" name="" />
-          <label>광고성 정보 수신동의(선택)</label>
-          <Link href="">
-            <img
-              className="arrow"
-              src="./assets/images/icons/arrow-point-to-right.png"
-            />
-          </Link>
-          <br />
-          <div className="advertising-info">
-            <p>광고성 정보 수신 방법(선택)</p>
-            <input type="checkbox" id="advertising-email" />
-            <label>E-mail</label>
-            <input type="checkbox" id="advertising-sms" />
-            <label>SMS</label>
-          </div>
-        </section>
-      </div>
+      {steps[stepId - 1][stepId]}
+      <section className="submit-container">
+        <StButton
+          buttonText='NEXT'
+          textSize='1.1rem'
+          handler={handleStepNext}
+        />
+      </section>
     </>
   );
 }

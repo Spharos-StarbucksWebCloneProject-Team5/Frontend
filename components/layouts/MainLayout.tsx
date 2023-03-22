@@ -38,7 +38,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       <Head>
         <meta name="description" content="StarBucks Clone Site" />
         <meta name="keywords" content="StarBucks, Clone, Site" />
-        <link rel="stylesheet" href="assets/css/style.css" />
       </Head>
       <div className="container">
         <header>

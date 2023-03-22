@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   eventProductListType,
@@ -8,6 +9,7 @@ import { eventType } from "@/types/main/eventDataType";
 import axios from "axios";
 import Config from "@/configs/config.export";
 
+
 export default function ChunsikWidget(props: { data: eventType }) {
   const [chunsikItemList, setChunsikItemList] =
     useState<productListCardType[]>();
@@ -15,6 +17,7 @@ export default function ChunsikWidget(props: { data: eventType }) {
   const baseUrl = Config().baseUrl;
 
   useEffect(() => {
+
     axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`).then(
       (res) => {
         console.log(res.data);
@@ -22,6 +25,7 @@ export default function ChunsikWidget(props: { data: eventType }) {
       }
     );
   }, []);
+
 
   return (
     <section className="chunsik">

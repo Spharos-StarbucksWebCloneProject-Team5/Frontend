@@ -1,12 +1,11 @@
-import Config from "@/configs/config.export";
-import { productListCardType } from "@/types/product/fetchDataType";
+import Config from '@/configs/config.export';
+import { categoryType } from '@/types/header/categoryType';
+import axios from 'axios';
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
-import { categoryType } from "@/types/header/categoryType";
-import axios from "axios";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+export default function MenuModal() {
 
-export default function menu() {
   const baseUrl = Config().baseUrl;
   const [categoryData, SetCategoryData] = useState<categoryType[]>([]);
 
@@ -38,9 +37,8 @@ export default function menu() {
         </div>
 
         <div className="menu-product-list">
-
-          {categoryData.map((element) => (
-            <div key={element.id} className="menu-product-item">
+          {categoryData?.map((element) => (
+            <div className="menu-product-item" key={element.id}>
               <div className="menu-product-item__img">
                 <img src={element.thumbNail} alt="" />
               </div>
@@ -78,5 +76,5 @@ export default function menu() {
         </div>
       </section>
     </>
-  );
+  )
 }

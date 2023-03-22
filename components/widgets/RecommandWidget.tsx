@@ -13,14 +13,13 @@ export default function RecommandWidget(props: { data: eventType }) {
 
   const baseUrl = Config().baseUrl;
 
-  console.log(props.data.eventId);
+
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`).then(
-      (res) => {
-        console.log(res.data);
-        setEventItemList(res.data);
-      }
-    );
+    axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`)
+      .then(res => {
+        setEventItemList(res.data)
+      })
+
   }, []);
 
   return (
