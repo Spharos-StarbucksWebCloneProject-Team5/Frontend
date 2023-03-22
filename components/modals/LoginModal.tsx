@@ -14,8 +14,6 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 
 export default function LoginModal(props: {
-  //isModalOpen: boolean;
-  //setIsModalOpen: Function;
   thisModalName: string;
   setThisModalName: Dispatch<SetStateAction<string>>;
   setIsModalView: Function;
@@ -76,8 +74,6 @@ export default function LoginModal(props: {
         });
     }
   };
-
-  //console.log(loginData);
 
   return (
     <>
