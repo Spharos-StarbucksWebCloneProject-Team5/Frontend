@@ -16,7 +16,6 @@ const Home: NextPageWithLayout = () => {
   useEffect(() => {
     axios(`${baseUrl}/v1/api/events/all`)
       .then(res => {
-        console.log(res.data)
         setEventListData(res.data)
       })
   }, [])
