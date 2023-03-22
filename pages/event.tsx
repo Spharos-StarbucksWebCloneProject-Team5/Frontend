@@ -35,7 +35,7 @@ export default function Event() {
             {
               eventItemList &&
               eventItemList.map((item) => (
-                <ProductListCard key={item.id} data={item} />
+                <ProductListCard key={item.productId} data={item} />
               ))
             }
           </div>

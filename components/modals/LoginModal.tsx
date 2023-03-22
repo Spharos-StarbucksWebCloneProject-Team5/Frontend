@@ -7,6 +7,7 @@ import axios from "axios";
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
+import Link from "next/link";
 
 export default function LoginModal(props: {
   thisModalName: string;
@@ -104,6 +105,21 @@ export default function LoginModal(props: {
             {isError.password ? (
               <p className="error-message">비밀번호를 입력해 주세요.</p>
             ) : null}
+            <div className="login-btn">
+              <div className="login-btn-inner">
+                <ul>
+                  <li>
+                    <Link href="">아이디 찾기</Link>
+                  </li>
+                  <li>
+                    <Link href="">비밀번호 찾기</Link>
+                  </li>
+                  <li>
+                    <p onClick={() => props.setThisModalName("signup")}>회원가입</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <br />
             <button type="submit">로그인</button>
           </form>

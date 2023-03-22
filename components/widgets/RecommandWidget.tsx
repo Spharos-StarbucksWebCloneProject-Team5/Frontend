@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductListCard from "../ui/ProductListCard";
-import {
-  eventProductListType,
-  productListCardType,
-} from "@/types/product/fetchDataType";
+import { productListCardType } from "@/types/product/fetchDataType";
 import { eventType } from "@/types/main/eventDataType";
 import Config from "@/configs/config.export";
 import axios from "axios";
@@ -29,7 +26,7 @@ export default function RecommandWidget(props: { data: eventType }) {
         <div className="recommand-product-list">
           {eventItemList &&
             eventItemList.map((item) => (
-              <ProductListCard key={item.id} data={item} />
+              <ProductListCard key={item.productId} data={item} />
             ))}
         </div>
       </div>
