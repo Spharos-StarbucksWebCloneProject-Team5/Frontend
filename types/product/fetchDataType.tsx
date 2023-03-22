@@ -1,7 +1,7 @@
 export interface productListCardType {
-  id: number;
+  productId: number;
   description: string;
-  name: string;
+  productName: string;
   price: number;
   thumbnail: string;
   isNew: boolean;

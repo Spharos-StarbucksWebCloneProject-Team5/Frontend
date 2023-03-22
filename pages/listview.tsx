@@ -12,9 +12,10 @@ export default function ProductListView() {
   const [productData, setProductData] = useState<productListCardType[]>();
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) =>
-      setProductData(res.data)
-    );
+    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
+      setProductData(res.data);
+      console.log(res.data);
+    });
   }, []);
 
   return (
@@ -31,7 +32,7 @@ export default function ProductListView() {
         <div className="event-product-list">
           {productData &&
             productData.map((item) => (
-              <ProductListCard key={item.id} data={item} />
+              <ProductListCard key={item.productId} data={item} />
             ))}
         </div>
       </div>

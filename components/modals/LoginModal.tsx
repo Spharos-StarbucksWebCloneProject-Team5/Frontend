@@ -1,13 +1,9 @@
+import { LoginReq } from "../../types/UserRequest/Request";
 import { LoginRes } from "../../types/UserRequest/Response";
-import { cookies } from "next/headers";
-import { loginData } from "../../types/UserRequest/LoginData";
 import Config from "@/configs/config.export";
-//import { REQUEST_LOGIN } from '@/constants/Apis/URL';
 import { userIsLogin } from "../../state/atom/userIsLoginState";
 import { userLoginState } from "../../state/atom/userLoginState";
 import axios from "axios";
-import Head from "next/head";
-import Link from "next/link";
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
@@ -112,6 +108,7 @@ export default function LoginModal(props: {
             <button type="submit">로그인</button>
           </form>
         </div>
+        <section className="submit-container"></section>
       </section>
     </>
   );

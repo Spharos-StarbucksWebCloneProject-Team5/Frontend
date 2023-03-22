@@ -16,19 +16,19 @@ export default function Product() {
   const [productImageData, setProductImageData] = useState<productImageType[]>(
     []
   );
+  console.log(query);
   useEffect(() => {
+    //if (!router.isReady) return;
     axios(`${baseUrl}/v1/api/products/${query.productId}`).then((res) => {
-      console.log(res.data);
       setProductData(res.data);
     });
     axios(`${baseUrl}/v1/api/product-images/${query.productId}`).then((res) => {
       console.log(res.data);
       setProductImageData(res.data);
-      //console.log(productImageData?.productId);
     });
   }, []);
 
-  // useEffect(() => {
+  // useEffect(() => {${Number(query.productId)}
   //   axios(`${baseUrl}/v1/api/product-images/1`).then((res) => {
   //     //console.log(res.data);
   //     setProductImageData(res.data);
@@ -39,7 +39,7 @@ export default function Product() {
   return (
     <>
       <Head>
-        <title>{productData?.name}</title>
+        <title>{productData?.productName}</title>
       </Head>
       <section id="thumb-details">
         <div className="thumb">
@@ -51,7 +51,7 @@ export default function Product() {
         <div className="product-details-list">
           <div className="product-name">
             <h3>
-              {productData?.name}
+              {productData?.productName}
               <img src="../assets/images/icons/share.png" />
             </h3>
           </div>
