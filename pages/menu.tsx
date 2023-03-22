@@ -1,4 +1,6 @@
 import Config from "@/configs/config.export";
+import { productListCardType } from "@/types/product/fetchDataType";
+
 import { categoryType } from "@/types/header/categoryType";
 import axios from "axios";
 import Link from "next/link";
@@ -36,8 +38,9 @@ export default function menu() {
         </div>
 
         <div className="menu-product-list">
-          {categoryData?.map((element) => (
-            <div className="menu-product-item" key={element.id}>
+
+          {categoryData.map((element) => (
+            <div key={element.id} className="menu-product-item">
               <div className="menu-product-item__img">
                 <img src={element.thumbNail} alt="" />
               </div>

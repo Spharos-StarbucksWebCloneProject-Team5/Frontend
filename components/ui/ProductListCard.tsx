@@ -1,15 +1,17 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Config from "@/configs/config.export";
+
 import { productListCardType } from "@/types/product/fetchDataType";
 
 export default function ProductListCard(props: { data: productListCardType }) {
-
   return (
     <>
       {props.data && (
         <div className="recommand-product-item">
           <div className="recommand-product-item__img">
-            <Link href={`/product/${props.data.id}`}>
+            <Link href={`/products/${props.data.id}`}>
               <img src={props.data.thumbnail} alt={props.data.description} />
             </Link>
           </div>

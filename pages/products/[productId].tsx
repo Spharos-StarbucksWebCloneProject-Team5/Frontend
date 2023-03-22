@@ -1,22 +1,49 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Config from "@/configs/config.export";
+
+import {
+  productImageType,
+  productListCardType,
+} from "../../types/product/fetchDataType";
 
 export default function Product() {
   const { query } = useRouter();
-  console.log(query);
+  const baseUrl = Config().baseUrl;
+  const [productData, setProductData] = useState<productListCardType>();
+  const [productImageData, setProductImageData] = useState<productImageType[]>(
+    []
+  );
+  useEffect(() => {
+    axios(`${baseUrl}/v1/api/products/${query.productId}`).then((res) => {
+      console.log(res.data);
+      setProductData(res.data);
+    });
+    axios(`${baseUrl}/v1/api/product-images/${query.productId}`).then((res) => {
+      console.log(res.data);
+      setProductImageData(res.data);
+      //console.log(productImageData?.productId);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   axios(`${baseUrl}/v1/api/product-images/1`).then((res) => {
+  //     //console.log(res.data);
+  //     setProductImageData(res.data);
+  //     //console.log(productImageData?.productId);
+  //   });
+  // }, []);
+
   return (
     <>
       <Head>
-        <title>Product {query.productId}</title>
+        <title>{productData?.name}</title>
       </Head>
       <section id="thumb-details">
         <div className="thumb">
-          <img
-            className="thumbnail"
-            src="assets/images/products/01.png"
-            alt=""
-          />
+          <img className="thumbnail" src={productData?.thumbnail} alt="" />
         </div>
       </section>
 
@@ -24,16 +51,16 @@ export default function Product() {
         <div className="product-details-list">
           <div className="product-name">
             <h3>
-              스타벅스 그린 멀티백
-              <img src="assets/images/icons/share.png" />
+              {productData?.name}
+              <img src="../assets/images/icons/share.png" />
             </h3>
           </div>
           <div className="product-description">
-            <p>벨트형 핸들의 멀티백입니다.</p>
+            <p>{productData?.description}</p>
           </div>
           <div className="product-price">
             <p>
-              <span>27,000</span>원
+              <span>{productData?.price}</span>원
             </p>
           </div>
           <div className="product-remark">
@@ -44,9 +71,9 @@ export default function Product() {
 
       <section id="product-details-img">
         <div className="product-img">
-          <img src="assets/images/products/01.png" />
-          <img src="assets/images/products/01.png" />
-          <img src="assets/images/products/01.png" />
+          {productImageData.map((item) => (
+            <img key={item.id} src={item.image} alt="" />
+          ))}
         </div>
       </section>
 
@@ -69,7 +96,7 @@ export default function Product() {
       <footer>
         <div className="product-footer">
           <div className="product-add-details">
-            <img src="assets/images/icons/grayLine.png" />
+            <img src="../assets/images/icons/grayLine.png" />
           </div>
           <div className="product-order">
             <p>구매하기</p>

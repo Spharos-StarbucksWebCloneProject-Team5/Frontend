@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 //component
 import SubNavigation from "../widgets/SubNavigation";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
-import { cartState } from "@/state/cartState";
+import { cartState } from "@/state/atom/cartState";
 import { bottomNavData } from "@/datas/navData";
 
 //recoil
@@ -21,7 +21,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const router = useRouter();
   console.log(router.pathname);
 
-  const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData)
+  const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
 
   // Modal
   const [isView, setIsView] = useState<boolean>(false);
@@ -66,34 +66,37 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             </nav>
           </div>
           {router.pathname === "/" ||
-            router.pathname === "/event" ||
-            router.pathname === "/best" ||
-            router.pathname === "/mypage" ? (
+          router.pathname === "/event" ||
+          router.pathname === "/best" ||
+          router.pathname === "/mypage" ? (
             <div className="header-bottom">
               <nav>
                 <ul>
                   {navBottomData &&
-                    navBottomData.map((nav) => (
-
-                      nav.link === '/event?category=1' || nav.link === '/best?category=1' ?
+                    navBottomData.map((nav) =>
+                      nav.link === "/event?category=1" ||
+                      nav.link === "/best?category=1" ? (
                         <li
                           key={nav.id}
                           className={
-                            router.pathname === nav.link.split('?')[0] ? "active" : ""}
+                            router.pathname === nav.link.split("?")[0]
+                              ? "active"
+                              : ""
+                          }
                         >
                           <Link href={nav.link}>{nav.name}</Link>
                         </li>
-                        :
+                      ) : (
                         <li
                           key={nav.id}
                           className={
-                            router.pathname === nav.link ? "active" : ""}
+                            router.pathname === nav.link ? "active" : ""
+                          }
                         >
                           <Link href={nav.link}>{nav.name}</Link>
                         </li>
-
-
-                    ))}
+                      )
+                    )}
                 </ul>
               </nav>
             </div>

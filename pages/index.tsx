@@ -1,15 +1,16 @@
-import Head from 'next/head'
-import { NextPageWithLayout } from './_app'
-import RecommandWidget from '@/components/widgets/RecommandWidget'
-import ChunsikWidget from '@/components/widgets/ChunsikWidget'
-import { useEffect, useState } from 'react'
-import Config from '@/configs/config.export'
-import axios from 'axios'
-import { eventType } from '@/types/main/eventDataType'
+import Head from "next/head";
+import { NextPageWithLayout } from "./_app";
+import RecommandWidget from "@/components/widgets/RecommandWidget";
+import ChunsikWidget from "@/components/widgets/ChunsikWidget";
+import { useEffect, useState } from "react";
+//import { mainEventListType } from "@/types/main/eventDataType";
+import Config from "@/configs/config.export";
+import axios from "axios";
+import { eventType } from "@/types/main/eventDataType";
 
 const Home: NextPageWithLayout = () => {
-
-  const [eventListData, setEventListData] = useState<eventType[]>()
+  const [eventListData, setEventListData] = useState<eventType[]>();
+  const [chunsikListData, setChunsikListData] = useState<eventType[]>();
 
   const baseUrl = Config().baseUrl;
 
@@ -34,22 +35,16 @@ const Home: NextPageWithLayout = () => {
           </div>
         </div>
       </section>
-      {
-        eventListData && eventListData.map((event: eventType) => (
-          event.eventId === 7 ?
-            <ChunsikWidget
-              key={event.id}
-              data={event}
-            />
-            :
-            <RecommandWidget
-              key={event.id}
-              data={event}
-            />
-        ))
-      }
+      {eventListData &&
+        eventListData.map((event: eventType) =>
+          event.eventId === 7 ? (
+            <ChunsikWidget key={event.id} data={event} />
+          ) : (
+            <RecommandWidget key={event.id} data={event} />
+          )
+        )}
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
