@@ -1,4 +1,3 @@
-import { LoginReq } from "../../types/UserRequest/Request";
 import { LoginRes } from "../../types/UserRequest/Response";
 import { cookies } from "next/headers";
 import { loginData } from "../../types/UserRequest/LoginData";
@@ -75,7 +74,6 @@ export default function LoginModal(props: {
     }
   };
 
-
   return (
     <>
       <section className="login-section">
@@ -114,14 +112,6 @@ export default function LoginModal(props: {
             <button type="submit">로그인</button>
           </form>
         </div>
-        <section className="submit-container"></section>
-      </section>
-      <section className="submit-container">
-        <StButton
-          buttonText='NEXT'
-          textSize='1.1rem'
-          handler={handleStepNext}
-        />
       </section>
     </>
   );

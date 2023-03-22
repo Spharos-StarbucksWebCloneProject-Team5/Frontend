@@ -1,3 +1,23 @@
+export interface LoginReq {
+  email: string;
+  password: string;
+}
+
+export interface RegisterReq {
+  userEmail: string;
+  userName: string;
+  userNickname: string;
+  password: string;
+  birthday: Date;
+  phoneNo: string;
+  isAgree: boolean;
+}
+
+export interface VeriftyEmailReq {
+  email: string;
+  verifyCode: string;
+}
+
 export interface inputRegisterType {
   userEmail: string;
   userName: string;
