@@ -2,8 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['shop-phinf.pstatic.net', 'image.istarbucks.co.kr'],
+    domains: [
+      "shop-phinf.pstatic.net",
+      "image.istarbucks.co.kr",
+      "cdn.sisamagazine.co.kr",
+      "blog.kakaocdn.net",
+      "cdn.ggilbo.com",
+    ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

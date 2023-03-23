@@ -1,10 +1,10 @@
 export interface productListCardType {
-  productId: number;
+  id: number;
   description: string;
-  productName: string;
+  name: string;
   price: number;
   thumbnail: string;
-  isNew: boolean;
+  isNew?: boolean;
 }
 
 export interface eventProductListType {

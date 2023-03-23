@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Config from "@/configs/config.export";
 import axios from "axios";
 import { eventType } from "@/types/main/eventDataType";
+import Mainbanner from "@/components/widgets/Mainbanner";
 
 const Home: NextPageWithLayout = () => {
   const [eventListData, setEventListData] = useState<eventType[]>();
@@ -15,26 +16,17 @@ const Home: NextPageWithLayout = () => {
   const baseUrl = Config().baseUrl;
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/events/all`)
-      .then(res => {
-        setEventListData(res.data)
-      })
-  }, [])
+    axios(`${baseUrl}/v1/api/events/all`).then((res) => {
+      setEventListData(res.data);
+    });
+  }, []);
 
   return (
     <>
       <Head>
         <title>StarBucks Clone Site</title>
       </Head>
-      <section id="event-banner">
-        <div className="event-banner">
-          <div className="event-banner__item">
-            <div className="event-banner__item__img">
-              <img src="assets/images/banner/banner01.png" alt="" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <Mainbanner />
       {eventListData &&
         eventListData.map((event: eventType) =>
           event.eventId === 7 ? (

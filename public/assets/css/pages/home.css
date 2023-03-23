@@ -49,12 +49,20 @@ section .recommand-product-list .recommand-product-item:last-child {
   margin-right: 0px;
 }
 
-section .recommand-product-list .recommand-product-item .recommand-product-item__img {
+section
+  .recommand-product-list
+  .recommand-product-item
+  .recommand-product-item__img {
   width: 160px;
 }
 
-section .recommand-product-list .recommand-product-item .recommand-product-item__img img {
+section
+  .recommand-product-list
+  .recommand-product-item
+  .recommand-product-item__img
+  img {
   width: 100%;
+  height: auto;
   border-radius: 5px;
 }
 
