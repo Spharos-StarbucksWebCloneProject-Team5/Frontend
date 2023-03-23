@@ -84,7 +84,7 @@ export default function SignUp() {
   return (
     <div className="modal">
       <CloseButton />
-      {/* {steps[stepId - 1][stepId]} */}
+      {steps[stepId - 1][stepId]}
       <section className="submit-container">
         <StButton
           buttonText="NEXT"
