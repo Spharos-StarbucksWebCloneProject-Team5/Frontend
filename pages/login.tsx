@@ -3,7 +3,6 @@ import React, { ChangeEvent, useState } from "react";
 import Config from "@/configs/config.export";
 
 import Swal from "sweetalert2";
-import Link from "next/link";
 import axios from "axios";
 
 import { LoginReq } from "@/types/UserRequest/Request";
@@ -11,6 +10,8 @@ import { LoginReq } from "@/types/UserRequest/Request";
 import { userLoginState } from "@/state/atom/userLoginState";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import CloseButton from "@/components/ui/CloseButton";
+import LoginFooter from "@/components/page/login/LoginFooter";
 
 export default function Login() {
   const router = useRouter();
@@ -33,8 +34,7 @@ export default function Login() {
     setInputData({ ...inputData, [name]: value });
   };
   //로그인 확인용 => Recoil 셋업 되는대로 라우팅 처리 하겠습니다.
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     console.log("login");
     console.log(inputData);
     if (inputData.email === "" || inputData.password === "") {
@@ -51,14 +51,6 @@ export default function Login() {
           password: inputData.password,
         })
         .then((res) => {
-          if (res.data.state === 400) {
-            console.log(res.data.message);
-            Swal.fire({
-              icon: "error",
-              text: res.data.message,
-            });
-            return;
-          }
           setLoginData({
             userId: res.data.data.userId,
             accessToken: res.data.data.accessToken,
@@ -76,24 +68,32 @@ export default function Login() {
           router.back();
         })
         .catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "아이디 혹은 비밀번호가 틀렸습니다.",
-          });
-          setInputData({
-            email: "",
-            password: "",
-          });
-          console.log(err);
+          if (err.response.status === 400) {
+            Swal.fire({
+              icon: "error",
+              title: "아이디 혹은 비밀번호가 틀렸습니다.",
+            });
+            setInputData({
+              email: "",
+              password: "",
+            });
+          } else if (err.response.status === 500) {
+            Swal.fire({
+              icon: "error",
+              title: "서버에 접속할 수 없습니다. 잠시후에 다시 시도해주세요.",
+            });
+            setInputData({
+              email: "",
+              password: "",
+            });
+          }
         });
     }
   };
 
   return (
     <div className="modal">
-      <div onClick={() => router.back()}>
-        <img src="./assets/images/icons/close.png" className="back-button" />
-      </div>
+      <CloseButton />
       <section className="login-section">
         <div className="login-top">
           <h2>로그인</h2>
@@ -104,50 +104,37 @@ export default function Login() {
           <p className="sub">회원 서비스 이용을 위해 로그인 해주세요.</p>
         </div>
         <div className="login">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="email"
-              id="email"
-              placeholder="이메일"
-              onChange={handleOnChange}
-            />
-            {isError.email ? (
-              <p className="error-message">이메일을 입력해 주세요.</p>
-            ) : null}
-            <br />
-            <input
-              type="password"
-              name="password"
-              id="pwd"
-              placeholder="비밀번호"
-              onChange={handleOnChange}
-            />
-            {isError.password ? (
-              <p className="error-message">비밀번호를 입력해 주세요.</p>
-            ) : null}
-            <div className="login-btn">
-              <div className="login-btn-inner">
-                <ul>
-                  <li>
-                    <Link href="">아이디 찾기</Link>
-                  </li>
-                  <li>
-                    <Link href="">비밀번호 찾기</Link>
-                  </li>
-                  <li>
-                    <Link href="/signup">회원가입</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <br />
-            <div className="submit-container">
-              <button type="submit">로그인</button>
-            </div>
-          </form>
+          <input
+            type="text"
+            name="email"
+            defaultValue={inputData.email}
+            value={inputData.email}
+            placeholder="이메일"
+            onChange={handleOnChange}
+          />
+          {isError.email ? (
+            <p className="error-message">이메일을 입력해 주세요.</p>
+          ) : null}
+          <br />
+          <input
+            type="password"
+            name="password"
+            defaultValue={inputData.password}
+            value={inputData.password}
+            placeholder="비밀번호"
+            onChange={handleOnChange}
+          />
+          {isError.password ? (
+            <p className="error-message">비밀번호를 입력해 주세요.</p>
+          ) : null}
+          <LoginFooter />
         </div>
       </section>
+      <div className="submit-container">
+        <button type="button" onClick={handleSubmit}>
+          로그인
+        </button>
+      </div>
     </div>
   );
 }

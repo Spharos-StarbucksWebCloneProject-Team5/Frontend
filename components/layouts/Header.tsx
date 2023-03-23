@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import SubNavigation from "../widgets/SubNavigation";
-import Category from "../widgets/ProductCategory";
+import SubNavigation from "@/components/widgets/SubNavigation";
+import Category from "@/components/widgets/ProductCategory";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
 import { bottomNavData } from "@/datas/navData";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
