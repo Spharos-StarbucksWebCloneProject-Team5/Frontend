@@ -6,24 +6,21 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 
 //recoil
-import ModalUi from "../ui/ModalUi";
 import Header from "./Header";
 import MenuModal from "../modals/MenuModal";
-import LoginModal from "../modals/LoginModal";
-import SignupModal from "../modals/SignupModal";
+import { useRecoilValue } from "recoil";
+import { userLoginState } from "@/state/atom/userLoginState";
 
 export default function MainLayout(props: { children: React.ReactNode }) {
+  const { isLogin } = useRecoilValue(userLoginState);
+
   const router = useRouter();
   console.log(router.pathname);
-
-  // Modal
-  const [isView, setIsView] = useState<boolean>(false);
+  console.log(isLogin);
 
   return (
     <>
       <MenuModal />
-      <LoginModal />
-      <SignupModal />
       <Head>
         <meta name="description" content="StarBucks Clone Site" />
         <meta name="keywords" content="StarBucks, Clone, Site" />

@@ -17,11 +17,12 @@ import Swal from "sweetalert2";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
+  console.log(isLogin);
   const setLoginModal = useSetRecoilState<boolean>(loginModalState);
   const btnAllClick = () => {
     SelectAll ? setAllSelect(false) : setAllSelect(true);
   };
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const baseUrl = Config().baseUrl;
   const [cartData, setCartData] = useState<cartType[]>();
   const [productData, setProductData] = useState<productListCardType[]>();
@@ -42,7 +43,7 @@ export default function cart() {
       icon: "warning",
       text: "로그인이 필요합니다!",
     });
-    setLoginModal(true);
+    push("/login");
   }
 
   return (

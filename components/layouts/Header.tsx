@@ -6,10 +6,11 @@ import SubNavigation from "../widgets/SubNavigation";
 import Category from "../widgets/ProductCategory";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
 import { bottomNavData } from "@/datas/navData";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { cartState } from "@/state/atom/cartState";
 import { menuModalState } from "@/state/atom/menuModalState";
-import { loginModalState } from "@/state/atom/loginModalState";
+import { userLoginState } from "@/state/atom/userLoginState";
+import Swal from "sweetalert2";
 
 export default function Header() {
   const router = useRouter();
@@ -18,10 +19,50 @@ export default function Header() {
   const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
   const cartCnt = useRecoilValue(cartState);
   const setIsMenuModalOpen = useSetRecoilState(menuModalState);
-  const setIsLoginModalOpen = useSetRecoilState(loginModalState);
+  const [isLogin, setIsLogin] = useRecoilState(userLoginState);
 
-  const handleLogin = () => {
-    setIsLoginModalOpen(true);
+  const handleLogout = () => {
+    Swal.fire({
+      title: "로그아웃 하시겠습니까?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: `확인`,
+      denyButtonText: `취소`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setIsLogin({
+          userId: "",
+          accessToken: "",
+          refreshToken: "",
+          isLogin: false,
+        });
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userId");
+        let timerInterval: string | number | NodeJS.Timer | undefined;
+        Swal.fire({
+          html: "다음에 또~",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            // const b = Swal.getHtmlContainer().querySelector("b");
+            // timerInterval = setInterval(() => {
+            //   b.textContent = Swal.getTimerLeft();
+            // }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+          }
+        });
+        router.push("/");
+      }
+    });
   };
 
   return (
@@ -44,9 +85,13 @@ export default function Header() {
               <p className="cart-badge">{cartCnt}</p>
               <img src="assets/images/icons/shopping-cart.svg" />
             </li>
-            <li onClick={handleLogin}>
-              <img src="assets/images/icons/user.svg" />
-            </li>
+            {isLogin.isLogin ? (
+              <li onClick={handleLogout}>logout</li>
+            ) : (
+              <li onClick={() => router.push("/login")}>
+                <img src="assets/images/icons/user.svg" />
+              </li>
+            )}
           </ul>
         </nav>
       </div>
