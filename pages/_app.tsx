@@ -1,19 +1,20 @@
-import MainLayout from '@/components/layouts/MainLayout';
-import { NextPage } from 'next';
-import type { AppProps } from 'next/app'
-import { ReactElement, ReactNode, useState } from 'react';
-import { RecoilRoot } from 'recoil';
+import MainLayout from "@/components/layouts/MainLayout";
+import { NextPage } from "next";
+import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
+import { ReactElement, ReactNode, useState } from "react";
+import { RecoilRoot } from "recoil";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
-
+  Component: NextPageWithLayout;
+};
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { pathname } = useRouter();
 
   // const getLayout = Component.getLayout ?? ((page) => page)
 
@@ -23,6 +24,5 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </MainLayout>
     </RecoilRoot>
-  )
-
+  );
 }
