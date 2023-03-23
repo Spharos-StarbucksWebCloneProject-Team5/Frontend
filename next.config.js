@@ -8,6 +8,7 @@ const nextConfig = {
       "cdn.sisamagazine.co.kr",
       "blog.kakaocdn.net",
       "cdn.ggilbo.com",
+      "i.ibb.co",
     ],
   },
 };

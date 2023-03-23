@@ -3,13 +3,14 @@ import { inputRegisterType } from "@/types/UserRequest/Request";
 import Countdown from "react-countdown";
 
 import axios from "axios";
+import Config from "@/configs/config.export";
 
 interface ChildProps {
   inputData: inputRegisterType;
   setInputData: React.Dispatch<React.SetStateAction<inputRegisterType>>;
 }
 
-const Completionist = () => <span>You are good to go!</span>;
+const Completionist = () => <span>시간초과</span>;
 
 const renderer = (props: {
   hours: any;
@@ -35,6 +36,8 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
   const [confirmView, setConfirmView] = useState<boolean>(false);
 
   const [confirm, setConfirm] = useState<boolean>(false);
+
+  const BASE_URL = Config().baseUrl;
 
   //create email regex code
   const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
@@ -69,26 +72,22 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     console.log("이메일 전송");
     setConfirmView(true);
     axios
-      .post(`http://10.10.10.205:8081/api/v1/email`, {
-        to: inputData.userEmail,
-      })
+      .post(`http://10.10.10.205:8081/api/v1/email`, { to: inputData.userEmail })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
   const handleConfirmKey = () => {
     console.log(confirmKey);
     // 서버에 키값 확인
-    // axiois.post('http://localhost:3000/api/user/confirmKey', {
-    //   confirmKey: confirmKey,
-    // })
-    // .then((res) => {
-    //   console.log(res)
-    //   // 키값이 일치하면 인증완료
-    // })
-    // .catch((err) => {
-    //   console.log(err)
-    // })
-    setConfirm(true);
+    axios.post(`${BASE_URL}/api/v1/email-confirm`, { code: confirmKey })
+      .then((res) => {
+        console.log(res)
+        // 키값이 일치하면 인증완료
+        setConfirm(true)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   };
 
   const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {

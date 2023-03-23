@@ -46,9 +46,7 @@ export default function SignUp() {
     console.log(inputData.privateAgree);
     if (stepId === 1 && inputData.privateAgree) {
       if (
-        !inputData.privateAgree.isAgree ||
-        !inputData.privateAgree.isUseConfirm
-      ) {
+        !inputData.privateAgree.isAgree || !inputData.privateAgree.isUseConfirm) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
