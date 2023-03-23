@@ -3,18 +3,24 @@ import Config from "@/configs/config.export";
 import { cartIsCheckState } from "@/state/atom/cartIsCheckState";
 import { freezeIsCheckState } from "@/state/atom/freezeIsCheckState";
 import { generalIsCheckState } from "@/state/atom/generalIsCheckState";
+import { loginModalState } from "@/state/atom/loginModalState";
+import { userIsLogin } from "@/state/atom/userIsLoginState";
+import { userLoginState } from "@/state/atom/userLoginState";
 import { cartType, productListCardType } from "@/types/product/fetchDataType";
 import axios from "axios";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import Swal from "sweetalert2";
 
 export default function cart() {
-  function btnAllClick() {
+  const { isLogin } = useRecoilValue(userLoginState);
+  const setLoginModal = useSetRecoilState<boolean>(loginModalState);
+  const btnAllClick = () => {
     SelectAll ? setAllSelect(false) : setAllSelect(true);
-  }
+  };
   const { query } = useRouter();
   const baseUrl = Config().baseUrl;
   const [cartData, setCartData] = useState<cartType[]>();
@@ -31,9 +37,17 @@ export default function cart() {
     });
   }, []);
 
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인이 필요합니다!",
+    });
+    setLoginModal(true);
+  }
+
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Cart</title>
       </Head>
       <div className="cart-background">
@@ -52,7 +66,7 @@ export default function cart() {
                   선택삭제
                 </p>
                 <p>|</p>
-                <p onClick={btnClick}>전체삭제</p>
+                <p onClick={}>전체삭제</p>
               </div>
             </div>
           </div>
@@ -89,12 +103,8 @@ export default function cart() {
                 <p>35,000원</p>
               </div>
               <div className="box-button">
-                <button id="box-button-01" onClick={() => setCart(cart + 1)}>
-                  주문 수정
-                </button>
-                <button id="box-button-02" onClick={btnClick}>
-                  바로 구매
-                </button>
+                <button id="box-button-01">주문 수정</button>
+                <button id="box-button-02">바로 구매</button>
               </div>
             </div>
           </div>
@@ -132,10 +142,8 @@ export default function cart() {
                 <p>35,000원</p>
               </div>
               <div className="box-button">
-                <button id="box-button-01" onClick={() => setCart(cart + 1)}>
-                  주문 수정
-                </button>
-                <button id="box-button-02" onClick={btnClick}>
+                <button id="box-button-01">주문 수정</button>
+                <button id="box-button-02" onClick={}>
                   바로 구매
                 </button>
               </div>
@@ -192,7 +200,7 @@ export default function cart() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

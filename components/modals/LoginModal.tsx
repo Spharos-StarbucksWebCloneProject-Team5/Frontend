@@ -1,22 +1,27 @@
-import { LoginReq } from "../../types/UserRequest/Request";
-import { LoginRes } from "../../types/UserRequest/Response";
-import Config from "@/configs/config.export";
-import { userIsLogin } from "../../state/atom/userIsLoginState";
-import { userLoginState } from "../../state/atom/userLoginState";
-import axios from "axios";
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+
+import Config from "@/configs/config.export";
+
 import Swal from "sweetalert2";
 import Link from "next/link";
+import axios from "axios";
 
-export default function LoginModal(props: {
-  thisModalName: string;
-  setThisModalName: Dispatch<SetStateAction<string>>;
-  setIsModalView: Function;
-}) {
+import { LoginReq } from "../../types/UserRequest/Request";
+import { LoginRes } from "../../types/UserRequest/Response";
+
+import { userIsLogin } from "../../state/atom/userIsLoginState";
+import { userLoginState } from "../../state/atom/userLoginState";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loginModalState } from "@/state/atom/loginModalState";
+import { menuModalState } from "@/state/atom/menuModalState";
+import { signupModalState } from "@/state/atom/signupModalState";
+
+export default function LoginModal() {
   const BASE_URL = Config().baseUrl;
-  const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
-  const setIsLogIn = useSetRecoilState<boolean>(userIsLogin);
+  const [loginData, setLoginData] = useRecoilState(userLoginState);
+  const setSignupModal = useSetRecoilState<boolean>(signupModalState);
+  const [isLoginModalOpen, setIsLoginModalOpen] =
+    useRecoilState(loginModalState);
 
   const [inputData, setInputData] = useState<LoginReq>({
     email: "",
@@ -52,7 +57,6 @@ export default function LoginModal(props: {
         .then((res) => {
           console.log(res);
           setLoginData(res.data.data);
-          setIsLogIn(true);
           let myLogin = localStorage;
           myLogin.setItem("userId", res.data.data.userId);
           myLogin.setItem("accessToken", res.data.data.accessToken);
@@ -63,7 +67,7 @@ export default function LoginModal(props: {
             icon: "success",
             text: "Welcome!",
           });
-          props.setIsModalView(false);
+          setIsLoginModalOpen(false);
         })
         .catch((err) => {
           console.log(err);
@@ -71,8 +75,18 @@ export default function LoginModal(props: {
     }
   };
 
+  const handleSignup = () => {
+    setSignupModal(true);
+    setIsLoginModalOpen(false);
+  };
+
+  if (!isLoginModalOpen) return null;
+
   return (
-    <>
+    <div className="modal">
+      <div onClick={() => setIsLoginModalOpen(false)}>
+        <img src="./assets/images/icons/close.png" className="back-button" />
+      </div>
       <section className="login-section">
         <div className="login-top">
           <h2>로그인</h2>
@@ -115,17 +129,18 @@ export default function LoginModal(props: {
                     <Link href="">비밀번호 찾기</Link>
                   </li>
                   <li>
-                    <p onClick={() => props.setThisModalName("signup")}>회원가입</p>
+                    <p onClick={handleSignup}>회원가입</p>
                   </li>
                 </ul>
               </div>
             </div>
             <br />
-            <button type="submit">로그인</button>
+            <div className="submit-container">
+              <button type="submit">로그인</button>
+            </div>
           </form>
         </div>
-        <section className="submit-container"></section>
       </section>
-    </>
+    </div>
   );
 }

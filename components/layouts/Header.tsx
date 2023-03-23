@@ -9,6 +9,7 @@ import { bottomNavData } from "@/datas/navData";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { cartState } from "@/state/atom/cartState";
 import { menuModalState } from "@/state/atom/menuModalState";
+import { loginModalState } from "@/state/atom/loginModalState";
 
 export default function Header() {
   const router = useRouter();
@@ -17,6 +18,11 @@ export default function Header() {
   const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
   const cartCnt = useRecoilValue(cartState);
   const setIsMenuModalOpen = useSetRecoilState(menuModalState);
+  const setIsLoginModalOpen = useSetRecoilState(loginModalState);
+
+  const handleLogin = () => {
+    setIsLoginModalOpen(true);
+  };
 
   return (
     <header>
@@ -34,11 +40,11 @@ export default function Header() {
             <li>
               <img src="assets/images/icons/search.svg" />
             </li>
-            <li>
+            <li onClick={() => router.push("/cart")}>
               <p className="cart-badge">{cartCnt}</p>
               <img src="assets/images/icons/shopping-cart.svg" />
             </li>
-            <li>
+            <li onClick={handleLogin}>
               <img src="assets/images/icons/user.svg" />
             </li>
           </ul>

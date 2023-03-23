@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import ModalUi from "../ui/ModalUi";
 import Header from "./Header";
 import MenuModal from "../modals/MenuModal";
+import LoginModal from "../modals/LoginModal";
+import SignupModal from "../modals/SignupModal";
 
 export default function MainLayout(props: { children: React.ReactNode }) {
   const router = useRouter();
@@ -20,11 +22,8 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   return (
     <>
       <MenuModal />
-      <ModalUi
-        isModalView={isView}
-        setIsModalView={setIsView}
-        modalName="login"
-      />
+      <LoginModal />
+      <SignupModal />
       <Head>
         <meta name="description" content="StarBucks Clone Site" />
         <meta name="keywords" content="StarBucks, Clone, Site" />
