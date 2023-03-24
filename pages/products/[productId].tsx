@@ -39,7 +39,7 @@ export default function Product() {
   return (
     <>
       <Head>
-        <title>{productData?.productName}</title>
+        <title>{productData?.name}</title>
       </Head>
       <section id="thumb-details">
         <div className="thumb">
@@ -51,7 +51,7 @@ export default function Product() {
         <div className="product-details-list">
           <div className="product-name">
             <h3>
-              {productData?.productName}
+              {productData?.name}
               <img src="../assets/images/icons/share.png" />
             </h3>
           </div>

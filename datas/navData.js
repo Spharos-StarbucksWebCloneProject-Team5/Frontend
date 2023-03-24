@@ -259,3 +259,5 @@ export const subCategoryList = [
     ],
   },
 ];
+
+export const cartListData = [{}];

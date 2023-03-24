@@ -9,7 +9,6 @@ import axios from "axios";
 import { LoginReq } from "../../types/UserRequest/Request";
 import { LoginRes } from "../../types/UserRequest/Response";
 
-import { userIsLogin } from "../../state/atom/userIsLoginState";
 import { userLoginState } from "../../state/atom/userLoginState";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { loginModalState } from "@/state/atom/loginModalState";

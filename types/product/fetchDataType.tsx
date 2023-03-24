@@ -6,6 +6,12 @@ export interface productListCardType {
   thumbnail: string;
   isNew?: boolean;
 }
+export interface productAllType {
+  productId: number;
+  productName: string;
+  price: number;
+  thumbnail: string;
+}
 
 export interface eventProductListType {
   id: number;
@@ -25,6 +31,15 @@ export interface cartType {
   product: [productListCardType];
   count: number;
   now: boolean;
+}
+
+export interface cartListType {
+  cartId: number;
+  productId: number;
+  productName: string;
+  productPrice: number;
+  productThumbnail: string;
+  count: number;
 }
 export interface eventProductListType {
   id: number;
