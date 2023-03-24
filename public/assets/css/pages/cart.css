@@ -27,7 +27,7 @@
   justify-content: space-between;
 }
 
-.select-all {
+/* .select-all {
   background-color: var(--color-white);
   box-shadow: 0 3px 10px -4px rgb(0 0 0 / 10%);
   width: 100%;
@@ -39,6 +39,26 @@
 }
 
 .select-all>input[type=checkbox] {
+  transform: scale(1.2);
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-gray-button);
+} */
+
+.select-all {
+  background-color: var(--color-white);
+  box-shadow: 0 3px 10px -4px rgb(0 0 0 / 10%);
+  width: 100%;
+}
+
+.select-all div {
+  margin: 12px 3px 15px 25px;
+  vertical-align: middle;
+}
+
+.select-all > div {
   transform: scale(1.2);
   appearance: none;
   width: 1rem;
@@ -60,7 +80,7 @@ input[type="checkbox"]:checked {
   font-size: 0.8rem;
 }
 
-.select-all .advertising-info input[type=checkbox] {
+.select-all .advertising-info input[type="checkbox"] {
   border: 1px solid var(--color-gray-button);
   appearance: none;
   width: 1rem;
@@ -68,7 +88,7 @@ input[type="checkbox"]:checked {
   border-radius: 15%;
 }
 
-.select-all .advertising-info input[type=checkbox]:checked {
+.select-all .advertising-info input[type="checkbox"]:checked {
   background-color: var(--color-light-green);
   background-image: url(https://blog.kakaocdn.net/dn/t7a2D/btrhtVgLYmG/dUxzAkBy9hIZ4gHmyllQrk/img.png);
 }
@@ -133,7 +153,6 @@ input[type="checkbox"]:checked {
 
 .cart-product-info {
   display: flex;
-
 }
 
 .cart-product-info-text {
@@ -294,7 +313,7 @@ input[type="checkbox"]:checked {
   border: none;
   background-color: var(--color-light-green);
   color: var(--color-white);
-  font-size: 1.0rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 
@@ -305,7 +324,7 @@ input[type="checkbox"]:checked {
   justify-content: space-around;
 }
 
-.cart-btn-order button:first-child{
+.cart-btn-order button:first-child {
   color: var(--color-light-green);
   background-color: var(--color-white);
   border: 1px solid var(--color-light-green);

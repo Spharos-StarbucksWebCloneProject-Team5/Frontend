@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { productListCardType } from "@/types/product/fetchDataType";
 import ColProductListCard from "../ui/ColProductListCard";
@@ -13,7 +12,6 @@ export default function ChunsikWidget(props: { data: eventType }) {
   const baseUrl = Config().baseUrl;
 
   useEffect(() => {
-
     axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`).then(
       (res) => {
         console.log(res.data);
@@ -28,7 +26,7 @@ export default function ChunsikWidget(props: { data: eventType }) {
         <h2>{props.data.description}</h2>
         {chunsikItemList &&
           chunsikItemList.map((item: productListCardType) => (
-            <ColProductListCard key={item.productId} data={item} />
+            <ColProductListCard key={item.id} data={item} />
           ))}
       </div>
     </section>

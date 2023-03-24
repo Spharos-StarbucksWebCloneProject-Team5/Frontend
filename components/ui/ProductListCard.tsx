@@ -5,39 +5,46 @@ import React, { useEffect, useState } from "react";
 import { getImageSize } from "react-image-size";
 
 import { productListCardType } from "@/types/product/fetchDataType";
+import axios from "axios";
+import Config from "@/configs/config.export";
 
-export default function ProductListCard(props: { data: productListCardType }) {
+export default function ProductListCard(props: { productId: number }) {
+  const { baseUrl } = Config();
+  const [data, setData] = useState<productListCardType>();
   const [size, setSize] = useState({
     width: 0,
     height: 0,
   });
 
   useEffect(() => {
-    console.log(getImageSize);
-    getImageSize(props.data.thumbnail).then((res) => {
-      setSize(res);
+    axios(`${baseUrl}/v1/api/products/${props.productId}`).then((res) => {
+      console.log(res);
+      getImageSize(res.data.thumbnail).then((res) => {
+        setSize(res);
+      });
+      setData(res.data);
     });
   }, []);
 
   return (
     <>
-      {props.data && (
-        <div key={props.data.id} className="recommand-product-item">
+      {data && (
+        <div key={data.id} className="recommand-product-item">
           <div className="recommand-product-item__img">
-            <Link href={`/products/${props.data.id}`}>
+            <Link href={`/products/${data.id}`}>
               <Image
-                src={props.data.thumbnail}
-                alt={props.data.description}
+                src={data.thumbnail}
+                alt={data.description}
                 width={size.width}
                 height={size.height}
               />
             </Link>
           </div>
           <div className="recommand-product-item__info">
-            {props.data.isNew ? <p className="item-new">New</p> : null}
-            <p className="item-title">{props.data.name}</p>
+            {data.isNew ? <p className="item-new">New</p> : null}
+            <p className="item-title">{data.name}</p>
             <p className="item-price">
-              <span>{props.data.price}</span>원
+              <span>{data.price}</span>원
             </p>
           </div>
         </div>

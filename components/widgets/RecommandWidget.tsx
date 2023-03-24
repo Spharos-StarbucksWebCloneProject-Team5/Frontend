@@ -10,13 +10,12 @@ export default function RecommandWidget(props: { data: eventType }) {
 
   const baseUrl = Config().baseUrl;
 
-
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`)
-      .then(res => {
-        setEventItemList(res.data)
-      })
-
+    axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`).then(
+      (res) => {
+        setEventItemList(res.data);
+      }
+    );
   }, []);
 
   return (
@@ -26,7 +25,7 @@ export default function RecommandWidget(props: { data: eventType }) {
         <div className="recommand-product-list">
           {eventItemList &&
             eventItemList.map((item) => (
-              <ProductListCard key={item.productId} data={item} />
+              <ProductListCard key={item.id} productId={item.id} />
             ))}
         </div>
       </div>
