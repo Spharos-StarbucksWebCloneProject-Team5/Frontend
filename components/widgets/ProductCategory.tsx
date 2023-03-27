@@ -12,6 +12,8 @@ import {
 import Config from "@/configs/config.export";
 import axios from "axios";
 
+import { categoryList } from "../../datas/navData";
+
 export default function Category() {
   const router = useRouter();
 
@@ -32,11 +34,11 @@ export default function Category() {
   //   axios(url).then((res) => SetCategoryData(res.data));
   // }, []);
 
-  useEffect(() => {
-    axios(`${baseUrl}/v1/api/categories/main`).then((res) =>
-      SetCategoryData(res.data)
-    );
-  }, []);
+  // useEffect(() => {
+  //   axios(`${baseUrl}/v1/api/categories/main`).then((res) =>
+  //     //SetCategoryData(res.data)
+  //   );
+  // }, []);
 
   // `http://localhost:6601//listview?categoryid=${categoryId}` + query;
 
@@ -57,7 +59,7 @@ export default function Category() {
       <div className="header-sub">
         <nav>
           <ul className="allProducts-ul">
-            {categoryData.map((element: categoryType) => (
+            {categoryList.map((element) => (
               <li
                 key={element.id}
                 onClick={() => {
