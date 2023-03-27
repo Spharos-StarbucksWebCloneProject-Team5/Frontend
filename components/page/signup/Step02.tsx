@@ -34,26 +34,47 @@ const renderer = (props: {
 const Step02 = ({ inputData, setInputData }: ChildProps) => {
   const [confirmKey, setConfirmKey] = useState<string>("");
   const [confirmView, setConfirmView] = useState<boolean>(false);
-
+  const [duplicateView, setDuplicateView] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const baseUrl = Config().baseUrl;
 
   //create email regex code
-  const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
+  const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
+  const pwRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+  const passwordRegex: RegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+
 
   useEffect(() => {
-    console.log(new Date());
     console.log(inputData);
   }, [inputData]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "confirmKey") setConfirmKey(value);
-    if (name === "userEmail" && expression.test(value)) {
+    if (name === "userEmail" && emailRegex.test(value)) {
       // 이메일 중복확인
-      console.log("이메일 중복확인");
+      axios.post(`${baseUrl}/api/v1/users/email`, { email: inputData.userEmail })
+        .then((res) => {
+          console.log(res);
+          setDuplicateView(true);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setDuplicateView(false);
     }
+    if (name === "password") {
+      setPassword(value)
+    }
+    if (name === "confirmPassword") {
+      setConfirmPassword(value)
+      if (password !== confirmPassword) {
+        console.log("비밀번호가 다릅니다.")
+      }
+    }
+
     setInputData({
       ...inputData,
       [name]: value,
@@ -61,7 +82,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
   };
 
   const handleEmailConfirm = () => {
-    if (!expression.test(inputData.userEmail)) {
+    if (!emailRegex.test(inputData.userEmail)) {
       alert("이메일 형식이 올바르지 않습니다.");
       return;
     }
@@ -76,25 +97,22 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+
   const handleConfirmKey = () => {
     console.log(confirmKey);
     // 서버에 키값 확인
     axios.post(`${baseUrl}/api/v1/email-confirm`, { code: confirmKey })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         // 키값이 일치하면 인증완료
-        setConfirm(true)
-
+        setConfirm(true);
       })
       .catch((err) => {
         console.log(err)
       })
   };
 
-  const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("submit");
-  };
+  const timerStop = () => true
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
@@ -122,6 +140,13 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
               이메일인증
             </button>
           </div>
+          {
+            duplicateView && (
+              <div>
+                <p>중복확인완료</p>
+              </div>
+            )
+          }
           {confirmView && (
             <div>
               <input
@@ -133,7 +158,8 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
               <button type="button" onClick={handleConfirmKey}>
                 인증하기
               </button>
-              <Countdown date={Date.now() + 180000} renderer={renderer} />
+              <Countdown date={Date.now() + 180000} renderer={renderer}
+                onStop={timerStop} />
             </div>
           )}
 

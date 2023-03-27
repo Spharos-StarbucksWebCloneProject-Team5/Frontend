@@ -17,12 +17,17 @@ export default function SignUp() {
   const [inputData, setInputData] = useState<inputRegisterType>({
     userEmail: "",
     userName: "",
-    userNickname: "",
     birthday: new Date(),
+    address: "",
     password: "",
     confirmPassword: "",
     phone: "",
     isUserConfirm: false,
+    emailCheck: {
+      isDuplicate: false,
+      isEmailCheck: false,
+      isPasswordCheck: false,
+    },
     privateAgree: {
       isAgree: false,
       isUseConfirm: false,
@@ -45,8 +50,7 @@ export default function SignUp() {
   const handleStepNext = () => {
     console.log(inputData.privateAgree);
     if (stepId === 1 && inputData.privateAgree) {
-      if (
-        !inputData.privateAgree.isAgree || !inputData.privateAgree.isUseConfirm) {
+      if (!inputData.privateAgree.isAgree || !inputData.privateAgree.isUseConfirm) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -60,15 +64,13 @@ export default function SignUp() {
       setStepId(stepId + 1);
     }
 
-    if (stepId === 2 && inputData.privateAgree) {
-      if (
-        !inputData.privateAgree.isAgree ||
-        !inputData.privateAgree.isUseConfirm
-      ) {
+    console.log(inputData.emailCheck);
+    if (stepId === 2 && inputData.emailCheck) {
+      if (!inputData.emailCheck.isDuplicate || !inputData.emailCheck.isEmailCheck) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "필수 항목을 동의 해주세요.",
+          text: "이메일 인증을 해주세요.",
           customClass: {
             confirmButton: "swal-confirm-button",
           },

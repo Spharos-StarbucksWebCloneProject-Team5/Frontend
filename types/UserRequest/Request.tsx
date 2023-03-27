@@ -21,12 +21,13 @@ export interface VeriftyEmailReq {
 export interface inputRegisterType {
   userEmail: string;
   userName: string;
-  userNickname: string;
   birthday: Date;
+  address: string;
   password: string;
   confirmPassword: string;
   phone: string;
   isUserConfirm: boolean;
+  emailCheck: emailCheckType;
   privateAgree: privateAgreeType;
 }
 
@@ -34,4 +35,10 @@ export interface privateAgreeType {
   isAgree: boolean;
   isUseConfirm: boolean;
   isAdvertisingConfirm?: boolean;
+}
+
+export interface emailCheckType {
+  isDuplicate: false;
+  isEmailCheck: false;
+  isPasswordCheck: false;
 }
