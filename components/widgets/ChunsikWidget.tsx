@@ -14,7 +14,6 @@ export default function ChunsikWidget(props: { data: eventType }) {
   useEffect(() => {
     axios(`${baseUrl}/v1/api/event-products/${props.data.eventId}`).then(
       (res) => {
-        console.log(res.data);
         setChunsikItemList(res.data);
       }
     );
@@ -23,7 +22,7 @@ export default function ChunsikWidget(props: { data: eventType }) {
   return (
     <section className="chunsik">
       <div className="recommand-md-products">
-        <h2>{props.data.description}</h2>
+        <h2>{props.data.name}</h2>
         {chunsikItemList &&
           chunsikItemList.map((item: productListCardType) => (
             <ColProductListCard key={item.id} data={item} />

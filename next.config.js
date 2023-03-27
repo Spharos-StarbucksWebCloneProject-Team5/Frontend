@@ -9,6 +9,7 @@ const nextConfig = {
       "blog.kakaocdn.net",
       "cdn.ggilbo.com",
       "i.ibb.co",
+      "i.imgur.com",
     ],
   },
 };

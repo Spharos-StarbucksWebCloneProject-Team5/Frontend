@@ -1,8 +1,9 @@
 export interface bannerInfoType {
-  bannerImage: string;
-  eventId?: number;
-  recommendId?: number;
-  regTime: string;
+  id: number;
+  eventId: number;
+  name: string;
+  description: string;
+  titleImage: string;
   width: number;
   height: number;
 }

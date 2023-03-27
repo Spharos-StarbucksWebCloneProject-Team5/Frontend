@@ -37,7 +37,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
 
   const [confirm, setConfirm] = useState<boolean>(false);
 
-  const BASE_URL = Config().baseUrl;
+  const baseUrl = Config().baseUrl;
 
   //create email regex code
   const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
@@ -72,18 +72,19 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     console.log("이메일 전송");
     setConfirmView(true);
     axios
-      .post(`http://10.10.10.205:8081/api/v1/email`, { to: inputData.userEmail })
+      .post(`${baseUrl}/api/v1/email`, { to: inputData.userEmail })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
   const handleConfirmKey = () => {
     console.log(confirmKey);
     // 서버에 키값 확인
-    axios.post(`${BASE_URL}/api/v1/email-confirm`, { code: confirmKey })
+    axios.post(`${baseUrl}/api/v1/email-confirm`, { code: confirmKey })
       .then((res) => {
         console.log(res)
         // 키값이 일치하면 인증완료
         setConfirm(true)
+
       })
       .catch((err) => {
         console.log(err)

@@ -28,8 +28,8 @@ const Home: NextPageWithLayout = () => {
       </Head>
       <Mainbanner />
       {eventListData &&
-        eventListData.map((event: eventType) =>
-          event.eventId === 7 ? (
+        eventListData.map((event: eventType, index) =>
+          eventListData.length === index + 1 ? (
             <ChunsikWidget key={event.id} data={event} />
           ) : (
             <RecommandWidget key={event.id} data={event} />

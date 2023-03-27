@@ -21,7 +21,7 @@ export default function RecommandWidget(props: { data: eventType }) {
   return (
     <section id="recommand-md-1">
       <div className="recommand-md-products">
-        <h2>{props.data.description}</h2>
+        <h2>{props.data.name}</h2>
         <div className="recommand-product-list">
           {eventItemList &&
             eventItemList.map((item) => (

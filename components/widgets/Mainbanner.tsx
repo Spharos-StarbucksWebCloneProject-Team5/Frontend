@@ -10,26 +10,30 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { bannerInfoType } from "@/types/main/mainBannerType";
+import Config from "@/configs/config.export";
 
 SwiperCore.use([Pagination, Navigation, Autoplay]);
 
 export default function Mainbanner() {
   const [slideData, setSlideData] = useState<bannerInfoType[]>([]);
 
+  const baseUrl = Config().baseUrl;
+
   useEffect(() => {
     axios
-      .get("http://10.10.10.89:8081/api/v1/banner")
+      .get(`${baseUrl}/v1/api/events/image`)
       .then((res) => {
-        console.log(res.data.data);
-        res.data.data.map(async (item: bannerInfoType) => {
-          const { width, height } = await getImageSize(item.bannerImage);
+        console.log(res.data);
+        res.data.map(async (item: bannerInfoType) => {
+          const { width, height } = await getImageSize(item.titleImage);
           setSlideData((prev) => [
             ...prev,
             {
-              bannerImage: item.bannerImage,
+              id: item.id,
               eventId: item.eventId,
-              recommendId: item.recommendId,
-              regTime: item.regTime,
+              name: item.name,
+              description: item.description,
+              titleImage: item.titleImage,
               width: width,
               height: height,
             },
@@ -58,10 +62,11 @@ export default function Mainbanner() {
                 <div className="event-banner__item">
                   <div className="event-banner__item__img">
                     <Image
-                      src={slide.bannerImage}
+                      src={slide.titleImage}
                       width={slide.width}
                       height={slide.height}
-                      alt={slide.bannerImage}
+                      alt={slide.description}
+                      priority
                     />
                   </div>
                 </div>

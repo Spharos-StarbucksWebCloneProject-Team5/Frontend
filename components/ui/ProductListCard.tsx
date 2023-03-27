@@ -18,7 +18,6 @@ export default function ProductListCard(props: { productId: number }) {
 
   useEffect(() => {
     axios(`${baseUrl}/v1/api/products/${props.productId}`).then((res) => {
-      console.log(res);
       getImageSize(res.data.thumbnail).then((res) => {
         setSize(res);
       });
