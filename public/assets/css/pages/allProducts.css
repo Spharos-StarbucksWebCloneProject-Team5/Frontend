@@ -4,7 +4,6 @@
 
 .filter-price {
   display: flex;
-
 }
 
 .filter-price p {
@@ -35,7 +34,6 @@
   font-weight: bold;
   text-align: center;
   margin: 10px;
-
 }
 
 .sort-box {
@@ -56,6 +54,6 @@
   padding: 0px 17px;
 }
 
-.event-product-list .recommand-product-item img {
+/* .event-product-list .recommand-product-item img {
   width: 160px;
-}
+} */

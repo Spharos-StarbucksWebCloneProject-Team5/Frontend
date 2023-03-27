@@ -1,19 +1,42 @@
-import MiddleLine from '@/components/ui/MiddleLine'
-import React from 'react'
+import MiddleLine from "@/components/ui/MiddleLine";
+import Config from "@/configs/config.export";
+import axios from "axios";
+import { useRouter } from "next/router";
+
+import React, { useEffect, useState } from "react";
 
 export default function search() {
+  const baseUrl = Config().baseUrl;
+
+  const [search, setSearch] = useState("");
+
+  const searchHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+
+  const router = useRouter();
+
   return (
     <>
       <div className="search-top">
         <div className="search-bar">
           <form action="">
-            <input type="text" placeholder="검색어를 입력해 주세요." />
+            <input
+              type="text"
+              placeholder="검색어를 입력해 주세요."
+              onChange={searchHandle}
+            />
           </form>
         </div>
         <div className="search-icons">
           <ul>
-            <li><img src="assets/images/icons/search.svg" /></li>
-            <li><img src="assets/images/icons/close.png" /></li>
+            <li onClick={() => router.push(`/search/${search}`)}>
+              <img src="assets/images/icons/search.svg" />
+            </li>
+            <li>
+              <img src="assets/images/icons/close.png" />
+            </li>
           </ul>
         </div>
       </div>
@@ -54,23 +77,13 @@ export default function search() {
           <h3>추천태그</h3>
         </div>
         <div className="tag-list">
-          <button className="tag-list-item">
-            #케이크
-          </button>
-          <button className="tag-list-item">
-            #케이크
-          </button>
-          <button className="tag-list-item">
-            #케이크
-          </button>
-          <button className="tag-list-item">
-            #케이크
-          </button>
-          <button className="tag-list-item">
-            #케이크
-          </button>
+          <button className="tag-list-item">#케이크</button>
+          <button className="tag-list-item">#케이크</button>
+          <button className="tag-list-item">#케이크</button>
+          <button className="tag-list-item">#케이크</button>
+          <button className="tag-list-item">#케이크</button>
         </div>
       </div>
     </>
-  )
+  );
 }

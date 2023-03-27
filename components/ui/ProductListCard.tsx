@@ -34,8 +34,8 @@ export default function ProductListCard(props: { productId: number }) {
               <Image
                 src={data.thumbnail}
                 alt={data.description}
-                width={size.width}
-                height={size.height}
+                width={160}
+                height={160}
               />
             </Link>
           </div>
