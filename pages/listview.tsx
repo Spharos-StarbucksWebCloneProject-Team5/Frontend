@@ -1,5 +1,6 @@
 import ProductListCard from "@/components/ui/ProductListCard";
 import {
+  pageProductType,
   productAllType,
   productListCardType,
 } from "@/types/product/fetchDataType";
@@ -12,7 +13,7 @@ import Product from "./products/[productId]";
 export default function ProductListView() {
   const baseUrl = Config().baseUrl;
 
-  const [productData, setProductData] = useState<productAllType[]>();
+  const [productData, setProductData] = useState<pageProductType>();
 
   useEffect(() => {
     axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
@@ -34,7 +35,7 @@ export default function ProductListView() {
       <div className="product-list">
         <div className="event-product-list">
           {productData &&
-            productData.map((item: productAllType) => (
+            productData.content.map((item: productAllType) => (
               <ProductListCard
                 key={item.productId}
                 productId={item.productId}

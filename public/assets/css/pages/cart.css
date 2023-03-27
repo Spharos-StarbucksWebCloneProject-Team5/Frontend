@@ -47,18 +47,28 @@
   border: 1px solid var(--color-gray-button);
 } */
 
-.select-all {
+.check-all {
   background-color: var(--color-white);
   box-shadow: 0 3px 10px -4px rgb(0 0 0 / 10%);
-  width: 100%;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(0 0 0 / 10%);
 }
 
-.select-all div {
+.check-active {
+  background-color: var(--color-light-green);
+  box-shadow: 0 3px 10px -4px rgb(0 0 0 / 10%);
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgb(0 0 0 / 10%);
+}
+
+.check-all div {
   margin: 12px 3px 15px 25px;
   vertical-align: middle;
 }
 
-.select-all > div {
+.check-all > div {
   transform: scale(1.2);
   appearance: none;
   width: 1rem;

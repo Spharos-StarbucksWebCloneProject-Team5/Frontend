@@ -12,6 +12,13 @@ export interface productAllType {
   price: number;
   thumbnail: string;
 }
+export interface pageProductType {
+  content: productAllType[];
+  pageNum: number;
+  pageSize: number;
+  totalElements: number;
+  totalPage: number;
+}
 
 export interface eventProductListType {
   id: number;
@@ -25,22 +32,6 @@ export interface productImageType {
   image: string;
 }
 
-export interface cartType {
-  id: number;
-  user: number;
-  product: [productListCardType];
-  count: number;
-  now: boolean;
-}
-
-export interface cartListType {
-  cartId: number;
-  productId: number;
-  productName: string;
-  productPrice: number;
-  productThumbnail: string;
-  count: number;
-}
 export interface eventProductListType {
   id: number;
   eventId: number;
