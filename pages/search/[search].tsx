@@ -6,8 +6,10 @@ import axios from "axios";
 import Config from "@/configs/config.export";
 
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useRouter } from "next/router";
 
-export default function ProductListView() {
+export default function SearchResult() {
+  const { query } = useRouter();
   const baseUrl = Config().baseUrl;
 
   const [pageData, setPageData] = useState<pageProductType>();
@@ -15,14 +17,20 @@ export default function ProductListView() {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
+    axios(
+      `${baseUrl}/v1/api/categories/event?keyword=${query.search}&pageNum=0`
+    ).then((res) => {
       setPageData(res.data);
       setProductData(res.data.content);
     });
   }, []);
 
   const fetchData = () => {
-    axios(`${baseUrl}/v1/api/products/?pageNum=${page + 1}`).then((res) => {
+    axios(
+      `${baseUrl}/v1/api/categories/event?keyword=${query.search}&pageNum=${
+        page + 1
+      }`
+    ).then((res) => {
       setPageData(res.data);
       setProductData([...productData, ...res.data.content]);
     });

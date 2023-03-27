@@ -20,8 +20,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
-import { cartListData } from "@/datas/navData";
-import CartItem from "@/components/page/cart/CartItem";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
@@ -41,13 +39,17 @@ export default function cart() {
   const [isFreezeCheck, setIsFreezeCheck] = useState<boolean>(false); //냉동상품 체크했는지
   const [isAllCheck, setIsAllCheck] = useState<boolean>(false); //전체 체크했는지
 
-  const [checkedItems, setCheckedItems] =
-    useRecoilState<allCartType>(allCartListState);
+  // if (!isLogin) {
+  //   Swal.fire({
+  //     icon: "warning",
+  //     text: "로그인이 필요합니다!",
+  //   });
+  //   push("/login");
+  // }
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/carts/get/7`).then((res) => {
+    axios.put(`${baseUrl}/v1/api/carts/get/7`).then((res) => {
       //userId 추가
-
       setAllCartItems({ allCartList: res.data });
       setCartItems({
         cartList: res.data.filter(
@@ -75,9 +77,13 @@ export default function cart() {
       ? (freezeCheck = false)
       : (freezeCheck = true);
 
-    allCartItems.allCartList.find((item) => item.checked === false)
-      ? (allCheck = false)
-      : (allCheck = true);
+    // allCartItems.allCartList.find((item) => item.checked === false)
+    //   ? (allCheck = false)
+    //   : (allCheck = true);
+
+    check === true && freezeCheck === true
+      ? (allCheck = true)
+      : (allCheck = false);
 
     if (cartItems.cartList.length === 0) {
       //빈 배열 일 때
@@ -92,7 +98,38 @@ export default function cart() {
     setIsCheck(check);
     setIsFreezeCheck(freezeCheck);
     setIsAllCheck(allCheck);
-  }, [cartItems, freezeCartItems, allCartItems]);
+  }, [cartItems, freezeCartItems, isAllCheck]);
+
+  let cartPrice = 0;
+  let cartCount = 0;
+  cartItems.cartList.map((item) => {
+    if (item.checked === true) {
+      cartPrice = item.count * item.productPrice + cartPrice;
+      cartCount = cartCount + 1; //주문 건수
+    }
+  });
+
+  let freezeCartPrice = 0;
+  let freezeCartCount = 0;
+  freezeCartItems.freezeCartList.map((item) => {
+    if (item.checked === true) {
+      freezeCartPrice = item.count * item.productPrice + freezeCartPrice;
+      freezeCartCount = freezeCartCount + 1;
+    }
+  });
+
+  let totalPrice = cartPrice + freezeCartPrice;
+
+  let shipPrice = 0;
+  cartPrice < 30000 && cartPrice > 0 ? (shipPrice = 3000) : (shipPrice = 0);
+
+  let freezeShipPrice = 0;
+  freezeCartPrice < 30000 && freezeCartPrice > 0
+    ? (freezeShipPrice = 3000)
+    : (freezeShipPrice = 0);
+
+  let totalCount = cartCount + freezeCartCount;
+  let price = totalPrice + shipPrice + freezeShipPrice;
 
   const handleCart = (id: number, check: boolean) => {
     //일반 상품 단일
@@ -103,15 +140,10 @@ export default function cart() {
         return item;
       }),
     });
-    //check === true ? setCheckedItems(checkedItems)
   };
 
   const handleCartList = (check: boolean) => {
     //일반 상품 전체
-
-    // cartItems.cartList.map((item: cartListType) =>
-    //   handleCart(item.cartId, check)
-    // );
     setIsCheck(check);
     setCartItems({
       ...cartItems,
@@ -145,9 +177,6 @@ export default function cart() {
       ),
     });
 
-    // freezeCartItems.freezeCartList.map((item: cartListType) =>
-    //   handleFreezeCart(item.cartId, check)
-    // );
     setIsFreezeCheck(check);
   };
 
@@ -164,14 +193,6 @@ export default function cart() {
     handleFreezeCartList(check);
     handleCartList(check);
   };
-
-  // if (!isLogin) {
-  //   Swal.fire({
-  //     icon: "warning",
-  //     text: "로그인이 필요합니다!",
-  //   });
-  //   push("/login");
-  // }
 
   const handleAllDelete = () => {
     //모든 카트 아이템 삭제 처리
@@ -263,7 +284,9 @@ export default function cart() {
                   />
                   <div className="cart-product-info-text">
                     <p>{element.productName}</p>
-                    <p className="price-bold">{element.productPrice}원</p>
+                    <p className="price-bold">
+                      {element.productPrice.toLocaleString("en")}원
+                    </p>
                   </div>
                   <img
                     className="img-cart-close"
@@ -286,6 +309,16 @@ export default function cart() {
               </div>
             </div>
           ))}
+          <section>
+            <div className="cart-total-check">
+              <p>
+                상품 {cartCount}건 {cartPrice.toLocaleString("en")}원 + 배송비{" "}
+                {shipPrice}원 = 총{cartPrice + shipPrice}원
+              </p>
+              <p className="price-bold">무료배송</p>
+              <Link href="">더 담으러 가기</Link>
+            </div>
+          </section>
 
           <MiddleLine />
           <div className="advertising-info">
@@ -316,7 +349,9 @@ export default function cart() {
                   />
                   <div className="cart-product-info-text">
                     <p>{element.productName}</p>
-                    <p className="price-bold">{element.productPrice}원</p>
+                    <p className="price-bold">
+                      {element.productPrice.toLocaleString("en")}원
+                    </p>
                   </div>
                   <img
                     className="img-cart-close"
@@ -329,7 +364,7 @@ export default function cart() {
                 </div>
                 <div className="text-order-amount">
                   <p>주문 금액</p>
-                  <p>{element.productPrice}원</p>
+                  <p>{element.productPrice.toLocaleString("en")}원</p>
                 </div>
                 <div className="box-button">
                   <button id="box-button-01">주문 수정</button>
@@ -339,10 +374,14 @@ export default function cart() {
             </div>
           ))}
         </section>
-        {}
+
         <section>
           <div className="cart-total-check">
-            <p>상품 1건 35,000원 + 배송비 0원 = 총 35,000원</p>
+            <p>
+              상품 {freezeCartCount}건 {freezeCartPrice.toLocaleString("en")}원
+              + 배송비 {freezeShipPrice.toLocaleString("en")}원 = 총
+              {(freezeCartPrice + freezeShipPrice).toLocaleString("en")}원
+            </p>
             <p className="price-bold">무료배송</p>
             <Link href="">더 담으러 가기</Link>
           </div>
@@ -351,7 +390,7 @@ export default function cart() {
           <p className="cart-total-price-text">총 주문 금액</p>
           <div className="product-price">
             <p>상품 금액</p>
-            <p className="price-bold">35,000원</p>
+            <p className="price-bold">{totalPrice.toLocaleString("en")}원</p>
           </div>
           <div className="discount-price">
             <p>할인 금액</p>
@@ -359,12 +398,17 @@ export default function cart() {
           </div>
           <div className="delivery-price">
             <p>배송비</p>
-            <p className="price-bold">0원</p>
+            <p className="price-bold">
+              {(shipPrice + freezeShipPrice).toLocaleString("en")}원
+            </p>
           </div>
           <hr className="middle-line" />
           <div className="cart-total-price">
             <p>최종 결제 금액</p>
-            <p id="cart-total-price">35,000원</p>
+            <p id="cart-total-price">
+              {(totalPrice + shipPrice + freezeShipPrice).toLocaleString("en")}
+              원
+            </p>
           </div>
           <div className="cart-description">
             <p>
@@ -376,7 +420,7 @@ export default function cart() {
           </div>
         </section>
       </div>
-      <CartFooter />
+      <CartFooter count={totalCount} totalPrice={price} />
     </>
   );
 }

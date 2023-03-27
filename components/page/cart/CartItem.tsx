@@ -1,5 +1,5 @@
 import { cartListState } from "@/state/atom/cartState";
-import { cartListType, cartType } from "@/types/product/fetchDataType";
+import { cartListType, cartType } from "@/types/cart/cartDataType";
 import React from "react";
 import { useRecoilState } from "recoil";
 
