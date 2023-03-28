@@ -4,9 +4,9 @@ import {
   cartType,
   freezeCartType,
   allCartType,
-} from "@/types/product/fetchDataType";
+} from "@/types/cart/cartDataType";
 
-//const { persistAtom } = recoilPersist();
+const { persistAtom } = recoilPersist();
 
 export const cartListState = atom<cartType>({
   key: "cartListState",
@@ -24,8 +24,13 @@ export const cartState = atom({
   key: "cartState",
   default: 0,
 });
-
 export const cartIsCheckState = atom({
   key: "cartIsCheckState",
   default: false,
+});
+
+export const countState = atom({
+  key: "countState",
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
 });
