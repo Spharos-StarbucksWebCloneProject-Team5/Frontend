@@ -1,11 +1,20 @@
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 export default function CartFooter(props: {
   count: number;
   totalPrice: number;
+  checked: number[];
 }) {
-  console.log(`count ${props.count}`);
-  console.log(`totalPrice ${props.totalPrice}`);
+  const { push } = useRouter();
+
+  const buyNow = () => {
+    //바로 구매
+    const query = props.checked.map((element) => "id=" + element + "&");
+    push(`/payment?` + query);
+    console.log(query);
+  };
+
   return (
     <div className="cart-footer">
       <div className="cart-submit-container cart-footer-padding">
@@ -19,7 +28,7 @@ export default function CartFooter(props: {
         </div>
         <div className="cart-btn-order">
           <button>선물하기</button>
-          <button>구매하기</button>
+          <button onClick={buyNow}>구매하기</button>
         </div>
       </div>
     </div>

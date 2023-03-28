@@ -20,6 +20,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
+import ModifyCountModal from "@/components/ui/ModifyCountModal";
+import payment from "./payment";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
@@ -39,6 +41,8 @@ export default function cart() {
   const [isFreezeCheck, setIsFreezeCheck] = useState<boolean>(false); //냉동상품 체크했는지
   const [isAllCheck, setIsAllCheck] = useState<boolean>(false); //전체 체크했는지
 
+  const [checkedList, setCheckedList] = useState<number[]>([]);
+
   // if (!isLogin) {
   //   Swal.fire({
   //     icon: "warning",
@@ -48,7 +52,7 @@ export default function cart() {
   // }
 
   useEffect(() => {
-    axios.put(`${baseUrl}/v1/api/carts/get/7`).then((res) => {
+    axios.get(`${baseUrl}/v1/api/carts/get/7`).then((res) => {
       //userId 추가
       setAllCartItems({ allCartList: res.data });
       setCartItems({
@@ -94,6 +98,7 @@ export default function cart() {
       freezeCheck = false;
       if (check === true) allCheck = true;
     }
+    if (allCartItems.allCartList.length === 0) allCheck = false;
 
     setIsCheck(check);
     setIsFreezeCheck(freezeCheck);
@@ -140,6 +145,9 @@ export default function cart() {
         return item;
       }),
     });
+    checkedList.includes(id)
+      ? checkedList.splice(id)
+      : setCheckedList([...checkedList, id]);
   };
 
   const handleCartList = (check: boolean) => {
@@ -148,6 +156,9 @@ export default function cart() {
     setCartItems({
       ...cartItems,
       cartList: cartItems.cartList.map((item: cartListType) => {
+        checkedList.includes(item.cartId)
+          ? checkedList.splice(item.cartId)
+          : setCheckedList([...checkedList, item.cartId]);
         return { ...item, checked: check };
       }),
     });
@@ -164,6 +175,9 @@ export default function cart() {
         }
       ),
     });
+    checkedList.includes(id)
+      ? checkedList.splice(id)
+      : setCheckedList([...checkedList, id]);
   };
 
   const handleFreezeCartList = (check: boolean) => {
@@ -172,11 +186,13 @@ export default function cart() {
       ...freezeCartItems,
       freezeCartList: freezeCartItems.freezeCartList.map(
         (item: cartListType) => {
+          checkedList.includes(item.cartId)
+            ? checkedList.splice(item.cartId)
+            : setCheckedList([...checkedList, item.cartId]);
           return { ...item, checked: check };
         }
       ),
     });
-
     setIsFreezeCheck(check);
   };
 
@@ -185,10 +201,12 @@ export default function cart() {
     setAllCartItems({
       ...allCartItems,
       allCartList: allCartItems.allCartList.map((item: cartListType) => {
+        checkedList.includes(item.cartId)
+          ? checkedList.splice(item.cartId)
+          : setCheckedList([...checkedList, item.cartId]);
         return { ...item, checked: check };
       }),
     });
-
     setIsAllCheck(check);
     handleFreezeCartList(check);
     handleCartList(check);
@@ -196,35 +214,48 @@ export default function cart() {
 
   const handleAllDelete = () => {
     //모든 카트 아이템 삭제 처리
-    axios.delete(`${baseUrl}/v1/api/carts/delete/`); //userId 추가
+    axios.put(`${baseUrl}/v1/api/carts/delete/7`); //userId 추가
   };
 
-  const handleDelete = () => {
+  const handleSelectDelete = () => {
     //선택 카트 아이템 삭제 처리
-    cartItems.cartList
-      .filter((item) => item.checked === true)
-      .map((item) =>
-        axios.delete(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
-      );
-    freezeCartItems.freezeCartList
-      .filter((item) => item.checked === true)
-      .map((item) =>
-        axios.delete(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
-      );
+    // cartItems.cartList
+    //   .filter((item) => item.checked === true)
+    //   .map((item) =>
+    //     axios.put(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
+    //   );
+    // freezeCartItems.freezeCartList
+    //   .filter((item) => item.checked === true)
+    //   .map((item) =>
+    //     axios.put(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
+    //   );
+    console.log(checkedList);
+    checkedList.map((item) => axios.put(`${baseUrl}/v1/api/carts/` + item));
+    location.reload();
   };
 
   const handleCloseDelete = (id: number) => {
     //x버튼으로 아이템 삭제 처리
     cartItems.cartList
       .filter((item) => item.cartId === id)
-      .map((item) =>
-        axios.delete(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
-      );
+      .map((item) => axios.put(`${baseUrl}/v1/api/carts/` + id));
     freezeCartItems.freezeCartList
       .filter((item) => item.cartId === id)
-      .map((item) =>
-        axios.delete(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
-      );
+      .map((item) => axios.put(`${baseUrl}/v1/api/carts/` + id));
+    location.reload();
+  };
+
+  const buyNow = (id: number) => {
+    //바로 구매
+    push(`/payment?id=${id}`);
+  };
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [countCartId, setCountCartId] = useState<number>(0);
+
+  const showModal = (cartId: number) => {
+    setModalOpen(!modalOpen);
+    setCountCartId(cartId);
   };
 
   return (
@@ -247,7 +278,7 @@ export default function cart() {
             </div>
             <div id="btn-cart-delete">
               <div className="btn-delete-inner">
-                <p onClick={() => handleDelete} id="select-delete">
+                <p onClick={handleSelectDelete} id="select-delete">
                   선택삭제
                 </p>
                 <p>|</p>
@@ -303,8 +334,19 @@ export default function cart() {
                   <p>{element.productPrice}원</p>
                 </div>
                 <div className="box-button">
-                  <button id="box-button-01">주문 수정</button>
-                  <button id="box-button-02">바로 구매</button>
+                  <button
+                    id="box-button-01"
+                    onClick={() => showModal(element.cartId)}
+                  >
+                    주문 수정
+                  </button>
+
+                  <button
+                    id="box-button-02"
+                    onClick={() => buyNow(element.cartId)}
+                  >
+                    바로 구매
+                  </button>
                 </div>
               </div>
             </div>
@@ -357,6 +399,7 @@ export default function cart() {
                     className="img-cart-close"
                     src="./assets/images/icons/close.png"
                     alt="close"
+                    onClick={() => handleCloseDelete(element.cartId)}
                   />
                 </div>
                 <div className="cart-product-quantity">
@@ -367,8 +410,18 @@ export default function cart() {
                   <p>{element.productPrice.toLocaleString("en")}원</p>
                 </div>
                 <div className="box-button">
-                  <button id="box-button-01">주문 수정</button>
-                  <button id="box-button-02">바로 구매</button>
+                  <button
+                    id="box-button-01"
+                    onClick={() => showModal(element.cartId)}
+                  >
+                    주문 수정
+                  </button>
+                  <button
+                    id="box-button-02"
+                    onClick={() => buyNow(element.cartId)}
+                  >
+                    바로 구매
+                  </button>
                 </div>
               </div>
             </div>
@@ -420,7 +473,11 @@ export default function cart() {
           </div>
         </section>
       </div>
-      <CartFooter count={totalCount} totalPrice={price} />
+      <CartFooter count={totalCount} totalPrice={price} checked={checkedList} />
+
+      {modalOpen && (
+        <ModifyCountModal setModalOpen={setModalOpen} cartId={countCartId} />
+      )}
     </>
   );
 }
