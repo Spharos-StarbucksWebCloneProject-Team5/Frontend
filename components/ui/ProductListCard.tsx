@@ -45,7 +45,7 @@ export default function ProductListCard(props: { productId: number }) {
             {data.isNew ? <p className="item-new">New</p> : null}
             <p className="item-title">{data.name}</p>
             <p className="item-price">
-              <span>{data.price}</span>원
+              <span>{data.price.toLocaleString()}</span>원
             </p>
           </div>
         </div>
