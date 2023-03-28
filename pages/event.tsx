@@ -1,7 +1,6 @@
 import ProductListCard from "@/components/ui/ProductListCard";
 import Config from "@/configs/config.export";
-import { eventImageType } from "@/types/main/eventDataType";
-import { productListCardType } from "@/types/product/fetchDataType";
+import { eventImageType, eventProductType } from "@/types/main/eventDataType";
 import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
@@ -10,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { getImageSize } from "react-image-size";
 
 export default function Event() {
-  const [eventItemList, setEventItemList] = useState<productListCardType[]>();
+  const [eventItemList, setEventItemList] = useState<eventProductType[]>();
   const [imageData, setImageData] = useState<eventImageType>();
   const [size, setSize] = useState({
     width: 0,
@@ -52,7 +51,7 @@ export default function Event() {
                 src={imageData.image}
                 alt={imageData.description}
                 width={390}
-                height={size.height}
+                height={1000}
               />
             )
           }
@@ -61,7 +60,7 @@ export default function Event() {
           <div className="event-product-list">
             {eventItemList &&
               eventItemList.map((item) => (
-                <ProductListCard key={item.id} productId={item.id} />
+                <ProductListCard key={item.id} productId={item.productId} />
               ))}
           </div>
         </div>

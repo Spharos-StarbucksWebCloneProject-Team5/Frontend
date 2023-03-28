@@ -3,10 +3,12 @@ import { menuModalState } from "@/state/atom/menuModalState";
 
 import { categoryType } from "@/types/header/categoryType";
 import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
+import Separator from "../ui/Separator";
 
 export default function MenuModal() {
   const baseUrl = Config().baseUrl;
@@ -26,8 +28,17 @@ export default function MenuModal() {
   };
 
   const handlePushClose = (path: string) => {
-    router.push(path);
-    setIsMenuModalOpen(false);
+    if (path === "/event?category=1") {
+      router.push(path);
+      setIsMenuModalOpen(false);
+    } else if (path === "/best?category=1") {
+      router.push(path);
+      setIsMenuModalOpen(false);
+    } else {
+      alert('d');
+      return;
+    };
+
   };
   if (!isMenuModalOpen) return null;
 
@@ -35,8 +46,14 @@ export default function MenuModal() {
     <div className={isMenuModalOpen ? "modal menu-slide-right" : "modal"}>
       <div className="welcome">
         <div className="welcome-top">
-          <div onClick={handleClose}>
-            <img src="assets/images/icons/close.svg" />
+          <div className="welcome-back-button" onClick={handleClose}>
+            {/* <img src="assets/images/icons/close.svg" /> */}
+            <Image
+              src="/assets/images/icons/close.png"
+              width={23}
+              height={23}
+              alt="closeButton"
+            />
           </div>
         </div>
         <div className="welcome-bottom">
@@ -68,11 +85,9 @@ export default function MenuModal() {
 
       <section className="section-bottom">
         <div className="menu-bottom">
-          <div className="menu-bottom-list">
+          <div className="menu-bottom-list" onClick={() => handlePushClose("/event?category=1")}>
             <div
-              className="menu-bottom-list-item-left"
-              onClick={() => handlePushClose("/event")}
-            >
+              className="menu-bottom-list-item-left">
               <h3>기획전</h3>
               <p>진행중인 기획전을 만나보세요</p>
             </div>
@@ -84,7 +99,12 @@ export default function MenuModal() {
             </div>
           </div>
         </div>
-        <div className="menu-bottom-list">
+        <div className="menu-separator">
+          <Separator
+            color={"rgb(230, 217, 217)"}
+          />
+        </div>
+        <div className="menu-bottom-list" onClick={() => handlePushClose("/best?category=1")}>
           <div className="menu-bottom-list-item-left">
             <h3>베스트</h3>
             <p>스타벅스의 베스트 상품을 만나보세요.</p>

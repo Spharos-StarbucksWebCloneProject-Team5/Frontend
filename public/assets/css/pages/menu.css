@@ -1,10 +1,20 @@
 .welcome {
-    margin: 10px 30px;
+    margin: 30px 30px 20px 30px;
     border-bottom: rgb(230, 217, 217) 1px solid;
 }
 
+.welcome-bottom {
+    margin: 10px 0 20px 0;
+}
+
 .welcome-bottom p {
-    font-size: 12px;
+    font-size: 15px;
+}
+
+.welcome-back-button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .welcome-top img {
@@ -13,15 +23,19 @@
     float: right;
 }
 
+.welcome h1 {
+    margin: 10px 0;
+}
+
 section .all-product {
     display: flex;
     justify-content: flex-end;
     margin: 30px 0px 30px 0px;
 }
 
-section .all-product a {
-    margin-right: 15px;
-    font-size: 12px;
+section .all-product div {
+    margin-right: 30px;
+    font-size: 14px;
     color: gray;
 }
 
@@ -39,10 +53,12 @@ section .all-product img {
     justify-content: space-around;
     display: flex;
     flex-wrap: wrap;
+    padding: 0 20px;
 }
 
 .menu-product-item {
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .menu-product-item:last-child {
@@ -55,8 +71,12 @@ section .all-product img {
     border-radius: 50px;
 }
 
+.menu-product-item__info p {
+    margin-top: 10px;
+}
+
 .section-bottom {
-    background-color: rgba(251, 246, 246, 0.911);
+    background-color: rgba(251, 246, 246, 0.526);
     height: 100%;
     margin-bottom: 0px !important;
 }
@@ -70,6 +90,7 @@ section .all-product img {
 
 .menu-bottom-list-item-left {
     width: 90%;
+    padding-left: 10px;
 }
 
 .menu-bottom-list-item-right {
@@ -77,11 +98,11 @@ section .all-product img {
 }
 
 .menu-bottom-list h3 {
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .menu-bottom-list p {
-    font-size: 8px;
+    font-size: 14px;
     color: gray;
 }
 
@@ -92,4 +113,8 @@ section .all-product img {
 .menu-bottom-list-item-right img {
     width: 20px;
     height: auto;
+}
+
+.menu-separator .separator {
+    margin-left: 20px;
 }
