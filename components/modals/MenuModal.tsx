@@ -28,17 +28,8 @@ export default function MenuModal() {
   };
 
   const handlePushClose = (path: string) => {
-    if (path === "/event?category=1") {
-      router.push(path);
-      setIsMenuModalOpen(false);
-    } else if (path === "/best?category=1") {
-      router.push(path);
-      setIsMenuModalOpen(false);
-    } else {
-      alert('d');
-      return;
-    };
-
+    router.push(path);
+    setIsMenuModalOpen(false);
   };
   if (!isMenuModalOpen) return null;
 
