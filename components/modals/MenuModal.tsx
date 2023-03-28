@@ -4,7 +4,6 @@ import { menuModalState } from "@/state/atom/menuModalState";
 import { categoryType } from "@/types/header/categoryType";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";

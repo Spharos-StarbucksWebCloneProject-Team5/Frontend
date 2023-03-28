@@ -60,16 +60,16 @@ export default function Product() {
           </div>
           <div className="product-price">
             <p>
-              <span>{productData?.price}</span>원
+              <span>{productData?.price.toLocaleString()}</span>원
             </p>
           </div>
-          <div className="product-remark">
-            <p>주의사항</p>
-          </div>
+        </div>
+        <div className="product-remark">
         </div>
       </section>
 
       <section id="product-details-img">
+        <p className="product-info">상품 정보</p>
         <div className="product-img">
           {productImageData.map((item) => (
             <img key={item.id} src={item.image} alt="" />
@@ -80,15 +80,19 @@ export default function Product() {
       <section id="product-etc">
         <div className="etc">
           <h3>이용조건 및 배송 안내</h3>
+          <img src="../assets/images/icons/arrow-point-to-right.png" alt="" />
         </div>
         <div className="etc">
           <h3>상품제공정보고시</h3>
+          <img src="../assets/images/icons/arrow-point-to-right.png" alt="" />
         </div>
         <div className="etc">
           <h3>교환/반품 안내</h3>
+          <img src="../assets/images/icons/arrow-point-to-right.png" alt="" />
         </div>
         <div className="etc">
           <h3>취소/환불 안내</h3>
+          <img src="../assets/images/icons/arrow-point-to-right.png" alt="" />
         </div>
         <div></div>
       </section>
