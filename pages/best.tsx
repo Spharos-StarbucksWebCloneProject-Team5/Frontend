@@ -34,7 +34,7 @@ export default function Best() {
               {
                 bestItemList &&
                 bestItemList.map((item) => (
-                  <ProductListCard key={item.id} data={item} />
+                  <ProductListCard key={item.id} productId={item.id} />
                 ))
               }
             </div>

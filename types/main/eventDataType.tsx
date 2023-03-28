@@ -4,3 +4,9 @@ export interface eventType {
   name: string;
   description: string;
 }
+
+export interface eventImageType {
+  id: number;
+  image: string;
+  description: string;
+}

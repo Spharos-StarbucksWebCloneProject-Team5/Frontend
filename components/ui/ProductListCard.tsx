@@ -17,12 +17,13 @@ export default function ProductListCard(props: { productId: number }) {
   });
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/products/${props.productId}`).then((res) => {
-      getImageSize(res.data.thumbnail).then((res) => {
-        setSize(res);
+    axios(`${baseUrl}/v1/api/products/${props.productId}`)
+      .then((res) => {
+        getImageSize(res.data.thumbnail).then((res) => {
+          setSize(res);
+        });
+        setData(res.data);
       });
-      setData(res.data);
-    });
   }, []);
 
   return (
@@ -36,6 +37,7 @@ export default function ProductListCard(props: { productId: number }) {
                 alt={data.description}
                 width={160}
                 height={160}
+                priority
               />
             </Link>
           </div>

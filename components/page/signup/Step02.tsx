@@ -46,7 +46,6 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
   const pwRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   const passwordRegex: RegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
-
   useEffect(() => {
     console.log(inputData);
   }, [inputData]);
