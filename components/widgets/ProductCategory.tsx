@@ -1,58 +1,35 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-//import { categoryList } from "../../datas/navData";
-//import { subCategoryList } from "../../datas/navData";
-import {
-  categoryType,
-  subCategoryType,
-  subCategoryListType,
-} from "../../types/header/categoryType";
-
-import Config from "@/configs/config.export";
-import axios from "axios";
-
 import { categoryList } from "../../datas/navData";
+import { subCategoryList } from "../../datas/navData";
 
 export default function Category() {
   const router = useRouter();
 
-  //const { pathname, query } = useRouter();
+  const { pathname } = useRouter();
 
   const [categoryId, SetCategoryId] = useState(0);
   const [subCategoryId, SetSubCategoryId] = useState([""]);
 
-  const [categoryData, SetCategoryData] = useState<categoryType[]>([]);
-  const [subCategoryList, SetSubCategoryList] = useState<subCategoryType[]>([]);
+  const query = subCategoryId.map((element) =>
+    element ? "&subCategoryId=" + element : ""
+  );
 
-  const baseUrl = Config().baseUrl;
-  //const query = subCategoryId.map((element) => "&subCategoryId=" + element);
-
-  //const url = `${baseUrl}/v1/api/listview?categoryId=${categoryId}`;
-
-  // useEffect(() => {
-  //   axios(url).then((res) => SetCategoryData(res.data));
-  // }, []);
+  // const url =
+  //   `http://localhost:6601//listview?categoryid=${categoryId}` + query;
 
   // useEffect(() => {
-  //   axios(`${baseUrl}/v1/api/categories/main`).then((res) =>
-  //     //SetCategoryData(res.data)
-  //   );
-  // }, []);
-
-  // `http://localhost:6601//listview?categoryid=${categoryId}` + query;
-
-  // useEffect(() => {
+  //   //console.log(query);
   //   fetch(url).then((res) => res.json());
+  //   //console.log(router.pathname);
   // }, [router.pathname]);
 
-  // useEffect(() => {
-  //   router.replace(url);
-  // }, [categoryId, subCategoryId]);
-
   useEffect(() => {
-    // router.replace(url);
-  }, [categoryId]);
+    router.push(`/listview?categoryId=${categoryId}&subCategoryId=0` + query);
+    //subCategoryId.map(item=> )
+    console.log(subCategoryId);
+  }, [categoryId, subCategoryId]);
 
   return (
     <>
@@ -75,10 +52,14 @@ export default function Category() {
         </nav>
       </div>
 
-      {/* {subCategoryList
-        .filter((element1) => element1.id === 0 || element1.id === categoryId)
+      {subCategoryList
+        .filter(
+          (element1) =>
+            element1.mainCategoryId === 0 ||
+            element1.mainCategoryId === categoryId
+        )
         .map((element2) => (
-          <div className="header-sub">
+          <div className="header-sub" key={element2.id}>
             <nav>
               <ul className="allProducts-ul">
                 <li key={element2.id}>
@@ -114,7 +95,7 @@ export default function Category() {
               </ul>
             </nav>
           </div>
-        ))} */}
+        ))}
     </>
   );
 }

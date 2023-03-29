@@ -78,7 +78,7 @@ export default function Header() {
         </Link>
         <nav>
           <ul>
-            <li>
+            <li onClick={() => router.push("/search")}>
               <img src="assets/images/icons/search.svg" />
             </li>
             <li onClick={() => router.push("/cart")}>

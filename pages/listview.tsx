@@ -6,6 +6,7 @@ import axios from "axios";
 import Config from "@/configs/config.export";
 
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useRouter } from "next/router";
 
 export default function ProductListView() {
   const baseUrl = Config().baseUrl;
@@ -13,6 +14,9 @@ export default function ProductListView() {
   const [pageData, setPageData] = useState<pageProductType>();
   const [productData, setProductData] = useState<productAllType[]>([]);
   const [page, setPage] = useState(0);
+  const [subCategory, setSubCategory] = useState<string[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
@@ -26,9 +30,41 @@ export default function ProductListView() {
       setPageData(res.data);
       setProductData([...productData, ...res.data.content]);
     });
-
     setPage(page + 1);
   };
+
+  useEffect(() => {
+    console.log(router.query);
+    if (router.query.categoryId !== "0") {
+      //메인카테고리
+      setProductData(
+        productData.filter(
+          (item) => item.mainCategoryId.toString() === router.query.categoryId
+        )
+      );
+    }
+    if (router.query.subCategory !== "15") {
+      //롤케이크
+      setProductData(
+        productData.filter(
+          (item) => item.mainCategoryId === 1 && item.middleCategoryId === 1
+        )
+      );
+    }
+    if (Array.isArray(router.query.subCategoryId)) {
+      // router.query.subCategoryId.map((item) =>
+      //   setSubCategory([...subCategory, item])
+      // );
+      router.query.subCategoryId.map((item) => {
+        console.log(item);
+        subCategory.includes(item)
+          ? subCategory.filter((c) => c !== item)
+          : setSubCategory([...subCategory, item]);
+      });
+    }
+  }, [router.query]);
+
+  console.log(subCategory);
 
   return (
     <section>
@@ -43,7 +79,7 @@ export default function ProductListView() {
       <InfiniteScroll
         dataLength={productData.length}
         next={fetchData}
-        style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
+        style={{ display: "flex", flexDirection: "column-reverse" }}
         hasMore={pageData?.pageNum !== pageData?.totalPage ? true : false}
         loader={<h4></h4>}
       >

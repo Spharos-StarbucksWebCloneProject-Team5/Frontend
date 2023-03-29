@@ -11,6 +11,8 @@ export interface productAllType {
   productName: string;
   price: number;
   thumbnail: string;
+  mainCategoryId: number;
+  middleCategoryId: number;
 }
 export interface pageProductType {
   content: productAllType[];
