@@ -53,7 +53,7 @@ export default function MenuModal() {
       </div>
       <section className="section-top">
         <div className="all-product">
-          <div onClick={() => handlePushClose("/listview")}>
+          <div onClick={() => handlePushClose("/listview?category=all")}>
             전체 상품 보기
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
@@ -75,9 +75,11 @@ export default function MenuModal() {
 
       <section className="section-bottom">
         <div className="menu-bottom">
-          <div className="menu-bottom-list" onClick={() => handlePushClose("/event?category=1")}>
-            <div
-              className="menu-bottom-list-item-left">
+          <div
+            className="menu-bottom-list"
+            onClick={() => handlePushClose("/event?category=1")}
+          >
+            <div className="menu-bottom-list-item-left">
               <h3>기획전</h3>
               <p>진행중인 기획전을 만나보세요</p>
             </div>
@@ -90,11 +92,12 @@ export default function MenuModal() {
           </div>
         </div>
         <div className="menu-separator">
-          <Separator
-            color={"rgb(230, 217, 217)"}
-          />
+          <Separator color={"rgb(230, 217, 217)"} />
         </div>
-        <div className="menu-bottom-list" onClick={() => handlePushClose("/best?category=1")}>
+        <div
+          className="menu-bottom-list"
+          onClick={() => handlePushClose("/best?category=1")}
+        >
           <div className="menu-bottom-list-item-left">
             <h3>베스트</h3>
             <p>스타벅스의 베스트 상품을 만나보세요.</p>

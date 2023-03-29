@@ -18,12 +18,12 @@ export default function ProductListView() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
-      setPageData(res.data);
-      setProductData(res.data.content);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
+  //     setPageData(res.data);
+  //     setProductData(res.data.content);
+  //   });
+  // }, []);
 
   const fetchData = () => {
     axios(`${baseUrl}/v1/api/products/?pageNum=${page + 1}`).then((res) => {
@@ -33,36 +33,36 @@ export default function ProductListView() {
     setPage(page + 1);
   };
 
-  useEffect(() => {
-    console.log(router.query);
-    if (router.query.categoryId !== "0") {
-      //메인카테고리
-      setProductData(
-        productData.filter(
-          (item) => item.mainCategoryId.toString() === router.query.categoryId
-        )
-      );
-    }
-    if (router.query.subCategory !== "15") {
-      //롤케이크
-      setProductData(
-        productData.filter(
-          (item) => item.mainCategoryId === 1 && item.middleCategoryId === 1
-        )
-      );
-    }
-    if (Array.isArray(router.query.subCategoryId)) {
-      // router.query.subCategoryId.map((item) =>
-      //   setSubCategory([...subCategory, item])
-      // );
-      router.query.subCategoryId.map((item) => {
-        console.log(item);
-        subCategory.includes(item)
-          ? subCategory.filter((c) => c !== item)
-          : setSubCategory([...subCategory, item]);
-      });
-    }
-  }, [router.query]);
+  // useEffect(() => {
+  //   console.log(router.query);
+  //   if (router.query.categoryId !== "0") {
+  //     //메인카테고리
+  //     setProductData(
+  //       productData.filter(
+  //         (item) => item.mainCategoryId.toString() === router.query.categoryId
+  //       )
+  //     );
+  //   }
+  //   if (router.query.subCategory !== "15") {
+  //     //롤케이크
+  //     setProductData(
+  //       productData.filter(
+  //         (item) => item.mainCategoryId === 1 && item.middleCategoryId === 1
+  //       )
+  //     );
+  //   }
+  //   if (Array.isArray(router.query.subCategoryId)) {
+  //     // router.query.subCategoryId.map((item) =>
+  //     //   setSubCategory([...subCategory, item])
+  //     // );
+  //     router.query.subCategoryId.map((item) => {
+  //       console.log(item);
+  //       subCategory.includes(item)
+  //         ? subCategory.filter((c) => c !== item)
+  //         : setSubCategory([...subCategory, item]);
+  //     });
+  //   }
+  // }, [router.query]);
 
   console.log(subCategory);
 

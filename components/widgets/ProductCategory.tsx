@@ -1,101 +1,47 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-import { categoryList } from "../../datas/navData";
-import { subCategoryList } from "../../datas/navData";
+import { categoryList, menuListDepth2 } from "@/datas/navData";
+import FilterMenuList from "../ui/FilterMenuList";
+import { MenuDataType, filterDataType } from "@/types/filter/filterTypes";
 
 export default function Category() {
   const router = useRouter();
 
-  const { pathname } = useRouter();
-
-  const [categoryId, SetCategoryId] = useState(0);
-  const [subCategoryId, SetSubCategoryId] = useState([""]);
-
-  const query = subCategoryId.map((element) =>
-    element ? "&subCategoryId=" + element : ""
-  );
-
-  // const url =
-  //   `http://localhost:6601//listview?categoryid=${categoryId}` + query;
-
-  // useEffect(() => {
-  //   //console.log(query);
-  //   fetch(url).then((res) => res.json());
-  //   //console.log(router.pathname);
-  // }, [router.pathname]);
+  const [filterData, setFilterDatas] = useState<filterDataType[]>([]);
+  const [menuList, setMenuList] = useState<MenuDataType[]>([]);
 
   useEffect(() => {
-    router.push(`/listview?categoryId=${categoryId}&subCategoryId=0` + query);
-    //subCategoryId.map(item=> )
-    console.log(subCategoryId);
-  }, [categoryId, subCategoryId]);
+    console.log("필터링데이터", filterData);
+    let queryUrl = "";
+    filterData.forEach((item) => {
+      queryUrl += `&${item.key}=${item.value}`;
+    });
+    router.push(`/listview?category=${router.query.category}${queryUrl}`);
+    // console.log(menuList);
+  }, [filterData]);
+
+  useEffect(() => {
+    setMenuList(
+      menuListDepth2.find((item) => item.name === router.query.category)
+        ?.data || []
+    ); // 1번 메뉴의 서브메뉴
+  }, [router]);
 
   return (
     <>
-      <div className="header-sub">
-        <nav>
-          <ul className="allProducts-ul">
-            {categoryList.map((element) => (
-              <li
-                key={element.id}
-                onClick={() => {
-                  SetCategoryId(element.id);
-                  SetSubCategoryId([]);
-                }}
-                className={categoryId === element.id ? "active" : ""}
-              >
-                <p>{element.name}</p>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
-
-      {subCategoryList
-        .filter(
-          (element1) =>
-            element1.mainCategoryId === 0 ||
-            element1.mainCategoryId === categoryId
-        )
-        .map((element2) => (
-          <div className="header-sub" key={element2.id}>
-            <nav>
-              <ul className="allProducts-ul">
-                <li key={element2.id}>
-                  <b>{element2.name}</b>
-                </li>
-                {element2.subCategory.map((element3) => (
-                  <li
-                    key={element3.id}
-                    onClick={() => {
-                      subCategoryId.includes(element3.id.toString())
-                        ? SetSubCategoryId(
-                            subCategoryId.filter(
-                              (item) => item !== element3.id.toString()
-                            )
-                          )
-                        : SetSubCategoryId([
-                            ...subCategoryId,
-                            element3.id.toString(),
-                          ]);
-                      //router.replace(url);
-                    }}
-                    className={
-                      subCategoryId.includes(element3.id.toString())
-                        ? "active"
-                        : ""
-                    }
-                  >
-                    <div>
-                      <p>{element3.name}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-        ))}
+      <FilterMenuList
+        data={categoryList}
+        filterFile={filterData}
+        setFilter={setFilterDatas}
+      />
+      {menuList.length > 0 && (
+        <FilterMenuList
+          data={menuList}
+          filterFile={filterData}
+          setFilter={setFilterDatas}
+        />
+      )}
     </>
   );
 }
