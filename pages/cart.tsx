@@ -45,13 +45,13 @@ export default function cart() {
   const [checkedList, setCheckedList] = useState<number[]>([]);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
-  // if (!isLogin) {
-  //   Swal.fire({
-  //     icon: "warning",
-  //     text: "로그인이 필요합니다!",
-  //   });
-  //   push("/login");
-  // }
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인이 필요합니다!",
+    });
+    push("/login");
+  }
 
   useEffect(() => {
     console.log(cookies.id);
