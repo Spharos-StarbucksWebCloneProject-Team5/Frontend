@@ -10,12 +10,14 @@ import Header from "./Header";
 import MenuModal from "../modals/MenuModal";
 import { useRecoilState } from "recoil";
 import { userLoginState } from "@/state/atom/userLoginState";
+import { useCookies } from "react-cookie";
 
 export default function MainLayout(props: { children: React.ReactNode }) {
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
+  const [cookies, setCookie] = useCookies(["id"]);
 
   useEffect(() => {
-    const myLogin = localStorage.getItem("accessToken");
+    const myLogin = cookies.id;
     if (myLogin && !isLogin.isLogin) {
       console.log("로그인 되어있음");
       setIsLogin({
