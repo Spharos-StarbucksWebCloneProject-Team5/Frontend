@@ -105,9 +105,11 @@
   height: 1rem;
   border-radius: 15%;
 }
+
 .small-left-50 {
   margin-left: 50px;
 }
+
 .agree-input .advertising-info label {
   font-size: 0.9rem;
   margin-right: 20px;
@@ -145,6 +147,7 @@
   padding: 0px 0px 0px 5px;
   margin: 0px;
 }
+
 .agree-input a {
   text-decoration: none;
 }
@@ -171,14 +174,16 @@
 .phonenumber-input {
   display: flex;
 }
+
 .phonenumber-input select {
   appearance: none;
 }
+
 #identification-input input:focus {
   border-bottom: 1.5px solid var(--color-light-green);
 }
 
-#identification-input select {
+/* #identification-input select {
   appearance: none;
   border: none;
   font-size: 1.2rem;
@@ -196,7 +201,7 @@
 
 #identification-input select option {
   font-size: 0.8rem;
-}
+} */
 
 #identification-input p {
   color: var(--color-gray-text);
@@ -241,7 +246,7 @@
   border-bottom: 1.5px solid var(--color-light-green);
 }
 
-#id-password-input select {
+/* #id-password-input select {
   appearance: none;
   border: none;
   font-size: 1.2rem;
@@ -250,13 +255,12 @@
   position: sticky;
   appearance: none;
   height: 40px;
-  background: url("https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png")
-    calc(100% - 5px) center no-repeat;
+  background: url("https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png") calc(100% - 5px) center no-repeat;
   background-size: 20px;
   padding: 5px 30px 5px 10px;
   width: 70%;
   color: var(--color-gray-text);
-}
+} */
 
 #id-password-input select option {
   font-size: 0.8rem;
@@ -276,7 +280,7 @@
   align-items: baseline;
 }
 
-#email-input select {
+/* #email-input select {
   appearance: none;
   border: none;
   font-size: 1.2rem;
@@ -285,13 +289,12 @@
   position: sticky;
   appearance: none;
   height: 40px;
-  background: url("https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png")
-    calc(100% - 5px) center no-repeat;
+  background: url("https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png") calc(100% - 5px) center no-repeat;
   background-size: 20px;
   padding: 5px 30px 5px 10px;
   width: 70%;
   color: var(--color-gray-text);
-}
+} */
 
 #email-input input {
   border: 0;

@@ -35,15 +35,14 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
   const [confirmKey, setConfirmKey] = useState<string>("");
   const [confirmView, setConfirmView] = useState<boolean>(false);
   const [duplicateView, setDuplicateView] = useState<boolean>(false);
-  const [confirm, setConfirm] = useState<boolean>(false);
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const baseUrl = Config().baseUrl;
 
   //create email regex code
   const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
+  //숫자+영문자+특수문자 조합으로 8자리 이상
   const pwRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+  //특수문자+문자+숫자 포함 형태의 8~15자리 이내의 암호 정규식 ( 3 가지 조합)
   const passwordRegex: RegExp = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
   useEffect(() => {
@@ -64,15 +63,6 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     } else {
       setDuplicateView(false);
     }
-    if (name === "password") {
-      setPassword(value)
-    }
-    if (name === "confirmPassword") {
-      setConfirmPassword(value)
-      if (password !== confirmPassword) {
-        console.log("비밀번호가 다릅니다.")
-      }
-    }
 
     setInputData({
       ...inputData,
@@ -89,6 +79,9 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
       alert("이메일을 입력해주세요.");
       return;
     }
+    if (!duplicateView) {
+      alert("이메일이 중복입니다.")
+    }
     console.log("이메일 전송");
     setConfirmView(true);
     axios
@@ -103,15 +96,16 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     axios.post(`${baseUrl}/api/v1/email-confirm`, { code: confirmKey })
       .then((res) => {
         console.log(res);
-        // 키값이 일치하면 인증완료
-        setConfirm(true);
+        // 키값이 일치하면 인증완료, 암호
+        setInputData({
+          ...inputData,
+          isUserConfirm: true
+        });
       })
       .catch((err) => {
         console.log(err)
       })
   };
-
-  const timerStop = () => true
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
@@ -157,8 +151,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
               <button type="button" onClick={handleConfirmKey}>
                 인증하기
               </button>
-              <Countdown date={Date.now() + 180000} renderer={renderer}
-                onStop={timerStop} />
+              <Countdown date={Date.now() + 180000} renderer={renderer} />
             </div>
           )}
 
