@@ -7,7 +7,7 @@
 }
 .swiper .swiper-pagination {
   position: absolute;
-  top: 43vh !important;
+  top: 33vh !important;
   z-index: 90;
 }
 .swiper .swiper-pagination-bullet {
@@ -15,7 +15,7 @@
   margin: 0 5px !important;
 }
 .event-banner__item__img {
-  height: 50vh;
+  height: 320px;
   overflow: hidden;
 }
 .event-banner__item__img img {

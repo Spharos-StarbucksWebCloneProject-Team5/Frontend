@@ -4,6 +4,7 @@ import Config from "@/configs/config.export";
 
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 import { LoginReq } from "@/types/UserRequest/Request";
 
@@ -18,7 +19,7 @@ export default function Login() {
 
   const BASE_URL = Config().baseUrl;
   const [loginData, setLoginData] = useRecoilState(userLoginState);
-
+  const [cookies, setCookie] = useCookies(["id"]);
   const [inputData, setInputData] = useState<LoginReq>({
     email: "",
     password: "",
@@ -51,6 +52,7 @@ export default function Login() {
           password: inputData.password,
         })
         .then((res) => {
+          console.log(res);
           setLoginData({
             userId: res.data.data.userId,
             accessToken: res.data.data.accessToken,
@@ -59,13 +61,15 @@ export default function Login() {
           });
           let myLogin = localStorage;
           myLogin.setItem("userId", res.data.data.userId);
-          myLogin.setItem("accessToken", res.data.data.accessToken);
           myLogin.setItem("refreshToken", res.data.data.refreshToken);
+          setCookie("id", res.data.data.accessToken, { path: "/" });
+
           Swal.fire({
             icon: "success",
             text: "Welcome!",
           });
-          router.back();
+          console.log(router);
+          router.push("/");
         })
         .catch((err) => {
           if (err.response.status === 400) {

@@ -11,7 +11,7 @@ import Mainbanner from "@/components/widgets/Mainbanner";
 
 const Home: NextPageWithLayout = () => {
   const [eventListData, setEventListData] = useState<eventType[]>();
-  const [chunsikListData, setChunsikListData] = useState<eventType[]>();
+  // const [chunsikListData, setChunsikListData] = useState<eventType[]>();
 
   const baseUrl = Config().baseUrl;
 

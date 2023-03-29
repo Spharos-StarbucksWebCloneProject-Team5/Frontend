@@ -14,10 +14,6 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { pathname } = useRouter();
-
-  // const getLayout = Component.getLayout ?? ((page) => page)
-
   return (
     <RecoilRoot>
       <MainLayout>

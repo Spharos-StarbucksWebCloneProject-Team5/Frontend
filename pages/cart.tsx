@@ -21,6 +21,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 import ModifyCountModal from "@/components/ui/ModifyCountModal";
+import { useCookies } from "react-cookie";
 import payment from "./payment";
 
 export default function cart() {
@@ -42,6 +43,7 @@ export default function cart() {
   const [isAllCheck, setIsAllCheck] = useState<boolean>(false); //전체 체크했는지
 
   const [checkedList, setCheckedList] = useState<number[]>([]);
+  const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
   // if (!isLogin) {
   //   Swal.fire({
@@ -52,20 +54,27 @@ export default function cart() {
   // }
 
   useEffect(() => {
-    axios.get(`${baseUrl}/v1/api/carts/get/7`).then((res) => {
-      //userId 추가
-      setAllCartItems({ allCartList: res.data });
-      setCartItems({
-        cartList: res.data.filter(
-          (item: cartListType) => item.mainCategoryId !== 1
-        ),
+    console.log(cookies.id);
+    axios
+      .get(`${baseUrl}/v1/api/carts/get`, {
+        headers: {
+          Authorization: `Bearer ${cookies.id}`,
+        },
+      })
+      .then((res) => {
+        //userId 추가
+        setAllCartItems({ allCartList: res.data });
+        setCartItems({
+          cartList: res.data.filter(
+            (item: cartListType) => item.mainCategoryId !== 1
+          ),
+        });
+        setFreezeCartItems({
+          freezeCartList: res.data.filter(
+            (item: cartListType) => item.mainCategoryId === 1
+          ),
+        });
       });
-      setFreezeCartItems({
-        freezeCartList: res.data.filter(
-          (item: cartListType) => item.mainCategoryId === 1
-        ),
-      });
-    });
   }, []);
 
   useEffect(() => {
