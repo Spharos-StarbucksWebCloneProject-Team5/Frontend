@@ -56,93 +56,101 @@ export const categoryList = [
 export const subCategoryList = [
   {
     id: 0,
-    name: "가격",
-    mainCategoryId: 0,
-    subCategoryId: [
+    name: "용량",
+    mainCategoryId: 2,
+    subCategory: [
       {
         id: 1,
-        name: "1만원미만",
+        name: "Short",
         subCategoryId: 1,
       },
       {
         id: 2,
-        name: "1만원대",
+        name: "Tall",
         subCategoryId: 2,
       },
       {
         id: 3,
-        name: "2만원대",
-        subCategoryId: 3,
+        name: "Grande",
+        subCategoryId: 2,
       },
       {
         id: 4,
-        name: "3만원대",
-        subCategoryId: 4,
-      },
-      {
-        id: 5,
-        name: "4만원대",
-        subCategoryId: 5,
-      },
-      {
-        id: 6,
-        name: "5만원이상",
-        subCategoryId: 6,
+        name: "Venti",
+        subCategoryId: 2,
       },
     ],
   },
   {
     id: 1,
-    name: "시즌",
-    mainCategoryId: 0,
-    subCategoryId: [
+    name: "용량",
+    mainCategoryId: 3,
+    subCategory: [
       {
-        id: 7,
-        name: "커티스 쿨릭",
+        id: 5,
+        name: "Short",
         subCategoryId: 1,
       },
       {
-        id: 8,
-        name: "체리블라썸",
+        id: 6,
+        name: "Tall",
         subCategoryId: 2,
       },
       {
-        id: 9,
-        name: "밸런타인데이",
-        subCategoryId: 3,
+        id: 7,
+        name: "Grande",
+        subCategoryId: 2,
       },
       {
-        id: 10,
-        name: "New Year",
-        subCategoryId: 4,
-      },
-      {
-        id: 11,
-        name: "데스크 컬렉션",
-        subCategoryId: 5,
-      },
-      {
-        id: 12,
-        name: "Christmas",
-        subCategoryId: 6,
-      },
-      {
-        id: 13,
-        name: "여주자유CC",
-        subCategoryId: 7,
-      },
-      {
-        id: 14,
-        name: "Autumn",
-        subCategoryId: 8,
+        id: 8,
+        name: "Venti",
+        subCategoryId: 2,
       },
     ],
   },
   {
     id: 2,
+    name: "가격",
+    mainCategoryId: 0,
+    subCategory: [
+      {
+        id: 9,
+        name: "1만원미만",
+        subCategoryId: 1,
+      },
+      {
+        id: 10,
+        name: "1만원대",
+        subCategoryId: 2,
+      },
+      {
+        id: 11,
+        name: "2만원대",
+        subCategoryId: 3,
+      },
+      {
+        id: 12,
+        name: "3만원대",
+        subCategoryId: 4,
+      },
+      {
+        id: 13,
+        name: "4만원대",
+        subCategoryId: 5,
+      },
+      {
+        id: 14,
+        name: "5만원이상",
+        subCategoryId: 6,
+      },
+    ],
+  },
+
+  {
+    id: 3,
     name: "카테고리",
     mainCategoryId: 1,
-    subCategoryId: [
+    subCategory: [
       {
         id: 15,
         name: "롤케이크",
@@ -155,109 +163,102 @@ export const subCategoryList = [
       },
     ],
   },
-  {
-    id: 3,
-    name: "용량",
-    mainCategoryId: 2,
-    subCategoryId: [
-      {
-        id: 17,
-        name: "Short",
-        subCategoryId: 1,
-      },
-      {
-        id: 18,
-        name: "Tall",
-        subCategoryId: 2,
-      },
-      {
-        id: 19,
-        name: "Grande",
-        subCategoryId: 2,
-      },
-      {
-        id: 20,
-        name: "Venti",
-        subCategoryId: 2,
-      },
-    ],
-  },
+
   {
     id: 4,
     name: "카테고리",
     mainCategoryId: 2,
-    subCategoryId: [
+    subCategory: [
       {
-        id: 21,
+        id: 17,
         name: "플라스틱 텀블러",
         subCategoryId: 1,
       },
       {
-        id: 22,
+        id: 18,
         name: "스테인리스 텀블러",
         subCategoryId: 2,
       },
       {
-        id: 23,
+        id: 19,
         name: "보온병",
         subCategoryId: 3,
       },
       {
-        id: 24,
+        id: 20,
         name: "콜드컵",
         subCategoryId: 4,
       },
     ],
   },
+
   {
     id: 5,
-    name: "용량",
-    mainCategoryId: 3,
-    subCategoryId: [
-      {
-        id: 25,
-        name: "Short",
-        subCategoryId: 1,
-      },
-      {
-        id: 26,
-        name: "Tall",
-        subCategoryId: 2,
-      },
-      {
-        id: 27,
-        name: "Grande",
-        subCategoryId: 2,
-      },
-      {
-        id: 28,
-        name: "Venti",
-        subCategoryId: 2,
-      },
-    ],
-  },
-  {
-    id: 6,
     name: "카테고리",
     mainCategoryId: 3,
-    subCategoryId: [
+    subCategory: [
       {
-        id: 29,
+        id: 21,
         name: "머그",
         subCategoryId: 1,
       },
       {
-        id: 30,
+        id: 22,
         name: "글라스",
         subCategoryId: 2,
       },
       {
-        id: 31,
+        id: 23,
         name: "리유저블",
         subCategoryId: 3,
       },
     ],
   },
+  {
+    id: 6,
+    name: "시즌",
+    mainCategoryId: 0,
+    subCategory: [
+      {
+        id: 24,
+        name: "커티스 쿨릭",
+        subCategoryId: 1,
+      },
+      {
+        id: 25,
+        name: "체리블라썸",
+        subCategoryId: 2,
+      },
+      {
+        id: 26,
+        name: "밸런타인데이",
+        subCategoryId: 3,
+      },
+      {
+        id: 27,
+        name: "New Year",
+        subCategoryId: 4,
+      },
+      {
+        id: 28,
+        name: "데스크 컬렉션",
+        subCategoryId: 5,
+      },
+      {
+        id: 29,
+        name: "Christmas",
+        subCategoryId: 6,
+      },
+      {
+        id: 30,
+        name: "여주자유CC",
+        subCategoryId: 7,
+      },
+      {
+        id: 31,
+        name: "Autumn",
+        subCategoryId: 8,
+      },
+    ],
+  },
 ];
-
-export const cartListData = [{}];
