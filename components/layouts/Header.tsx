@@ -14,6 +14,7 @@ import { userLoginState } from "@/state/atom/userLoginState";
 
 import Swal from "sweetalert2";
 import BackButton from "../ui/BackButton";
+import { useCookies } from "react-cookie";
 
 export default function Header() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function Header() {
   const cartCnt = useRecoilValue(cartState);
   const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
+  const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
   const handleLogout = () => {
     Swal.fire({
@@ -42,6 +44,7 @@ export default function Header() {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("userId");
+        removeCookie("id");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({
           html: "다음에 또~",
@@ -105,16 +108,16 @@ export default function Header() {
         </nav>
       </div>
       {router.pathname === "/" ||
-        router.pathname === "/event" ||
-        router.pathname === "/best" ||
-        router.pathname === "/mypage" ? (
+      router.pathname === "/event" ||
+      router.pathname === "/best" ||
+      router.pathname === "/mypage" ? (
         <div className="header-bottom">
           <nav>
             <ul>
               {navBottomData &&
                 navBottomData.map((nav) =>
                   nav.link === "/event?category=1" ||
-                    nav.link === "/best?category=1" ? (
+                  nav.link === "/best?category=1" ? (
                     <li
                       key={nav.id}
                       className={

@@ -230,7 +230,11 @@ export default function cart() {
 
   const handleAllDelete = () => {
     //모든 카트 아이템 삭제 처리
-    axios.put(`${baseUrl}/v1/api/carts/delete/7`); //userId 추가
+    axios.put(`${baseUrl}/v1/api/carts/delete`, {
+      headers: {
+        Authorization: `Bearer ${cookies.id}`,
+      },
+    });
   };
 
   const handleSelectDelete = () => {
