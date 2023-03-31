@@ -149,7 +149,7 @@ export default function Login() {
         </div>
       </section>
 
-      <div onClick={handleKakao}>
+      <div className="kakaoLogin" onClick={handleKakao}>
         <img src="/assets/images/icons/kakaoLogin.png" alt="" />
       </div>
 

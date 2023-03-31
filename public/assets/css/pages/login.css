@@ -102,3 +102,11 @@ body {
 .login-header-back-button {
   width: 42%;
 }
+
+.kakaoLogin {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  left: 0;
+  right: 0;
+}
