@@ -29,8 +29,8 @@ export default function payment() {
           />
         </div>
         <div className="payment-products">
-          <img src="./assets/images/products/01.png" alt="" />
-          <p>{paymentData.productId}</p>
+          <img src={paymentData.thumbnail} alt="" />
+          <p>{paymentData.productName}</p>
         </div>
       </section>
       <section className="payment-option-info">
@@ -72,7 +72,7 @@ export default function payment() {
           </div>
           <div className="payment-order-price">
             <p>주문 금액</p>
-            <p>{orderPrice.toLocaleString("en")}원</p>
+            <p>{orderPrice}원</p>
           </div>
           <div className="payment-info-price-fb">
             <p>상품 금액</p>
@@ -97,7 +97,7 @@ export default function payment() {
         <MiddleLine />
         <div className="payment-order-price">
           <p>결제 금액</p>
-          <p>33,000원</p>
+          <p>{totalPrice}원</p>
         </div>
         <div className="payment-info-price-fb">
           <p>모바일 상품권</p>
@@ -106,7 +106,7 @@ export default function payment() {
         <MiddleLine />
         <div className="payment-title payment-order-price">
           <p>최종 결제 금액</p>
-          <p>33,000원</p>
+          <p>{totalPrice}원</p>
         </div>
         <p className="payment-description">
           위 주문 내용을 확인하였으며, 결제에 동의합니다.
@@ -117,7 +117,7 @@ export default function payment() {
       <div className="cart-footer">
         <div className="submit-container cart-footer-padding">
           <div className="payment-btn-order">
-            <button>33,000원 결제하기</button>
+            <button>{totalPrice}원 결제하기</button>
           </div>
         </div>
       </div>

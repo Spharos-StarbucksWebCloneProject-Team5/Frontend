@@ -36,6 +36,10 @@ export default function Login() {
     const { name, value } = event.target;
     setInputData({ ...inputData, [name]: value });
   };
+
+  const handleKakao = () => {
+    router.push(`${BASE_URL}/oauth2/authorization/kakao`);
+  };
   //로그인 확인용 => Recoil 셋업 되는대로 라우팅 처리 하겠습니다.
   const handleSubmit = () => {
     console.log("login");
@@ -144,6 +148,11 @@ export default function Login() {
           <LoginFooter />
         </div>
       </section>
+
+      <div onClick={handleKakao}>
+        <img src="/assets/images/icons/kakaoLogin.png" alt="" />
+      </div>
+
       <div className="submit-container">
         <button type="button" onClick={handleSubmit}>
           로그인
