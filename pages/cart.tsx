@@ -51,6 +51,8 @@ export default function cart() {
 
   const [buyData, setBuyData] = useRecoilState<buyType>(paymentState);
 
+  const [checkedData, setCheckedData] = useState<allCartType>();
+
   if (!isLogin) {
     Swal.fire({
       icon: "warning",
@@ -257,8 +259,6 @@ export default function cart() {
     setModalOpen(!modalOpen);
     setCountCartId(cartId);
   };
-
-  allCartItems.allCartList.map((item) => {});
 
   return (
     <>

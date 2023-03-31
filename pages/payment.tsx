@@ -10,6 +10,10 @@ export default function payment() {
   const paymentData = useRecoilValue(paymentState);
   console.log(paymentData);
 
+  let shipPrice = paymentData.price < 30000 ? 3000 : 0;
+  let orderPrice = paymentData.price * paymentData.count;
+  let totalPrice = orderPrice + shipPrice;
+
   return (
     <>
       <Head>
@@ -26,7 +30,7 @@ export default function payment() {
         </div>
         <div className="payment-products">
           <img src="./assets/images/products/01.png" alt="" />
-          <p>dddd</p>
+          <p>{paymentData.productId}</p>
         </div>
       </section>
       <section className="payment-option-info">
@@ -68,11 +72,11 @@ export default function payment() {
           </div>
           <div className="payment-order-price">
             <p>주문 금액</p>
-            <p>33,000원</p>
+            <p>{orderPrice.toLocaleString("en")}원</p>
           </div>
           <div className="payment-info-price-fb">
             <p>상품 금액</p>
-            <p>33,000원</p>
+            <p>{paymentData.price}원</p>
           </div>
           <div className="payment-info-price-fb">
             <p>배송비</p>
