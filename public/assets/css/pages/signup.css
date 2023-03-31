@@ -23,7 +23,7 @@
 
 /* signup - step 01 */
 .greeting .signup-info {
-  font-weight: normal;
+  font-weight: bold;
   font-size: 1.4rem;
   padding-left: 8px;
   opacity: 0.7;
@@ -34,12 +34,12 @@
   padding: 0;
   font-size: 1rem;
   margin-top: 2rem;
-  opacity: 0.7;
 }
 
 .agree-input input {
   box-sizing: border-box;
   margin-right: 0.7rem;
+  opacity: 0.7;
 }
 
 .agree-input input[type="checkbox"] {
@@ -70,7 +70,7 @@
 }
 
 .form-group label {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .form-group .arrow {
@@ -106,8 +106,9 @@
   border-radius: 15%;
 }
 
-.small-left-50 {
+p.small-left-50 {
   margin-left: 50px;
+  color: var(--color-black);
 }
 
 .agree-input .advertising-info label {
@@ -133,7 +134,6 @@
 
 .agree-input p {
   font-size: 0.8rem;
-  color: var(--color-gray-text);
 }
 
 .form-group-step {
@@ -179,36 +179,6 @@
   appearance: none;
 }
 
-#identification-input input:focus {
-  border-bottom: 1.5px solid var(--color-light-green);
-}
-
-/* #identification-input select {
-  appearance: none;
-  border: none;
-  font-size: 1.2rem;
-  padding-left: 5px;
-  vertical-align: middle;
-  position: sticky;
-  appearance: none;
-  height: 40px;
-  background: url("https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png")
-    calc(100% - 5px) center no-repeat;
-  background-size: 20px;
-  padding: 5px 30px 5px 10px;
-  width: 30%;
-}
-
-#identification-input select option {
-  font-size: 0.8rem;
-} */
-
-#identification-input p {
-  color: var(--color-gray-text);
-  margin-top: 0;
-  padding: 0 10px;
-}
-
 .request {
   border: none;
   background-color: rgba(0, 0, 0, 0);
@@ -237,16 +207,20 @@
   margin-bottom: 15px;
 }
 
+/* #id-password-input input:first-child {
+  margin-bottom: 10px;
+} */
+
 #id-password-input p {
-  font-size: 1.3rem;
-  color: var(--color-gray-text);
+  font-size: 0.9rem;
+  color: var(--color-red);
 }
 
 #id-password-input input:focus {
   border-bottom: 1.5px solid var(--color-light-green);
 }
 
-/* #id-password-input select {
+#id-password-input select {
   appearance: none;
   border: none;
   font-size: 1.2rem;
@@ -260,7 +234,7 @@
   padding: 5px 30px 5px 10px;
   width: 70%;
   color: var(--color-gray-text);
-} */
+}
 
 #id-password-input select option {
   font-size: 0.8rem;
@@ -279,22 +253,6 @@
   display: flex;
   align-items: baseline;
 }
-
-/* #email-input select {
-  appearance: none;
-  border: none;
-  font-size: 1.2rem;
-  padding-left: 5px;
-  vertical-align: middle;
-  position: sticky;
-  appearance: none;
-  height: 40px;
-  background: url("https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png") calc(100% - 5px) center no-repeat;
-  background-size: 20px;
-  padding: 5px 30px 5px 10px;
-  width: 70%;
-  color: var(--color-gray-text);
-} */
 
 #email-input input {
   border: 0;
@@ -320,4 +278,69 @@
 
 #email-input select option {
   font-size: 0.8rem;
+}
+
+.email-guideline .notice {
+  font-size: 0.8rem;
+}
+
+.greeting-margin-40 {
+  margin: 40px 0;
+}
+
+#id-password-input button {
+  width: 100px;
+  height: 30px;
+  border-radius: 20px 20px 20px 20px;
+  border: none;
+  background-color: var(--color-light-green);
+  color: var(--color-white);
+  font-size: 1.0rem;
+  font-weight: bold;
+}
+
+.email-confirm-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#id-password-input .email-confirm-button p {
+  margin: 0 0 0 0;
+}
+
+#id-password-input #email-confirmkey {
+  width: 65%;
+  margin: 0;
+}
+
+#id-password-input #email-confirm-button {
+  width: 85px;
+  border-radius: 15px;
+}
+
+.confirmkey {
+  display: flex;
+  flex-direction: column;
+}
+
+.email-confirmkey-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#id-password-input .confirm-view {
+  display: flex;
+  align-items: center;
+}
+
+#id-password-input .confirm-view span {
+  margin-right: 15px;
+  margin: 0 15px 0 5px;
+}
+
+#id-password-input .confirm-view p {
+  margin: 0;
 }

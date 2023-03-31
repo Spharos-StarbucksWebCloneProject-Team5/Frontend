@@ -1,17 +1,29 @@
-import { inputRegisterType } from "@/types/UserRequest/Request";
 import React, { useState, useEffect } from "react";
+
+import CheckBox from "@/components/ui/CheckBox";
+
+import { inputRegisterType } from "@/types/UserRequest/Request";
 
 interface ChildProps {
   inputData: inputRegisterType;
   setInputData: React.Dispatch<React.SetStateAction<inputRegisterType>>;
 }
 const Step03 = ({ inputData, setInputData }: ChildProps) => {
+
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setInputData({
-      ...inputData,
-      [name]: value,
-    });
+    const { name, value, checked } = e.target;
+    if (name === 'isPrivacyAgree') {
+      setInputData({
+        ...inputData,
+        [name]: checked,
+      });
+    }
+    if (name === 'userNickname') {
+      setInputData({
+        ...inputData,
+        [name]: value,
+      });
+    };
   };
 
   useEffect(() => {
@@ -21,46 +33,39 @@ const Step03 = ({ inputData, setInputData }: ChildProps) => {
   return (
     <>
       <div className="slide-in">
-        <header>
-          <div className="signup-header">
-            <a href="javascript:window.history.back();">
-              <img
-                src="./assets/images/icons/close.png"
-                className="back-button"
-              />
-            </a>
-            <p className="page-num">①－②－③－❹</p>
-          </div>
-          <section className="greeting">
-            <h2 className="signup-info">
-              닉네임을
-              <br />
-              입력해 주세요.
-            </h2>
-          </section>
-          <section className="agree-input margin-top-zero">
-            <input type="checkbox" id="optional-agree" name="optional-agree" />
-            <label>선택적 개인정보 수집동의 및 이용약관</label>
-          </section>
-          <section id="id-password-input">
+        {/* <div className="signup-header">
+          <p className="page-num">①－②－③－❹</p>
+        </div> */}
+        <section className="greeting">
+          <h2 className="signup-info">
+            닉네임을
+            <br />
+            입력해 주세요.
+          </h2>
+        </section>
+        <form className="agree-input" id="agree-main">
+          <CheckBox
+            lableText="선택적 개인정보 수집동의 및 이용약관"
+            isArrow={true}
+            inputName="isPrivacyAgree"
+            link=""
+            handler={handleInput}
+            value={inputData.isPrivacyAgree}
+          />
+          <div id="id-password-input">
             <input
               type="text"
               name="userNickname"
               placeholder="닉네임 (한글 6자리 이내)"
               onChange={handleInput}
             />
-          </section>
+          </div>
+        </form>
 
-          <section className="email-guideline">
-            <p className="notice">
-              · 매장에서 주문한 메뉴를 찾으실 때, 등록한 닉네임으로 불러
-              드립니다.
-            </p>
-          </section>
-        </header>
-        <section id="identification-input"></section>
-        <section className="submit-container">
-          <button type="submit">다음</button>
+        <section className="email-guideline">
+          <p className="notice">
+            · 매장에서 주문한 메뉴를 찾으실 때, 등록한 닉네임으로 불러 드립니다.
+          </p>
         </section>
       </div>
     </>

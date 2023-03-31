@@ -1,22 +1,26 @@
-.search-top{
+div.container {
+    margin: 0 !important;
+}
+
+.search-top {
     width: 100%;
     display: flex;
     height: 20%;
 }
 
-.search-top .search-bar{
+.search-top .search-bar {
     width: 100%;
     height: 30px;
     display: flex;
     margin: 15px;
 }
 
-.search-top form{
+.search-top form {
     width: 100%;
     height: 100%
 }
 
-.search-top form input{ 
+.search-top form input {
     width: 100%;
     height: 100%;
     border: none;
@@ -24,7 +28,7 @@
     background-color: rgb(246, 246, 246);
 }
 
-.search-top .search-icons{
+.search-top .search-icons {
     position: relative;
     vertical-align: middle;
     right: 75px;
@@ -33,72 +37,76 @@
 
 }
 
-.search-top .search-icons ul{
+.search-top .search-icons ul {
     display: flex;
     width: 20%;
 }
 
-.search-top .search-icons li{
+.search-top .search-icons li {
     padding-right: 20px;
     list-style: none;
 }
 
-.search-top .search-icons img{
+.search-top .search-icons img {
     width: 20px;
     width: 20px;
 }
 
-.search-latest{
+.search-latest {
     margin: 15px;
     height: 50%;
 }
-.search-latest h3{
+
+.search-latest h3 {
     font-size: 13px;
     color: gray;
 }
-.search-latest .search-latest-keywords{
+
+.search-latest .search-latest-keywords {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
-.search-latest .search-latest-keywords .keywords{
+.search-latest .search-latest-keywords .keywords {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-right: 20px;
 }
 
-.search-latest .search-latest-keywords .keywords img{
+.search-latest .search-latest-keywords .keywords img {
     width: 10px;
     height: 10px;
 }
 
-.search-latest .delete-keywords{
+.search-latest .delete-keywords {
     float: right;
 }
-.search-latest .delete-keywords button{
+
+.search-latest .delete-keywords button {
     font-weight: bold;
     border: none;
-    background-color: white;    
+    background-color: white;
 }
 
-.recommand-tag{
+.recommand-tag {
     margin: 50px 20px 0 20px;
 }
 
-.recommand-tag .tag-list{
+.recommand-tag .tag-list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
 }
-.recommand-tag .tag-list .tag-list-item{
+
+.recommand-tag .tag-list .tag-list-item {
     border: none;
     vertical-align: middle;
     text-align: center;
     color: white;
     height: 35px;
     background-color: #22b673;
-    
+
     border-radius: 10px;
 }

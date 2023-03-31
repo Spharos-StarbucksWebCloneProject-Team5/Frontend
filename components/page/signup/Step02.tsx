@@ -6,6 +6,7 @@ import axios from "axios";
 import Config from "@/configs/config.export";
 import Swal from "sweetalert2";
 import { SignupErrType } from "@/types/signup/signupErrType";
+import StButton from "@/components/ui/StButton";
 
 interface ChildProps {
   inputData: inputRegisterType;
@@ -60,12 +61,17 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "confirmKey") setConfirmKey(value);
-    if (name === "password" && value.length > 10) {
+    if (name === "password" && value.length > 0) {
       if (!pwRegex.test(value)) {
         if (value.length > 25) {
           setErrMsg({
             ...errMsg,
             passwordErr: "비밀번호는 25자리 이하로 입력해주세요.",
+          });
+        } else if (value.length < 9) {
+          setErrMsg({
+            ...errMsg,
+            passwordErr: "비밀번호는 8자리 이상으로 입력해주세요.",
           });
         } else {
           setErrMsg({
@@ -86,12 +92,12 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
   };
 
   const handleEmailConfirm = () => {
-    if (!emailRegex.test(inputData.userEmail)) {
-      setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." });
-      return;
-    }
     if (inputData.userEmail === "") {
       setErrMsg({ ...errMsg, emailErr: "이메일을 입력해주세요." });
+      return;
+    }
+    if (!emailRegex.test(inputData.userEmail)) {
+      setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." });
       return;
     }
 
@@ -161,26 +167,28 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
 
   return (
     <>
-      <div className="slide-in">
-        <div className="greeting">
-          <h2 className="signup-info">
-            아이디와 비밀번호를
-            <br />
-            입력해주세요.
-          </h2>
-        </div>
-        <form className="agree-input" id="agree-main">
-          <div>
-            <input
-              type="email"
-              name="userEmail"
-              placeholder="이메일을 입력해주세요."
-              onChange={handleChange}
-              value={inputData.userEmail}
-              required={true}
-              className={inputData.isUserConfirm ? "isDisable" : ""}
-              disabled={inputData.isUserConfirm}
-            />
+      <div className="greeting">
+        <h2 className="signup-info">
+          아이디와 비밀번호를
+          <br />
+          입력해주세요.
+        </h2>
+      </div>
+      <form className="agree-input" id="agree-main">
+        <div id="id-password-input">
+          <input
+            id="email-input"
+            type="email"
+            name="userEmail"
+            placeholder="이메일을 입력해주세요."
+            onChange={handleChange}
+            value={inputData.userEmail}
+            required={true}
+            className={inputData.isUserConfirm ? "isDisable" : ""}
+            disabled={inputData.isUserConfirm}
+          />
+          <div className="email-confirm-button">
+            <p>{errMsg.emailErr}</p>
             <button
               type="button"
               onClick={handleEmailConfirm}
@@ -189,11 +197,13 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             >
               이메일인증
             </button>
-            <p>{errMsg.emailErr}</p>
           </div>
-          {confirmView && (
-            <div>
+        </div>
+        {confirmView && (
+          <div id="id-password-input" className="confirmkey">
+            <div className="email-confirmkey-div">
               <input
+                id="email-confirmkey"
                 type="text"
                 name="confirmKey"
                 placeholder="인증키를 입력해주세요."
@@ -202,6 +212,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                 disabled={inputData.isUserConfirm}
               />
               <button
+                id="email-confirm-button"
                 type="button"
                 onClick={handleConfirmKey}
                 className={inputData.isUserConfirm ? "isDisable" : ""}
@@ -209,6 +220,8 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
               >
                 인증하기
               </button>
+            </div>
+            <div className="confirm-view">
               {!inputData.isUserConfirm ? (
                 <Countdown date={confirmTime} renderer={renderer} />
               ) : (
@@ -216,8 +229,10 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
               )}
               <p>{errMsg.confirmKeyErr}</p>
             </div>
-          )}
+          </div>
+        )}
 
+        <div id="id-password-input">
           <input
             type="password"
             name="password"
@@ -232,8 +247,8 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             onChange={handleChange}
           />
           <p>{errMsg.confirmPasswordErr}</p>
-        </form>
-      </div>
+        </div>
+      </form>
     </>
   );
 };
