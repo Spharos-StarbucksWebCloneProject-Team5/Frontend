@@ -42,6 +42,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       </Head>
 
       {router.pathname && router.pathname === "/menu" || router.pathname === "/search" ? null : <Header />}
+
       <div className="container">{props.children}</div>
     </>
   );

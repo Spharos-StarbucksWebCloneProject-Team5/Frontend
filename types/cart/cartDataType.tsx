@@ -19,3 +19,15 @@ export interface cartListType {
   mainCategoryId: number;
   checked: boolean;
 }
+
+export interface cartBuyType {
+  buyList: buyType[];
+}
+
+export interface buyType {
+  productId: number;
+  productCount: number;
+  productName: string;
+  price: number;
+  thumbnail: string;
+}

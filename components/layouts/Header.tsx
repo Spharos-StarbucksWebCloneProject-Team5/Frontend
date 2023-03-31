@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 import SubNavigation from "@/components/widgets/SubNavigation";
-import Category from "@/components/widgets/ProductCategory";
+import Category from "@/components/widgets/Category";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
 import { bottomNavData } from "@/datas/navData";
 import { cartState } from "@/state/atom/cartState";
@@ -13,6 +13,7 @@ import { menuModalState } from "@/state/atom/menuModalState";
 import { userLoginState } from "@/state/atom/userLoginState";
 
 import Swal from "sweetalert2";
+import BackButton from "../ui/BackButton";
 
 export default function Header() {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function Header() {
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({
           html: "다음에 또~",
-          timer: 2000,
+          timer: 800,
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
@@ -71,9 +72,15 @@ export default function Header() {
     <header>
       <div className="header-top">
         <div className="menu-icon">
-          <div onClick={() => setIsMenuModalOpen(true)}>
-            <img src="assets/images/icons/menu.svg" alt="" />
-          </div>
+          {router.pathname === "/cart" ||
+          router.pathname === "/listview" ||
+          router.pathname === "/signup" ? (
+            <BackButton />
+          ) : (
+            <div onClick={() => setIsMenuModalOpen(true)}>
+              <img src="assets/images/icons/menu.svg" alt="" />
+            </div>
+          )}
         </div>
         <Link href={"/"}>
           <h1>온라인 스토어</h1>

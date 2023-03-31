@@ -18,7 +18,7 @@ export default function FilterMenuList(props: {
   const handleAddQuery = (item: MenuDataType) => {
     console.log(item);
     if (item.key === "category") {
-      router.push(`/listview?category=${item.name}`);
+      router.push(`/listview?category=${item.id}`);
 
       axios.get(`${baseUrl}/v1/api/categories/middle`)
         .then((res) => {
@@ -27,6 +27,8 @@ export default function FilterMenuList(props: {
           setCategoryMiddle(res.data)
         });
 
+    if (props.filterFile.find((data) => data.id === item.id)) {
+      props.setFilter(props.filterFile.filter((data) => data.id !== item.id));
       return;
     }
 

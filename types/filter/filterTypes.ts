@@ -10,3 +10,9 @@ export interface filterDataType {
   value: string;
   isCheck: boolean;
 }
+
+export interface menuListDepth2 {
+  id: number;
+  name: string;
+  data: MenuDataType[];
+}
