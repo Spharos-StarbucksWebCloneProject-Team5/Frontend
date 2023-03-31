@@ -22,12 +22,11 @@ export interface inputRegisterType {
   userEmail: string;
   userNickname: string;
   birthday: Date;
-  address: string;
   password: string;
   confirmPassword: string;
-  phone: string;
   isUserConfirm: boolean;
   privateAgree: privateAgreeType;
+  isPrivacyAgree: boolean;
 }
 
 export interface privateAgreeType {

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import StButton from "@/components/ui/StButton";
+
+import { useRouter } from "next/router";
 import { inputRegisterType } from "@/types/UserRequest/Request";
+
+import Config from "@/configs/config.export";
+
+import axios from "axios";
 import Swal from "sweetalert2";
+
 import Step01 from "@/components/page/signup/Step01";
 import Step02 from "@/components/page/signup/Step02";
 import Step03 from "@/components/page/signup/Step03";
-import { useRouter } from "next/router";
-import CloseButton from "@/components/ui/CloseButton";
-import axios from "axios";
-import Config from "@/configs/config.export";
+import StButton from "@/components/ui/StButton";
+import BackButton from "@/components/ui/BackButton";
 
 export default function SignUp() {
   const router = useRouter();
@@ -19,16 +23,15 @@ export default function SignUp() {
     userEmail: "",
     userNickname: "",
     birthday: new Date(),
-    address: "",
     password: "",
     confirmPassword: "",
-    phone: "",
     isUserConfirm: false,
     privateAgree: {
       isAgree: false,
       isUseConfirm: false,
       isAdvertisingConfirm: false,
     },
+    isPrivacyAgree: false,
   });
 
   const steps: any = [
@@ -59,6 +62,8 @@ export default function SignUp() {
         return;
       }
       setStepId(stepId + 1);
+      console.log(inputData.isUserConfirm)
+
     } else if (stepId === 2) {
       if (!inputData.isUserConfirm) {
         Swal.fire({
@@ -105,12 +110,29 @@ export default function SignUp() {
           },
         }).then((result) => {
           if (result.isConfirmed) {
-            setStepId(stepId + 1);
+            axios
+              .post(`${baseUrl}/api/v1/users/sign-up`, {
+                email: inputData.userEmail,
+                password: inputData.password,
+              })
+              .then((res) => {
+                console.log(res);
+                Swal.fire({
+                  icon: "success",
+                  text: `회원가입이 완료되었습니다.`,
+                  customClass: {
+                    confirmButton: "swal-confirm-button",
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    router.push("/login");
+                  }
+                });
+              });
           }
           return;
         });
-      } else {
-        console.log(inputData.userNickname);
+      } else if (inputData.userNickname !== "") {
         Swal.fire({
           icon: "warning",
           text: `닉네임을 ${inputData.userNickname}으로 정하시겠습니까?`,
@@ -122,6 +144,25 @@ export default function SignUp() {
           },
         }).then((result) => {
           if (result.isConfirmed) {
+            axios
+              .post(`${baseUrl}/api/v1/users/sign-up`, {
+                email: inputData.userEmail,
+                password: inputData.password,
+              })
+              .then((res) => {
+                console.log(res);
+                Swal.fire({
+                  icon: "success",
+                  text: `회원가입이 완료되었습니다.`,
+                  customClass: {
+                    confirmButton: "swal-confirm-button",
+                  },
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    router.push("/login");
+                  }
+                });
+              });
           } else {
             setInputData({
               ...inputData,
@@ -132,30 +173,11 @@ export default function SignUp() {
         });
       }
     }
-    axios
-      .post(`${baseUrl}/api/v1/users/sign-up`, {
-        email: inputData.userEmail,
-        password: inputData.password,
-      })
-      .then((res) => {
-        console.log(res);
-        Swal.fire({
-          icon: "success",
-          text: `회원가입이 완료되었습니다.`,
-          customClass: {
-            confirmButton: "swal-confirm-button",
-          },
-        }).then((result) => {
-          if (result.isConfirmed) {
-            router.push("/login");
-          }
-        });
-      });
   };
 
   return (
     <div className="modal">
-      <CloseButton />
+      <BackButton />
       {steps[stepId - 1][stepId]}
       <section className="submit-container">
         <StButton

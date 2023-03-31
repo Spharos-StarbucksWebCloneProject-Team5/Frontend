@@ -1,13 +1,12 @@
-import MiddleLine from "@/components/ui/MiddleLine";
-import Config from "@/configs/config.export";
-import axios from "axios";
 import { useRouter } from "next/router";
 
-import React, { useEffect, useState } from "react";
+import Config from "@/configs/config.export";
+import CloseButton from "@/components/ui/CloseButton";
+import MiddleLine from "@/components/ui/MiddleLine";
+
+import React, { useState } from "react";
 
 export default function search() {
-  const baseUrl = Config().baseUrl;
-
   const [search, setSearch] = useState("");
 
   const searchHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +34,7 @@ export default function search() {
               <img src="assets/images/icons/search.svg" />
             </li>
             <li>
-              <img src="assets/images/icons/close.png" />
+              <CloseButton />
             </li>
           </ul>
         </div>

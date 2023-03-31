@@ -13,6 +13,8 @@ import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import CloseButton from "@/components/ui/CloseButton";
 import LoginFooter from "@/components/page/login/LoginFooter";
+import Image from "next/image";
+import BackButton from "@/components/ui/BackButton";
 
 export default function Login() {
   const router = useRouter();
@@ -98,11 +100,20 @@ export default function Login() {
 
   return (
     <div className="modal">
-      <CloseButton />
+      <div className="login-header">
+        <div className="login-header-back-button">
+          <BackButton />
+        </div>
+        <h3>로그인</h3>
+      </div>
       <section className="login-section">
         <div className="login-top">
-          <h2>로그인</h2>
-          <img id="starbucks" src="./assets/images/starbucks-logo.png" alt="" />
+          <Image
+            src="/assets/images/starbucks-logo.png"
+            width={80}
+            height={80}
+            alt="starbucks-logo"
+          />
           <p className="title">
             안녕하세요. <br /> 스타벅스입니다.
           </p>
@@ -112,7 +123,6 @@ export default function Login() {
           <input
             type="text"
             name="email"
-            defaultValue={inputData.email}
             value={inputData.email}
             placeholder="이메일"
             onChange={handleOnChange}
@@ -124,7 +134,6 @@ export default function Login() {
           <input
             type="password"
             name="password"
-            defaultValue={inputData.password}
             value={inputData.password}
             placeholder="비밀번호"
             onChange={handleOnChange}

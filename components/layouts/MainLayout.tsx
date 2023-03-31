@@ -26,12 +26,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         refreshToken: localStorage.getItem("refreshToken") || "",
         isLogin: true,
       });
-      // setIsLogin({
-      //   userId: localStorage.getItem("userId") || "",
-      //   accessToken: localStorage.getItem("accessToken") || "",
-      //   refreshToken: localStorage.getItem("refreshToken") || "",
-      //   isLogin: true,
-      // });
     }
   }, []);
 
@@ -47,13 +41,8 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         <meta name="keywords" content="StarBucks, Clone, Site" />
       </Head>
 
-      <div className="container">
-        {router.pathname &&
-        (router.pathname === "/menu" ||
-          router.pathname === "/search") ? null : (
-          <Header />
-        )}
-      </div>
+      {router.pathname && router.pathname === "/menu" || router.pathname === "/search" ? null : <Header />}
+
       <div className="container">{props.children}</div>
     </>
   );

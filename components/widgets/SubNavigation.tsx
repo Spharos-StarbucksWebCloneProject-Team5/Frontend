@@ -18,7 +18,7 @@ export default function SubNavigation() {
   if (router.pathname === '/event') {
     subName = `${baseUrl}/v1/api/events/all`
   } else if (router.pathname === '/best') {
-    subName = `${baseUrl}/v1/api/categories/main`
+    subName = `${baseUrl}/v1/api/categories/main/side`
   }
 
   useEffect(() => {

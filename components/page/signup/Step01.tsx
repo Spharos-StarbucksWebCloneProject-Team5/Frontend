@@ -5,6 +5,7 @@ import {
 import CheckBox from "@/components/ui/CheckBox";
 import Separator from "@/components/ui/Separator";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface ChildProps {
   inputData: inputRegisterType;
@@ -14,10 +15,6 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
   const [agreeArray, setAgreeArray] = useState<privateAgreeType>(
     {} as privateAgreeType
   );
-  const [adOption, setAdOption] = useState<object>([
-    { id: 1, name: "E-mail", checked: false },
-    { id: 2, name: "SMS", checked: false },
-  ]);
 
   const [isAllAgree, setIsAllAgree] = useState<boolean>(false);
 
@@ -55,7 +52,12 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
     <>
       <div className="slide-in">
         <div className="greeting">
-          {/* <img id="starbucks-logo" src="./assets/images/starbucks-logo.png" /> */}
+          <Image
+            src="/assets/images/starbucks-logo.png"
+            width={80}
+            height={80}
+            alt="starbucks-logo"
+          />
           <h2 className="signup-info">
             고객님
             <br />
@@ -67,7 +69,7 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
             lableText="약관 전체동의"
             isArrow={false}
             inputName="isAllAgree"
-            link="/best_cake"
+            link=""
             handler={handleInput}
             value={isAllAgree}
           />
@@ -76,7 +78,7 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
             lableText="이용약관 동의(필수)"
             isArrow={true}
             inputName="isAgree"
-            link="/best_cake"
+            link=""
             handler={handleInput}
             value={agreeArray.isAgree}
           />
@@ -84,7 +86,7 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
             lableText="개인정보 수집 및 이용동의(필수)"
             isArrow={true}
             inputName="isUseConfirm"
-            link="/best_cake"
+            link=""
             handler={handleInput}
             value={agreeArray.isUseConfirm}
           />
@@ -92,7 +94,7 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
             lableText="광고성 정보 수신동의(선택)"
             isArrow={true}
             inputName="isAdvertisingConfirm"
-            link="/best_cake"
+            link=""
             handler={handleInput}
             value={agreeArray.isAdvertisingConfirm}
           />

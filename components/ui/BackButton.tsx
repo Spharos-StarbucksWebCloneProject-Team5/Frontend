@@ -4,11 +4,11 @@ import router from "next/router";
 
 export default function BackButton() {
   return (
-    <div onClick={() => history.back()}>
+    <div onClick={() => router.back()}>
       <Image
         src="/assets/images/icons/back.png"
-        width={23}
-        height={23}
+        width={50}
+        height={50}
         className="back-button"
         alt="backButton"
       />

@@ -1,10 +1,13 @@
-import ProductListCard from '@/components/ui/ProductListCard';
-import Config from '@/configs/config.export';
-import { productListCardType } from '@/types/product/fetchDataType';
-import axios from 'axios';
-import Head from 'next/head'
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router';
+import Head from 'next/head'
+
+import axios from 'axios';
+
+import Config from '@/configs/config.export';
+
+import ProductListCard from '@/components/ui/ProductListCard';
+import { productListCardType } from '@/types/product/fetchDataType';
 
 export default function Best() {
 

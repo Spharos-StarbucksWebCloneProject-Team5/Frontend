@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+
 import SubNavigation from "@/components/widgets/SubNavigation";
 import Category from "@/components/widgets/Category";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
 import { bottomNavData } from "@/datas/navData";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { cartState } from "@/state/atom/cartState";
 import { menuModalState } from "@/state/atom/menuModalState";
 import { userLoginState } from "@/state/atom/userLoginState";
+
 import Swal from "sweetalert2";
 import BackButton from "../ui/BackButton";
 
@@ -103,16 +105,16 @@ export default function Header() {
         </nav>
       </div>
       {router.pathname === "/" ||
-      router.pathname === "/event" ||
-      router.pathname === "/best" ||
-      router.pathname === "/mypage" ? (
+        router.pathname === "/event" ||
+        router.pathname === "/best" ||
+        router.pathname === "/mypage" ? (
         <div className="header-bottom">
           <nav>
             <ul>
               {navBottomData &&
                 navBottomData.map((nav) =>
                   nav.link === "/event?category=1" ||
-                  nav.link === "/best?category=1" ? (
+                    nav.link === "/best?category=1" ? (
                     <li
                       key={nav.id}
                       className={
