@@ -18,12 +18,12 @@ export default function ProductListView() {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
-  //     setPageData(res.data);
-  //     setProductData(res.data.content);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
+      setPageData(res.data);
+      setProductData(res.data.content);
+    });
+  }, []);
 
   const fetchData = () => {
     axios(`${baseUrl}/v1/api/products/?pageNum=${page + 1}`).then((res) => {
@@ -63,8 +63,6 @@ export default function ProductListView() {
   //     });
   //   }
   // }, [router.query]);
-
-  console.log(subCategory);
 
   return (
     <section>
