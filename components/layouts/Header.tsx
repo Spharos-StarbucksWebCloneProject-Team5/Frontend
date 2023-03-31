@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import SubNavigation from "@/components/widgets/SubNavigation";
-import Category from "@/components/widgets/ProductCategory";
+import Category from "@/components/widgets/Category";
 import { bottomNavMenuType } from "@/types/header/navMenuType";
 import { bottomNavData } from "@/datas/navData";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -43,7 +43,7 @@ export default function Header() {
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({
           html: "다음에 또~",
-          timer: 2000,
+          timer: 800,
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();

@@ -55,18 +55,19 @@ export default function Login() {
           console.log(res);
           setLoginData({
             userId: res.data.data.userId,
-            accessToken: res.data.data.accessToken,
-            refreshToken: res.data.data.refreshToken,
+            accessToken: res.headers.accesstoken,
+            refreshToken: res.headers.refreshtoken,
             isLogin: true,
           });
           let myLogin = localStorage;
           myLogin.setItem("userId", res.data.data.userId);
-          myLogin.setItem("refreshToken", res.data.data.refreshToken);
-          setCookie("id", res.data.data.accessToken, { path: "/" });
+          myLogin.setItem("refreshToken", res.headers.refreshtoken);
+          myLogin.setItem("nickname", res.data.data.name);
+          setCookie("id", res.headers.accesstoken, { path: "/" });
 
           Swal.fire({
             icon: "success",
-            text: "Welcome!",
+            text: `${myLogin.getItem("nickname")}님 Welcome!`,
           });
           console.log(router);
           router.push("/");

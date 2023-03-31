@@ -12,15 +12,13 @@ export default function FilterMenuList(props: {
   const handleAddQuery = (item: MenuDataType) => {
     console.log(item);
     if (item.key === "category") {
-      router.push(`/listview?category=${item.name}`);
+      router.push(`/listview?category=${item.id}`);
 
       return;
     }
 
-    if (props.filterFile.find((data) => data.value === item.name)) {
-      props.setFilter(
-        props.filterFile.filter((data) => data.value !== item.name)
-      );
+    if (props.filterFile.find((data) => data.id === item.id)) {
+      props.setFilter(props.filterFile.filter((data) => data.id !== item.id));
       return;
     }
     props.setFilter([

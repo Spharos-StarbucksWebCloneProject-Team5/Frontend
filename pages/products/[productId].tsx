@@ -10,7 +10,7 @@ import {
 } from "../../types/product/fetchDataType";
 
 export default function Product() {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const baseUrl = Config().baseUrl;
   const [productData, setProductData] = useState<productListCardType>();
   const [productImageData, setProductImageData] = useState<productImageType[]>(
@@ -35,6 +35,10 @@ export default function Product() {
   //     //console.log(productImageData?.productId);
   //   });
   // }, []);
+
+  const movePayment = () => {
+    push(`/payment`);
+  };
 
   return (
     <>
@@ -64,8 +68,7 @@ export default function Product() {
             </p>
           </div>
         </div>
-        <div className="product-remark">
-        </div>
+        <div className="product-remark"></div>
       </section>
 
       <section id="product-details-img">
@@ -102,7 +105,7 @@ export default function Product() {
           <div className="product-add-details">
             <img src="../assets/images/icons/grayLine.png" />
           </div>
-          <div className="product-order">
+          <div className="product-order" onClick={movePayment}>
             <p>구매하기</p>
           </div>
         </div>

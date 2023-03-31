@@ -9,6 +9,8 @@ import { loginModalState } from "@/state/atom/loginModalState";
 import { userLoginState } from "@/state/atom/userLoginState";
 import {
   allCartType,
+  buyType,
+  cartBuyType,
   cartListType,
   cartType,
   freezeCartType,
@@ -20,9 +22,11 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
-import ModifyCountModal from "@/components/ui/ModifyCountModal";
+
 import { useCookies } from "react-cookie";
 import payment from "./payment";
+import CountModal from "@/components/ui/CountModal";
+import { paymentState } from "@/state/atom/paymentState";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
@@ -45,13 +49,15 @@ export default function cart() {
   const [checkedList, setCheckedList] = useState<number[]>([]);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
-  // if (!isLogin) {
-  //   Swal.fire({
-  //     icon: "warning",
-  //     text: "로그인이 필요합니다!",
-  //   });
-  //   push("/login");
-  // }
+  const [buyData, setBuyData] = useRecoilState<buyType>(paymentState);
+
+  if (!isLogin) {
+    Swal.fire({
+      icon: "warning",
+      text: "로그인이 필요합니다!",
+    });
+    push("/login");
+  }
 
   useEffect(() => {
     console.log(cookies.id);
@@ -62,7 +68,6 @@ export default function cart() {
         },
       })
       .then((res) => {
-        //userId 추가
         setAllCartItems({ allCartList: res.data });
         setCartItems({
           cartList: res.data.filter(
@@ -228,16 +233,7 @@ export default function cart() {
 
   const handleSelectDelete = () => {
     //선택 카트 아이템 삭제 처리
-    // cartItems.cartList
-    //   .filter((item) => item.checked === true)
-    //   .map((item) =>
-    //     axios.put(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
-    //   );
-    // freezeCartItems.freezeCartList
-    //   .filter((item) => item.checked === true)
-    //   .map((item) =>
-    //     axios.put(`${baseUrl}/v1/api/carts/delete/` + item.cartId)
-    //   );
+
     console.log(checkedList);
     checkedList.map((item) => axios.put(`${baseUrl}/v1/api/carts/` + item));
     location.reload();
@@ -254,11 +250,6 @@ export default function cart() {
     location.reload();
   };
 
-  const buyNow = (id: number) => {
-    //바로 구매
-    push(`/payment?id=${id}`);
-  };
-
   const [modalOpen, setModalOpen] = useState(false);
   const [countCartId, setCountCartId] = useState<number>(0);
 
@@ -266,6 +257,8 @@ export default function cart() {
     setModalOpen(!modalOpen);
     setCountCartId(cartId);
   };
+
+  allCartItems.allCartList.map((item) => {});
 
   return (
     <>
@@ -352,7 +345,16 @@ export default function cart() {
 
                   <button
                     id="box-button-02"
-                    onClick={() => buyNow(element.cartId)}
+                    onClick={() => {
+                      setBuyData({
+                        productId: element.productId,
+                        productCount: element.count,
+                        productName: element.productName,
+                        price: element.productPrice,
+                        thumbnail: element.productThumbnail,
+                      });
+                      push(`/payment`);
+                    }}
                   >
                     바로 구매
                   </button>
@@ -427,7 +429,16 @@ export default function cart() {
                   </button>
                   <button
                     id="box-button-02"
-                    onClick={() => buyNow(element.cartId)}
+                    onClick={() => {
+                      setBuyData({
+                        productId: element.productId,
+                        productCount: element.count,
+                        productName: element.productName,
+                        price: element.productPrice,
+                        thumbnail: element.productThumbnail,
+                      });
+                      push(`/payment`);
+                    }}
                   >
                     바로 구매
                   </button>
@@ -438,7 +449,7 @@ export default function cart() {
         </section>
 
         <section>
-          <div className="cart-total-check">
+          <div className="cart-total-check" id="agree-main">
             <p>
               상품 {freezeCartCount}건 {freezeCartPrice.toLocaleString("en")}원
               + 배송비 {freezeShipPrice.toLocaleString("en")}원 = 총
@@ -482,10 +493,15 @@ export default function cart() {
           </div>
         </section>
       </div>
-      <CartFooter count={totalCount} totalPrice={price} checked={checkedList} />
+      <CartFooter
+        count={totalCount}
+        totalPrice={price}
+        checked={checkedList}
+        allItems={allCartItems}
+      />
 
       {modalOpen && (
-        <ModifyCountModal setModalOpen={setModalOpen} cartId={countCartId} />
+        <CountModal setModalOpen={setModalOpen} cartId={countCartId} />
       )}
     </>
   );

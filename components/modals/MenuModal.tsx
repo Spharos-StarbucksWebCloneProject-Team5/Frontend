@@ -17,7 +17,7 @@ export default function MenuModal() {
   const [isMenuModalOpen, setIsMenuModalOpen] = useRecoilState(menuModalState);
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/categories/main`).then((res) =>
+    axios(`${baseUrl}/v1/api/categories/main/side`).then((res) =>
       SetCategoryData(res.data)
     );
   }, []);
