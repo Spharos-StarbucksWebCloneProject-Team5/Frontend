@@ -1,53 +1,46 @@
-import MiddleLine from '@/components/ui/MiddleLine'
-import Head from 'next/head'
-import React from 'react'
+import MiddleLine from "@/components/ui/MiddleLine";
+import ShippingInfo from "@/components/widgets/ShippingInfo";
+import { paymentState } from "@/state/atom/paymentState";
+import { buyType } from "@/types/cart/cartDataType";
+import Head from "next/head";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function payment() {
+  const paymentData = useRecoilValue(paymentState);
+  console.log(paymentData);
+
   return (
     <>
       <Head>
         <title>Payment</title>
       </Head>
-      <section className="padding-lr-20">
-        <div id="payment">
-          <p>결제하기</p>
-        </div>
-        <div className="payment-box-shipping-info">
-          <div className="box-shipping-info">
-            <div className="payment-title">
-              <p>배송 정보</p>
-            </div>
-            <div id="btn-update">
-              <button>변경</button>
-            </div>
-          </div>
-          <div className="shipping-address">
-            <p>이름 (배송지이름)</p>
-            <p>(우편번호) 주소</p>
-            <p>상세주소</p>
-            <p>전화번호</p>
-          </div>
-        </div>
-      </section>
+      <ShippingInfo />
       <section className="payment-products-bg">
         <div className="payment-title">
           <p>상품내역</p>
-          <img src="./assets/images/icons/arrow-down-sign-to-navigate.png" alt="" />
+          <img
+            src="./assets/images/icons/arrow-down-sign-to-navigate.png"
+            alt=""
+          />
         </div>
         <div className="payment-products">
           <img src="./assets/images/products/01.png" alt="" />
-          <p>리유저블 투고컵 473ml</p>
+          <p>dddd</p>
         </div>
       </section>
       <section className="payment-option-info">
         <div className="payment-title">
           <p>쿠폰 및 할인</p>
-          <img src="./assets/images/icons/arrow-down-sign-to-navigate.png" alt="" />
+          <img
+            src="./assets/images/icons/arrow-down-sign-to-navigate.png"
+            alt=""
+          />
         </div>
-        {/* <div className="payment-coupon">
-          <img src="./assets/images/icons/service/voucher.png" alt=""/>
+        <div className="payment-coupon">
+          <img src="./assets/images/icons/service/voucher.png" alt="" />
           <p>쿠폰</p>
-        </div> */}
+        </div>
         <MiddleLine />
         <div className="payment-mobile-gift payment-title">
           <p>모바일 상품권</p>
@@ -112,7 +105,8 @@ export default function payment() {
           <p>33,000원</p>
         </div>
         <p className="payment-description">
-          위 주문 내용을 확인하였으며, 결제에 동의합니다.<br />
+          위 주문 내용을 확인하였으며, 결제에 동의합니다.
+          <br />
           (전자상거래법 8조 2항)
         </p>
       </section>
@@ -124,5 +118,5 @@ export default function payment() {
         </div>
       </div>
     </>
-  )
+  );
 }

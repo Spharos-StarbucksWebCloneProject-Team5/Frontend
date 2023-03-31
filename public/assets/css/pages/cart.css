@@ -53,6 +53,9 @@
   width: 20px;
   height: 20px;
   border: 1px solid rgb(0 0 0 / 10%);
+  margin-left: 20px;
+  float: left;
+  margin-right: 10px;
 }
 
 .check-active {
@@ -61,6 +64,9 @@
   width: 20px;
   height: 20px;
   border: 1px solid rgb(0 0 0 / 10%);
+  margin-left: 20px;
+  float: left;
+  margin-right: 10px;
 }
 
 .check-all div {
@@ -135,7 +141,7 @@ input[type="checkbox"]:checked {
 .box-select-delete {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 }
 
 .select-all hr {
