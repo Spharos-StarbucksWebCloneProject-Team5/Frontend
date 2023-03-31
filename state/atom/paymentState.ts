@@ -14,3 +14,15 @@ export const paymentState = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const paymentListState = atom({
+  key: "paymentState",
+  default: {
+    productId: 0,
+    productCount: 0,
+    productName: "",
+    price: 0,
+    thumbnail: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});

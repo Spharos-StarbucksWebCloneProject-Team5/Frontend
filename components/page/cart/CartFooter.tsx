@@ -32,16 +32,24 @@ export default function CartFooter(props: {
       (item1) => item === item1.cartId
     );
 
-    result.map((item2) =>
-      //     setCartData({
-      //       productId: item2.productId,
-      // productCount:item2.count,
-      // productName: item2.productName,
-      // price:item2.productPrice,
-      // thumbnail: item2.productThumbnail
-      //     })
-      console.log(typeof item2.productId)
-    );
+    // result.map((item2) =>
+    //       setCartData({...cartData,
+    //       buyList: { productId: item2.productId,
+    //             productCount: item2.count,
+    //             productName: item2.productName,
+    //             price: item2.productPrice,
+    //             thumbnail: item2.productThumbnail}
+    //       })
+    // );
+    // result.map((item2) =>
+    //       setCartData({...cartData,
+    //       buyList: { productId: item2.productId,
+    //             productCount: item2.count,
+    //             productName: item2.productName,
+    //             price: item2.productPrice,
+    //             thumbnail: item2.productThumbnail}
+    //       })
+    // );
   });
 
   // .map((item2) =>
@@ -75,13 +83,13 @@ export default function CartFooter(props: {
           <button>선물하기</button>
           <button
             onClick={() => {
-              cartData?.map((item) => {
+              cartData?.buyList.map((item) => {
                 setBuyData({
                   productId: item.productId,
-                  productCount: item.count,
+                  productCount: item.productCount,
                   productName: item.productName,
-                  price: item.productPrice,
-                  thumbnail: item.productThumbnail,
+                  price: item.price,
+                  thumbnail: item.thumbnail,
                 });
               });
               push(`/payment`);
