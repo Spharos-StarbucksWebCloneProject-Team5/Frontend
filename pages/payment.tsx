@@ -1,18 +1,35 @@
 import MiddleLine from "@/components/ui/MiddleLine";
 import ShippingInfo from "@/components/widgets/ShippingInfo";
+import Config from "@/configs/config.export";
 import { paymentState } from "@/state/atom/paymentState";
 import { buyType } from "@/types/cart/cartDataType";
+import axios from "axios";
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function payment() {
   const paymentData = useRecoilValue(paymentState);
   console.log(paymentData);
 
-  let shipPrice = paymentData.price < 30000 ? 3000 : 0;
-  let orderPrice = paymentData.price * paymentData.count;
-  let totalPrice = orderPrice + shipPrice;
+  const baseUrl = Config().baseUrl;
+  const [cookies, setCookie, removeCookie] = useCookies(["id"]);
+  // let shipPrice = paymentData.price < 30000 ? 3000 : 0;
+
+  // let orderPrice = paymentData.price * paymentData.productCount;
+  // console.log(typeof paymentData.count);
+  // let totalPrice = orderPrice + shipPrice;
+  useEffect(() => {
+    //console.log(cookies.id);
+    axios
+      .get(`${baseUrl}/v1/api/carts/get`, {
+        headers: {
+          Authorization: `Bearer ${cookies.id}`,
+        },
+      })
+      .then((res) => {});
+  }, []);
 
   return (
     <>
@@ -30,7 +47,13 @@ export default function payment() {
         </div>
         <div className="payment-products">
           <img src={paymentData.thumbnail} alt="" />
-          <p>{paymentData.productName}</p>
+          <p>
+            {paymentData.productCount > 1
+              ? `${paymentData.productName} 외 ${
+                  paymentData.productCount - 1
+                }개`
+              : paymentData.productName}
+          </p>
         </div>
       </section>
       <section className="payment-option-info">
@@ -72,11 +95,11 @@ export default function payment() {
           </div>
           <div className="payment-order-price">
             <p>주문 금액</p>
-            <p>{orderPrice}원</p>
+            <p>{orderPrice.toLocaleString("en")}원</p>
           </div>
           <div className="payment-info-price-fb">
             <p>상품 금액</p>
-            <p>{paymentData.price}원</p>
+            <p>{paymentData.price.toLocaleString("en")}원</p>
           </div>
           <div className="payment-info-price-fb">
             <p>배송비</p>
@@ -97,7 +120,7 @@ export default function payment() {
         <MiddleLine />
         <div className="payment-order-price">
           <p>결제 금액</p>
-          <p>{totalPrice}원</p>
+          <p>{totalPrice.toLocaleString("en")}원</p>
         </div>
         <div className="payment-info-price-fb">
           <p>모바일 상품권</p>
@@ -106,7 +129,7 @@ export default function payment() {
         <MiddleLine />
         <div className="payment-title payment-order-price">
           <p>최종 결제 금액</p>
-          <p>{totalPrice}원</p>
+          <p>{totalPrice.toLocaleString("en")}원</p>
         </div>
         <p className="payment-description">
           위 주문 내용을 확인하였으며, 결제에 동의합니다.
@@ -117,7 +140,7 @@ export default function payment() {
       <div className="cart-footer">
         <div className="submit-container cart-footer-padding">
           <div className="payment-btn-order">
-            <button>{totalPrice}원 결제하기</button>
+            <button>{totalPrice.toLocaleString("en")}원 결제하기</button>
           </div>
         </div>
       </div>

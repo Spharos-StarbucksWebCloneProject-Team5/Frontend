@@ -1,20 +1,50 @@
-import { useRouter } from "next/router";
-
-import Config from "@/configs/config.export";
 import CloseButton from "@/components/ui/CloseButton";
 import MiddleLine from "@/components/ui/MiddleLine";
+import Config from "@/configs/config.export";
+import { searchState } from "@/state/atom/searchState";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { tagData } from "@/datas/tagData";
 
 export default function search() {
-  const [search, setSearch] = useState("");
+  const baseUrl = Config().baseUrl;
+  const router = useRouter();
 
+  const [search, setSearch] = useState("");
+  const [recentSearch, setRecentSearch] = useRecoilState(searchState); //최근 검색어
+
+  //검색어 저장
   const searchHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value);
   };
+  //엔터키 눌렀을 때
+  const enterHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.key === "Enter") {
+      setRecentSearch([...recentSearch, search]);
+      router.push(`/search/${search}`);
+    }
+  };
 
-  const router = useRouter();
+  //선택 삭제
+  const handleDelete = (keyword: string) => {
+    setRecentSearch(recentSearch.filter((item) => item !== keyword));
+  };
+  //전체 삭제
+  const allDelete = () => {
+    setRecentSearch([]);
+  };
+
+  //태그 검색
+  const tagClick = (tag: string) => {
+    setRecentSearch([...recentSearch, tag]);
+    const tagSlice = tag.slice(1);
+    router.push(`/search/${tagSlice}`);
+  };
 
   return (
     <>
@@ -25,12 +55,18 @@ export default function search() {
               type="text"
               placeholder="검색어를 입력해 주세요."
               onChange={searchHandle}
+              onKeyDown={enterHandle}
             />
           </form>
         </div>
         <div className="search-icons">
           <ul>
-            <li onClick={() => router.push(`/search/${search}`)}>
+            <li
+              onClick={() => {
+                router.push(`/search/${search}`);
+                setRecentSearch([...recentSearch, search]);
+              }}
+            >
               <img src="assets/images/icons/search.svg" />
             </li>
             <li>
@@ -44,30 +80,24 @@ export default function search() {
           <h3>최근 검색어</h3>
         </div>
         <div className="search-latest-keywords">
-          <div className="keywords">
-            워커 핑크
-            <img src="assets/images/icons/close.png" />
-          </div>
-          <div className="keywords">
-            워커 핑크
-            <img src="assets/images/icons/close.png" />
-          </div>
-          <div className="keywords">
-            워커 핑크
-            <img src="assets/images/icons/close.png" />
-          </div>
-          <div className="keywords">
-            워커 핑크
-            <img src="assets/images/icons/close.png" />
-          </div>
-          <div className="keywords">
-            워커 핑크
-            <img src="assets/images/icons/close.png" />
-          </div>
+          {recentSearch
+            ? recentSearch
+                .slice(0)
+                .reverse()
+                .map((item) => (
+                  <div className="keywords" key={item}>
+                    {item}
+                    <img
+                      src="assets/images/icons/close.png"
+                      onClick={() => handleDelete(item)}
+                    />
+                  </div>
+                ))
+            : ""}
         </div>
         <MiddleLine />
         <div className="delete-keywords">
-          <button>전체삭제</button>
+          <button onClick={allDelete}>전체삭제</button>
         </div>
       </div>
 
@@ -76,11 +106,14 @@ export default function search() {
           <h3>추천태그</h3>
         </div>
         <div className="tag-list">
-          <button className="tag-list-item">#케이크</button>
-          <button className="tag-list-item">#케이크</button>
-          <button className="tag-list-item">#케이크</button>
-          <button className="tag-list-item">#케이크</button>
-          <button className="tag-list-item">#케이크</button>
+          {tagData.map((item) => (
+            <button
+              className="tag-list-item"
+              onClick={() => tagClick(item.name)}
+            >
+              {item.name}
+            </button>
+          ))}
         </div>
       </div>
     </>

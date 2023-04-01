@@ -30,10 +30,9 @@ import { paymentState } from "@/state/atom/paymentState";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
-  //console.log(isLogin);
   const setLoginModal = useSetRecoilState<boolean>(loginModalState);
 
-  const { query, push } = useRouter();
+  const router = useRouter();
   const baseUrl = Config().baseUrl;
 
   const [cartItems, setCartItems] = useRecoilState<cartType>(cartListState); //일반 상품
@@ -46,20 +45,24 @@ export default function cart() {
   const [isFreezeCheck, setIsFreezeCheck] = useState<boolean>(false); //냉동상품 체크했는지
   const [isAllCheck, setIsAllCheck] = useState<boolean>(false); //전체 체크했는지
 
-  const [checkedList, setCheckedList] = useState<number[]>([]);
+  const [checkedList, setCheckedList] = useRecoilState(paymentState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
-  const [buyData, setBuyData] = useRecoilState<buyType>(paymentState);
+  //const [buyData, setBuyData] = useRecoilState<buyType>(paymentState);
 
   const [checkedData, setCheckedData] = useState<allCartType>();
 
-  if (!isLogin) {
-    Swal.fire({
-      icon: "warning",
-      text: "로그인이 필요합니다!",
-    });
-    push("/login");
-  }
+  useEffect(() => {
+    console.log(isLogin);
+    if (!isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인이 필요합니다!",
+      });
+      router.push("/login");
+      return;
+    }
+  }, []);
 
   useEffect(() => {
     console.log(cookies.id);
@@ -350,14 +353,14 @@ export default function cart() {
                   <button
                     id="box-button-02"
                     onClick={() => {
-                      setBuyData({
-                        productId: element.productId,
-                        productCount: element.count,
-                        productName: element.productName,
-                        price: element.productPrice,
-                        thumbnail: element.productThumbnail,
-                      });
-                      push(`/payment`);
+                      // setBuyData({
+                      //   productId: element.productId,
+                      //   productCount: element.count,
+                      //   productName: element.productName,
+                      //   price: element.productPrice,
+                      //   thumbnail: element.productThumbnail,
+                      // });
+                      router.push(`/payment`);
                     }}
                   >
                     바로 구매
@@ -434,14 +437,14 @@ export default function cart() {
                   <button
                     id="box-button-02"
                     onClick={() => {
-                      setBuyData({
-                        productId: element.productId,
-                        productCount: element.count,
-                        productName: element.productName,
-                        price: element.productPrice,
-                        thumbnail: element.productThumbnail,
-                      });
-                      push(`/payment`);
+                      // setBuyData({
+                      //   productId: element.productId,
+                      //   productCount: element.count,
+                      //   productName: element.productName,
+                      //   price: element.productPrice,
+                      //   thumbnail: element.productThumbnail,
+                      // });
+                      router.push(`/payment`);
                     }}
                   >
                     바로 구매

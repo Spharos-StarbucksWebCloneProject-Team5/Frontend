@@ -16,8 +16,8 @@ export default function CartFooter(props: {
   allItems: allCartType;
 }) {
   const { push } = useRouter();
-  const [buyData, setBuyData] = useRecoilState<buyType>(paymentState);
-  const [cartData, setCartData] = useState<cartBuyType>();
+  //const [buyData, setBuyData] = useRecoilState(paymentState);
+  //const [cartData, setCartData] = useState<cartBuyType[]>();
 
   // const buyNow = () => {
   //   //바로 구매
@@ -33,13 +33,16 @@ export default function CartFooter(props: {
     );
 
     // result.map((item2) =>
-    //       setCartData({...cartData,
-    //       buyList: { productId: item2.productId,
-    //             productCount: item2.count,
-    //             productName: item2.productName,
-    //             price: item2.productPrice,
-    //             thumbnail: item2.productThumbnail}
-    //       })
+    //   setCartData([
+    //     ...cartData,
+    //     {
+    //       productId: item2.productId,
+    //       productCount: item2.count,
+    //       productName: item2.productName,
+    //       price: item2.productPrice,
+    //       thumbnail: item2.productThumbnail,
+    //     },
+    //   ])
     // );
     // result.map((item2) =>
     //       setCartData({...cartData,
@@ -83,15 +86,19 @@ export default function CartFooter(props: {
           <button>선물하기</button>
           <button
             onClick={() => {
-              cartData?.buyList.map((item) => {
-                setBuyData({
-                  productId: item.productId,
-                  productCount: item.productCount,
-                  productName: item.productName,
-                  price: item.price,
-                  thumbnail: item.thumbnail,
-                });
-              });
+              // cartData &&
+              //   cartData.map((item: car) => {
+              //     setBuyData([
+              //       ...buyData,
+              //       {
+              //         productId: item.productId,
+              //         productCount: item.productCount,
+              //         productName: item.productName,
+              //         price: item.price,
+              //         thumbnail: item.thumbnail,
+              //       },
+              //     ]);
+              //   });
               push(`/payment`);
             }}
           >
