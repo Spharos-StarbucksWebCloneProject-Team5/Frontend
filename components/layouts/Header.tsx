@@ -15,10 +15,13 @@ import { userLoginState } from "@/state/atom/userLoginState";
 import Swal from "sweetalert2";
 import BackButton from "../ui/BackButton";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import Config from "@/configs/config.export";
 
 export default function Header() {
   const router = useRouter();
-  console.log(router.pathname);
+  //console.log(router.pathname);
+  const baseUrl = Config().baseUrl;
 
   const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
   const cartCnt = useRecoilValue(cartState);
@@ -35,6 +38,11 @@ export default function Header() {
       denyButtonText: `취소`,
     }).then((result) => {
       if (result.isConfirmed) {
+        axios.post(`${baseUrl}/api/v1/users/logout`, {
+          headers: {
+            Authorization: `Bearer ${cookies.id}`,
+          },
+        });
         setIsLogin({
           userId: "",
           accessToken: "",
@@ -47,8 +55,8 @@ export default function Header() {
         removeCookie("id");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({
-          html: "다음에 또~",
-          timer: 800,
+          html: "Bye",
+          timer: 300,
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();

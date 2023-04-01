@@ -41,7 +41,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         <meta name="keywords" content="StarBucks, Clone, Site" />
       </Head>
 
-      {router.pathname && router.pathname === "/menu" || router.pathname === "/search" ? null : <Header />}
+      {(router.pathname && router.pathname === "/menu") ||
+      router.pathname === "/search" ? null : (
+        <Header />
+      )}
 
       <div className="container">{props.children}</div>
     </>

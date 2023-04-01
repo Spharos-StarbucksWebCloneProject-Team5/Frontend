@@ -15,6 +15,7 @@ import CloseButton from "@/components/ui/CloseButton";
 import LoginFooter from "@/components/page/login/LoginFooter";
 import Image from "next/image";
 import BackButton from "@/components/ui/BackButton";
+import BackButton2 from "@/components/ui/BackButton2";
 
 export default function Login() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function Login() {
   const handleKakao = () => {
     router.push(`${BASE_URL}/oauth2/authorization/kakao`);
   };
-  //로그인 확인용 => Recoil 셋업 되는대로 라우팅 처리 하겠습니다.
+
   const handleSubmit = () => {
     console.log("login");
     console.log(inputData);
@@ -106,7 +107,7 @@ export default function Login() {
     <div className="modal">
       <div className="login-header">
         <div className="login-header-back-button">
-          <BackButton />
+          <BackButton2 />
         </div>
         <h3>로그인</h3>
       </div>
