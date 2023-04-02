@@ -1,7 +1,9 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function mypage() {
+  const { push } = useRouter();
 
   function btnClick() {
     console.log("Click Button")
@@ -70,7 +72,7 @@ export default function mypage() {
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
         </div>
-        <div className="bottom-service" onClick={btnClick}>
+        <div className="bottom-service" onClick={() => push("/shippingAddress")}>
           <img src="assets/images/icons/service/delivery-truck.png" alt="delivery-truck" />
           <div className="bottom-service-button">
             <p>배송지 관리</p>

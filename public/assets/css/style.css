@@ -18,3 +18,6 @@
 @import url(./pages/payment.css);
 @import url(./modules/swiper.css);
 @import url(./pages/order-change.css);
+@import url(./pages/shipping_change.css);
+@import url(./pages/shipping_manage.css);
+@import url(./pages/shipping-info.css);

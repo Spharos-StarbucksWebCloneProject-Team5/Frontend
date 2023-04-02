@@ -17,10 +17,10 @@ import BackButton from "../ui/BackButton";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Config from "@/configs/config.export";
+import HeaderTopShipping from "./HeaderTopShipping";
 
 export default function Header() {
   const router = useRouter();
-  //console.log(router.pathname);
   const baseUrl = Config().baseUrl;
 
   const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
@@ -81,51 +81,61 @@ export default function Header() {
 
   return (
     <header>
-      <div className="header-top">
-        <div className="menu-icon">
-          {router.pathname === "/cart" ||
-          router.pathname === "/listview" ||
-          router.pathname === "/signup" ? (
-            <BackButton />
-          ) : (
-            <div onClick={() => setIsMenuModalOpen(true)}>
-              <img src="assets/images/icons/menu.svg" alt="" />
+      {
+        router.pathname === "/shippingAddressChange" ||
+          router.pathname === "/shippingAddressModify" ||
+          router.pathname === "/shippingAddressRegister" ? (
+          <HeaderTopShipping />
+        ) : (
+          <div className="header-top">
+            <div className="menu-icon">
+              {router.pathname === "/cart" ||
+                router.pathname === "/listview" ||
+                router.pathname === "/shippingAddress" ||
+                router.pathname === "/signup" ? (
+                <BackButton />
+              ) : (
+                <div onClick={() => setIsMenuModalOpen(true)}>
+                  <img src="assets/images/icons/menu.svg" alt="" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <Link href={"/"}>
-          <h1>온라인 스토어</h1>
-        </Link>
-        <nav>
-          <ul>
-            <li onClick={() => router.push("/search")}>
-              <img src="assets/images/icons/search.svg" />
-            </li>
-            <li onClick={() => router.push("/cart")}>
-              <p className="cart-badge">{cartCnt}</p>
-              <img src="assets/images/icons/shopping-cart.svg" />
-            </li>
-            {isLogin.isLogin ? (
-              <li onClick={handleLogout}>logout</li>
-            ) : (
-              <li onClick={() => router.push("/login")}>
-                <img src="assets/images/icons/user.svg" />
-              </li>
-            )}
-          </ul>
-        </nav>
-      </div>
+            <Link href={"/"}>
+              <h1>온라인 스토어</h1>
+            </Link>
+            <nav>
+              <ul>
+                <li onClick={() => router.push("/search")}>
+                  <img src="assets/images/icons/search.svg" />
+                </li>
+                <li onClick={() => router.push("/cart")}>
+                  <p className="cart-badge">{cartCnt}</p>
+                  <img src="assets/images/icons/shopping-cart.svg" />
+                </li>
+                {isLogin.isLogin ? (
+                  <li onClick={handleLogout}>logout</li>
+                ) : (
+                  <li onClick={() => router.push("/login")}>
+                    <img src="assets/images/icons/user.svg" />
+                  </li>
+                )}
+              </ul>
+            </nav>
+          </div>
+        )
+      }
+
       {router.pathname === "/" ||
-      router.pathname === "/event" ||
-      router.pathname === "/best" ||
-      router.pathname === "/mypage" ? (
+        router.pathname === "/event" ||
+        router.pathname === "/best" ||
+        router.pathname === "/mypage" ? (
         <div className="header-bottom">
           <nav>
             <ul>
               {navBottomData &&
                 navBottomData.map((nav) =>
                   nav.link === "/event?category=1" ||
-                  nav.link === "/best?category=1" ? (
+                    nav.link === "/best?category=1" ? (
                     <li
                       key={nav.id}
                       className={

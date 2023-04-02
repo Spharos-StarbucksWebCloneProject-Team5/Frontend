@@ -12,7 +12,37 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  height: 80px;
+  height: 70px;
+}
+
+.shipping-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 70px;
+}
+
+.shipping-header-top .menu-icon {
+  width: 30%;
+}
+
+.shipping-header-top .shipping-header-name {
+  text-align: center;
+  width: 40%;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.shipping-header-top .shipping-header-name p {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.shipping-header-top nav {
+  display: flex;
+  justify-content: end;
+  width: 30%;
 }
 
 .header-top .menu-icon {
@@ -34,11 +64,11 @@ header {
 }
 
 .header-top nav {
-  width: 35%;
+  width: 30%;
 }
 
 .header-top img {
-  width: 20px;
+  width: 19px;
   height: auto;
   opacity: 0.5;
 }
