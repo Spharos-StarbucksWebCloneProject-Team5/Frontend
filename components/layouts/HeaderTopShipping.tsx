@@ -3,9 +3,7 @@ import { useRouter } from 'next/router'
 import CloseButton from '../ui/CloseButton';
 
 export default function HeaderTopShipping() {
-  const { pathname, query, isReady } = useRouter();
-  console.log(query);
-
+  const { pathname } = useRouter();
 
   return (
     <div className="shipping-header-top">
