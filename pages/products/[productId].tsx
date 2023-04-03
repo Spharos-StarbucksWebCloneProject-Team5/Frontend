@@ -31,10 +31,10 @@ export default function Product() {
   useEffect(() => {
     //if (!router.isReady) return;
     axios(`${baseUrl}/v1/api/products/${query.productId}`).then((res) => {
+      console.log(res.data);
       setProductData(res.data);
     });
     axios(`${baseUrl}/v1/api/product-images/${query.productId}`).then((res) => {
-      console.log(res.data);
       setProductImageData(res.data);
     });
   }, []);

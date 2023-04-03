@@ -20,6 +20,7 @@ import { timerState } from "@/state/atom/timerState";
 import { useIdleTimer } from "react-idle-timer";
 
 export default function Login() {
+  
   const router = useRouter();
 
   const baseUrl = Config().baseUrl;
@@ -42,9 +43,24 @@ export default function Login() {
     setInputData({ ...inputData, [name]: value });
   };
 
+  useEffect(() => {
+    if (!window.Kakao.isInitialized()) {
+    window.Kakao.init('b862dd99f573e07396d32022f0e12491');
+    console.log(window.Kakao.isInitialized());
+    }
+  }, [])
+  
+  function kakaoLogin() {
+    console.log(window.Kakao.Auth);
+    window.Kakao.Auth.authorize({
+      redirectUri: `http://localhost:6600/kakao`, 
+    });
+  }
+
   const handleKakao = () => {
-    router.push(`${baseUrl}/oauth2/authorization/kakao`).then((res) => {
-      alert(JSON.stringify(router.query));
+    window.Kakao.Auth.authorize({
+      redirectUri: 'http://localhost:3000/kakao', 
+    });
       //router.push("/");
       // setLoginData({
       //   userId: res.data,
@@ -62,7 +78,7 @@ export default function Login() {
       //   text: `${myLogin.getItem("nickname")}님 Welcome!`,
       // });
       //console.log(router);
-    });
+   
 
     // axios.post(`${baseUrl}/oauth2/authorization/kakao`).then((res) => {
     //  console.log(`resresres`);
@@ -153,10 +169,7 @@ export default function Login() {
           myLogin.setItem("refreshToken", res.headers.refreshtoken);
           myLogin.setItem("nickname", res.data.data.name);
           setCookie("id", res.headers.accesstoken, { path: "/" });
-          //start();
-          //타이머
-          //localStorage.setItem("timer", count.toString());
-          //setCount(count - 1);
+          
 
           Swal.fire({
             icon: "success",
@@ -189,7 +202,7 @@ export default function Login() {
     }
   };
 
-  return (
+  return ( 
     <div className="modal">
       <div className="login-header">
         <div className="login-header-back-button">
@@ -236,7 +249,7 @@ export default function Login() {
         </div>
       </section>
 
-      <div className="kakaoLogin" onClick={handleKakao}>
+      <div className="kakaoLogin" onClick={kakaoLogin}>
         <img src="/assets/images/icons/kakaoLogin.png" alt="" />
       </div>
 
