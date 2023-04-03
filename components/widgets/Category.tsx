@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-//import { categoryList, menuListDepth2 } from "@/datas/navData";
-import FilterMenuList from "../ui/FilterMenuList";
 import {
   MenuDataType,
   filterDataType,
@@ -10,6 +8,7 @@ import {
 } from "@/types/filter/filterTypes";
 import Config from "@/configs/config.export";
 import axios from "axios";
+import FilterMenuList from "../ui/FilterMenuList";
 
 export default function Category() {
   const router = useRouter();
@@ -57,13 +56,13 @@ export default function Category() {
         filterFile={filterData}
         setFilter={setFilterData}
       />
-      {menuList.length > 0 && (
+      {/* {menuList.length > 0 && (
         <FilterMenuList
           data={menuList}
           filterFile={filterData}
           setFilter={setFilterData}
         />
-      )}
+      )} */}
     </>
   );
 }

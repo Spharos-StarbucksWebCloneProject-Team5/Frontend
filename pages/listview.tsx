@@ -14,19 +14,34 @@ export default function ProductListView() {
   const [pageData, setPageData] = useState<pageProductType>();
   const [productData, setProductData] = useState<productAllType[]>([]);
   const [page, setPage] = useState(0);
-  const [subCategory, setSubCategory] = useState<string[]>([]);
+  const [queryUrl, setQueryUrl] = useState<string>("");
 
   const router = useRouter();
 
   useEffect(() => {
-    axios(`${baseUrl}/v1/api/products/?pageNum=0`).then((res) => {
+    console.log(router.query)
+    let url = ''
+    if(router.query.category && !router.query.subCategory){
+      url = `category=${router.query.category}`
+    } else if(router.query.category && router.query.subCategory){
+      url = `category=${router.query.category}&subCategory=${router.query.subCategory}` 
+    } else {
+      url = ``;
+    }
+    setQueryUrl(url);
+
+    console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
+
+    axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
+      console.log(res.data)
       setPageData(res.data);
       setProductData(res.data.content);
     });
-  }, []);
+  }, [router.query]);
 
   const fetchData = () => {
-    axios(`${baseUrl}/v1/api/products/?pageNum=${page + 1}`).then((res) => {
+    console.log(queryUrl)
+    axios(`${baseUrl}/v1/api/categories?${queryUrl}&pageNum=${page + 1}`).then((res) => {
       setPageData(res.data);
       setProductData([...productData, ...res.data.content]);
     });
