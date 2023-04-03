@@ -31,7 +31,7 @@ export default function Category() {
   }, []);
 
   useEffect(() => {
-    console.log("필터링데이터", filterData);
+    //console.log("필터링데이터", filterData);
     let queryUrl = "";
     filterData.forEach((item) => {
       queryUrl += `&${item.key}=${item.value}`;
@@ -41,7 +41,6 @@ export default function Category() {
   }, [filterData]);
 
   useEffect(() => {
-    //console.log(`category ${router.query.category}`);
     setMenuList(
       menuListDepth2.find(
         (item) => item.id.toString() === router.query.category

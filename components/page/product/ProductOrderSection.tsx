@@ -74,12 +74,13 @@ export default function ProductOrderSection(props: {
   };
 
   const addCart = () => {
+    //console.log(`buyProduct------${buyProduct.productId}`)
     axios
       .post(
         `${baseUrl}/v1/api/carts`,
         {
-          productId: buyProduct.productId,
-          count: buyProduct.count,
+          productId: props.productId,
+          count: count,
         },
         {
           withCredentials: true,
