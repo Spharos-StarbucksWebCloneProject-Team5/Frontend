@@ -21,11 +21,27 @@ export default function search() {
     e.preventDefault();
     setSearch(e.target.value);
   };
+
+  //검색버튼 눌렀을 때
+  const buttonHandle = () => {
+    if (recentSearch.includes(search)) {
+      setRecentSearch([
+        ...recentSearch.filter((item) => item !== search),
+        search,
+      ]);
+    } else setRecentSearch([...recentSearch, search]);
+    router.push(`/search/${search}`);
+  };
   //엔터키 눌렀을 때
   const enterHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.preventDefault();
+    //e.preventDefault();
     if (e.key === "Enter") {
-      setRecentSearch([...recentSearch, search]);
+      if (recentSearch.includes(search)) {
+        setRecentSearch([
+          ...recentSearch.filter((item) => item !== search),
+          search,
+        ]);
+      } else setRecentSearch([...recentSearch, search]);
       router.push(`/search/${search}`);
     }
   };
@@ -61,12 +77,7 @@ export default function search() {
         </div>
         <div className="search-icons">
           <ul>
-            <li
-              onClick={() => {
-                router.push(`/search/${search}`);
-                setRecentSearch([...recentSearch, search]);
-              }}
-            >
+            <li onClick={buttonHandle}>
               <img src="assets/images/icons/search.svg" />
             </li>
             <li>
@@ -108,6 +119,7 @@ export default function search() {
         <div className="tag-list">
           {tagData.map((item) => (
             <button
+              key={item.id}
               className="tag-list-item"
               onClick={() => tagClick(item.name)}
             >

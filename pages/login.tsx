@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import Config from "@/configs/config.export";
 
@@ -16,13 +16,17 @@ import LoginFooter from "@/components/page/login/LoginFooter";
 import Image from "next/image";
 import BackButton from "@/components/ui/BackButton";
 import BackButton2 from "@/components/ui/BackButton2";
+import { timerState } from "@/state/atom/timerState";
+import { useIdleTimer } from "react-idle-timer";
 
 export default function Login() {
   const router = useRouter();
 
-  const BASE_URL = Config().baseUrl;
+  const baseUrl = Config().baseUrl;
   const [loginData, setLoginData] = useRecoilState(userLoginState);
-  const [cookies, setCookie] = useCookies(["id"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["id"]);
+  //const [count, setCount] = useRecoilState(timerState);
+
   const [inputData, setInputData] = useState<LoginReq>({
     email: "",
     password: "",
@@ -39,8 +43,86 @@ export default function Login() {
   };
 
   const handleKakao = () => {
-    router.push(`${BASE_URL}/oauth2/authorization/kakao`);
+    router.push(`${baseUrl}/oauth2/authorization/kakao`).then((res) => {
+      alert(JSON.stringify(router.query));
+      //router.push("/");
+      // setLoginData({
+      //   userId: res.data,
+      //   accessToken: res.headers.accesstoken,
+      //   refreshToken: res.headers.refreshtoken,
+      //   isLogin: true,
+      // });
+      // let myLogin = localStorage;
+      // myLogin.setItem("userId", res.data.data.userId);
+      // myLogin.setItem("refreshToken", res.headers.refreshtoken);
+      // myLogin.setItem("nickname", res.data.data.name);
+      // setCookie("id", res.headers.accesstoken, { path: "/" });
+      // Swal.fire({
+      //   icon: "success",
+      //   text: `${myLogin.getItem("nickname")}님 Welcome!`,
+      // });
+      //console.log(router);
+    });
+
+    // axios.post(`${baseUrl}/oauth2/authorization/kakao`).then((res) => {
+    //  console.log(`resresres`);
+    // });
   };
+  // const { start, getRemainingTime } = useIdleTimer({
+  //   onActive() {
+  //     console.log(`로로로로로로ㅗ로로`);
+
+  //     console.log(`ㅇㅇㅇㅇㅇㅇㅇㅇ${getRemainingTime}`);
+  //     if (getRemainingTime() === 1000) {
+  //       Swal.fire({
+  //         title: "로그인을 연장하시겠습니까?",
+  //         showDenyButton: true,
+  //         showCancelButton: false,
+  //         confirmButtonText: `확인`,
+  //         denyButtonText: `취소`,
+  //       }).then((result) => {
+  //         if (result.isConfirmed) {
+  //           axios
+  //             .post(`${baseUrl}/api/v1/users/logout`, {
+  //               headers: {
+  //                 Authorization: `Bearer ${cookies.id}`,
+  //               },
+  //             })
+  //             .then((res) => {
+  //               // setLoginData({
+  //               //   userId: res.data.data.userId,
+  //               //   accessToken: res.headers.accesstoken,
+  //               //   refreshToken: res.headers.refreshtoken,
+  //               //   isLogin: true,
+  //               // });
+  //               let myLogin = localStorage;
+  //               myLogin.setItem("userId", res.data.data.userId);
+  //               myLogin.setItem("refreshToken", res.headers.refreshtoken);
+  //               myLogin.setItem("nickname", res.data.data.name);
+  //               setCookie("id", res.headers.accesstoken, { path: "/" });
+  //             });
+  //         }
+  //       });
+
+  //       if (getRemainingTime() <= 500) {
+  //         // setLoginData({
+  //         //   userId: "",
+  //         //   accessToken: "",
+  //         //   refreshToken: "",
+  //         //   isLogin: false,
+  //         // });
+  //         localStorage.removeItem("accessToken");
+  //         localStorage.removeItem("refreshToken");
+  //         localStorage.removeItem("userId");
+  //         removeCookie("id");
+  //       }
+  //     }
+  //   },
+  //   timeout: 3000,
+  // });
+  // const idleHandler = ()=> {
+
+  //     }}
 
   const handleSubmit = () => {
     console.log("login");
@@ -54,7 +136,7 @@ export default function Login() {
       return;
     } else {
       axios
-        .post(`${BASE_URL}/api/v1/users/login`, {
+        .post(`${baseUrl}/api/v1/users/login`, {
           email: inputData.email,
           password: inputData.password,
         })
@@ -71,6 +153,10 @@ export default function Login() {
           myLogin.setItem("refreshToken", res.headers.refreshtoken);
           myLogin.setItem("nickname", res.data.data.name);
           setCookie("id", res.headers.accesstoken, { path: "/" });
+          //start();
+          //타이머
+          //localStorage.setItem("timer", count.toString());
+          //setCount(count - 1);
 
           Swal.fire({
             icon: "success",
