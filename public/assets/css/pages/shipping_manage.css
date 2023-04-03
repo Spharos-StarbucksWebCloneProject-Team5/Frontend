@@ -1,0 +1,55 @@
+#shipping-manage-list {
+  padding: 20px 0px;
+  border-bottom: 1.5px solid rgba(128, 128, 128, 0.381);
+  margin: 0px 20px;
+}
+
+.shipping-manage {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0;
+}
+
+#shipping-manage-list :nth-child(n+4) {
+  font-size: 0.8rem;
+  color: var(--color-gray-text)
+}
+
+#shipping-manage-list p {
+  margin: 5px 0px;
+  font-size: 0.9rem;
+}
+
+.shipping-manage a {
+  color: var(--color-gray-text);
+  text-decoration-line: none;
+  font-size: 0.8rem;
+}
+
+.shipping-manage .shipping-info {
+  width: 80%;
+  word-wrap: break-word;
+}
+
+.shipping-manage .shipping-info .shipping-name {
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+}
+
+.shipping-manage .shipping-info .name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.shipping-manage .shipping-info .is-primary {
+  width: 25px;
+  font-size: 4px;
+  font-weight: 200;
+  text-align: center;
+  margin: 0px 10px;
+  background-color: rgba(167, 255, 236, 0.507);
+  color: var(--color-light-green);
+  border-radius: 2px;
+}

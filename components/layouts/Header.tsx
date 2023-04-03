@@ -17,12 +17,11 @@ import BackButton from "../ui/BackButton";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Config from "@/configs/config.export";
+import HeaderTopShipping from "./HeaderTopShipping";
 import BackButton3 from "../ui/BackButton3";
-import { timerState } from "@/state/atom/timerState";
 
 export default function Header() {
   const router = useRouter();
-  //console.log(router.pathname);
   const baseUrl = Config().baseUrl;
 
   const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
@@ -31,6 +30,8 @@ export default function Header() {
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
   //const [remainingDuration, setRemainingDuration] = useRecoilState(timerState);
+
+  console.log(router.pathname)
 
   const handleLogout = () => {
     Swal.fire({
@@ -108,12 +109,19 @@ export default function Header() {
 
   return (
     <header>
-      <div className="header-top">
-        <div className="menu-icon">
-          {router.pathname === "/cart" ||
-          router.pathname === "/listview" ||
-          router.pathname === "/signup" ? (
-            <BackButton />
+      {
+        router.pathname === "/shippingAddressChange" ||
+          router.pathname === "/shippingAddressModify/[shippingAddressId]" ||
+          router.pathname === "/shippingAddressRegister" ? (
+          <HeaderTopShipping />
+        ) : (
+          <div className="header-top">
+            <div className="menu-icon">
+              {router.pathname === "/cart" ||
+                router.pathname === "/listview" ||
+                router.pathname === "/shippingAddress" ||
+                router.pathname === "/signup" ? (
+                <BackButton />
           ) : router.pathname === "/payment" ? (
             <BackButton3 />
           ) : (
@@ -122,10 +130,10 @@ export default function Header() {
             </div>
           )}
         </div>
-        <Link href={"/"}>
-          <h1>온라인 스토어</h1>
-        </Link>
-        <nav>
+            <Link href={"/"}>
+              <h1>온라인 스토어</h1>
+            </Link>
+            <nav>
           <ul>
             <li onClick={() => router.push("/search")}>
               <img src="assets/images/icons/search.svg" />
@@ -145,18 +153,20 @@ export default function Header() {
             )}
           </ul>
         </nav>
-      </div>
+          </div>
+        )
+      }
       {router.pathname === "/" ||
-      router.pathname === "/event" ||
-      router.pathname === "/best" ||
-      router.pathname === "/mypage" ? (
+        router.pathname === "/event" ||
+        router.pathname === "/best" ||
+        router.pathname === "/mypage" ? (
         <div className="header-bottom">
           <nav>
             <ul>
               {navBottomData &&
                 navBottomData.map((nav) =>
                   nav.link === "/event?category=1" ||
-                  nav.link === "/best?category=1" ? (
+                    nav.link === "/best?category=1" ? (
                     <li
                       key={nav.id}
                       className={

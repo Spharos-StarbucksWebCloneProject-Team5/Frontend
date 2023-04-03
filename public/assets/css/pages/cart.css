@@ -27,26 +27,6 @@
   justify-content: space-between;
 }
 
-/* .select-all {
-  background-color: var(--color-white);
-  box-shadow: 0 3px 10px -4px rgb(0 0 0 / 10%);
-  width: 100%;
-}
-
-.select-all input {
-  margin: 12px 3px 15px 25px;
-  vertical-align: middle;
-}
-
-.select-all>input[type=checkbox] {
-  transform: scale(1.2);
-  appearance: none;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  border: 1px solid var(--color-gray-button);
-} */
-
 .check-all {
   background-color: var(--color-white);
   box-shadow: 0 3px 10px -4px rgb(0 0 0 / 10%);
@@ -74,7 +54,7 @@
   vertical-align: middle;
 }
 
-.check-all > div {
+.check-all>div {
   transform: scale(1.2);
   appearance: none;
   width: 1rem;
@@ -187,9 +167,10 @@ input[type="checkbox"]:checked {
 .cart-product-quantity {
   background-color: var(--color-gray-background);
   border-radius: 5px;
-  margin: 10px 0px;
-  padding-left: 15px;
+  margin: 10px 5px;
+  padding: 0 15px;
   color: var(--color-gray-text);
+  font-weight: bold;
 }
 
 .text-order-amount {
@@ -344,4 +325,100 @@ input[type="checkbox"]:checked {
   color: var(--color-light-green);
   background-color: var(--color-white);
   border: 1px solid var(--color-light-green);
+}
+
+.cart-quantity-margin-top {
+  margin-top: 90px;
+}
+
+.cart-quantity-padding-left {
+  padding-left: 25px;
+}
+
+.cart-quantity-padding-left-20 {
+  padding-left: 20px !important;
+}
+
+.gray-box-line {
+  height: 10px;
+}
+
+.quantity-box-cart-product {
+  background-color: var(--color-gray-background);
+  margin: 30px 0px 20px 0;
+  padding-left: 15px;
+  color: var(--color-gray-text);
+}
+
+.change {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.change img {
+  width: 15px;
+}
+
+.change .quantity {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 90px;
+}
+
+.quantity-submit-container .submit-box .change-final {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+}
+
+.quantity-submit-container .submit-box .change-final p {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.quantity-submit-container .submit-box .change-final p span {
+  font-size: 25px;
+}
+
+.quantity-box-padding {
+  padding: 0 20px !important;
+}
+
+.quantity-submit-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #e2e2e2;
+  box-shadow: 0 -3px 0.3em 3px rgba(139, 139, 139, 0.08);
+  background-color: var(--color-white);
+}
+
+.quantity-submit-container .buttons button:first-child {
+  border-radius: 30px;
+  width: 40%;
+  height: 35px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-green);
+  color: var(--color-light-green);
+  margin: 10px 5px;
+  letter-spacing: -0.2px;
+}
+
+.quantity-submit-container .buttons button:last-child {
+  border-radius: 30px;
+  width: 40%;
+  height: 35px;
+  background-color: var(--color-light-green);
+  border: none;
+  color: var(--color-white);
+  margin: 10px 5px;
+  letter-spacing: -0.2px;
 }
