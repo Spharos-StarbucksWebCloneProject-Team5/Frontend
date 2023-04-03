@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -17,6 +17,8 @@ import BackButton from "../ui/BackButton";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Config from "@/configs/config.export";
+import BackButton3 from "../ui/BackButton3";
+import { timerState } from "@/state/atom/timerState";
 
 export default function Header() {
   const router = useRouter();
@@ -28,6 +30,7 @@ export default function Header() {
   const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
+  //const [remainingDuration, setRemainingDuration] = useRecoilState(timerState);
 
   const handleLogout = () => {
     Swal.fire({
@@ -37,12 +40,13 @@ export default function Header() {
       confirmButtonText: `확인`,
       denyButtonText: `취소`,
     }).then((result) => {
+      console.log(cookies.id);
       if (result.isConfirmed) {
-        axios.post(`${baseUrl}/api/v1/users/logout`, {
-          headers: {
-            Authorization: `Bearer ${cookies.id}`,
-          },
-        });
+        // axios.post(`${baseUrl}/api/v1/users/logout`, {
+        //   headers: {
+        //     Authorization: `Bearer ${cookies.id}`,
+        //   },
+        // });
         setIsLogin({
           userId: "",
           accessToken: "",
@@ -55,7 +59,7 @@ export default function Header() {
         removeCookie("id");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({
-          html: "Bye",
+          html: "Bye~",
           timer: 300,
           timerProgressBar: true,
           didOpen: () => {
@@ -79,6 +83,29 @@ export default function Header() {
     });
   };
 
+  // const getAccessToken = () => {
+
+  //     Swal.fire({
+  //       title: "로그인 연장을 하시겠습니까?",
+  //       showDenyButton: true,
+  //       showCancelButton: false,
+  //       confirmButtonText: `확인`,
+  //       denyButtonText: `취소`,
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         const refresh = localStorage.getItem("refreshToken");
+  //         const access = cookies.id;
+  //         axios.post(`${baseUrl}/api/v1/users/reissue`, {
+  //           headers: {
+  //             accessToken: `${access}`,
+  //             refreshToken: `${refresh}`,
+  //           },
+  //         });
+  //       }
+  //     });
+
+  // };
+
   return (
     <header>
       <div className="header-top">
@@ -87,6 +114,8 @@ export default function Header() {
           router.pathname === "/listview" ||
           router.pathname === "/signup" ? (
             <BackButton />
+          ) : router.pathname === "/payment" ? (
+            <BackButton3 />
           ) : (
             <div onClick={() => setIsMenuModalOpen(true)}>
               <img src="assets/images/icons/menu.svg" alt="" />
@@ -106,7 +135,9 @@ export default function Header() {
               <img src="assets/images/icons/shopping-cart.svg" />
             </li>
             {isLogin.isLogin ? (
-              <li onClick={handleLogout}>logout</li>
+              <li onClick={handleLogout}>
+                <img src="assets/images/icons/logout.png" />
+              </li>
             ) : (
               <li onClick={() => router.push("/login")}>
                 <img src="assets/images/icons/user.svg" />

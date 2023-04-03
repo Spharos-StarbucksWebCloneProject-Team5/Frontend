@@ -26,11 +26,11 @@ import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import payment from "./payment";
 import CountModal from "@/components/ui/CountModal";
-import { paymentState } from "@/state/atom/paymentState";
+import { cartPaymentState, cartBuyNowState } from "@/state/atom/paymentState";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
-  const setLoginModal = useSetRecoilState<boolean>(loginModalState);
+  //const setLoginModal = useSetRecoilState<boolean>(loginModalState);
 
   const router = useRouter();
   const baseUrl = Config().baseUrl;
@@ -45,16 +45,19 @@ export default function cart() {
   const [isFreezeCheck, setIsFreezeCheck] = useState<boolean>(false); //냉동상품 체크했는지
   const [isAllCheck, setIsAllCheck] = useState<boolean>(false); //전체 체크했는지
 
-  const [checkedList, setCheckedList] = useRecoilState(paymentState);
+  const [checkedList, setCheckedList] = useRecoilState(cartPaymentState);
+  const [buyNow, setBuyNow] = useRecoilState(cartBuyNowState);
+
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
   //const [buyData, setBuyData] = useRecoilState<buyType>(paymentState);
 
-  const [checkedData, setCheckedData] = useState<allCartType>();
+  //const [checkedData, setCheckedData] = useState<allCartType>();
 
   useEffect(() => {
-    console.log(isLogin);
-    if (!isLogin) {
+    const myLogin = cookies.id;
+    //console.log(isLogin);
+    if (!myLogin && !isLogin) {
       Swal.fire({
         icon: "warning",
         text: "로그인이 필요합니다!",
@@ -165,7 +168,7 @@ export default function cart() {
       }),
     });
     checkedList.includes(id)
-      ? checkedList.splice(id)
+      ? setCheckedList(checkedList.filter((item) => item !== id))
       : setCheckedList([...checkedList, id]);
   };
 
@@ -176,7 +179,7 @@ export default function cart() {
       ...cartItems,
       cartList: cartItems.cartList.map((item: cartListType) => {
         checkedList.includes(item.cartId)
-          ? checkedList.splice(item.cartId)
+          ? setCheckedList(checkedList.filter((item1) => item1 !== item.cartId))
           : setCheckedList([...checkedList, item.cartId]);
         return { ...item, checked: check };
       }),
@@ -195,7 +198,7 @@ export default function cart() {
       ),
     });
     checkedList.includes(id)
-      ? checkedList.splice(id)
+      ? setCheckedList(checkedList.filter((item) => item !== id))
       : setCheckedList([...checkedList, id]);
   };
 
@@ -206,7 +209,9 @@ export default function cart() {
       freezeCartList: freezeCartItems.freezeCartList.map(
         (item: cartListType) => {
           checkedList.includes(item.cartId)
-            ? checkedList.splice(item.cartId)
+            ? setCheckedList(
+                checkedList.filter((item1) => item1 !== item.cartId)
+              )
             : setCheckedList([...checkedList, item.cartId]);
           return { ...item, checked: check };
         }
@@ -221,7 +226,7 @@ export default function cart() {
       ...allCartItems,
       allCartList: allCartItems.allCartList.map((item: cartListType) => {
         checkedList.includes(item.cartId)
-          ? checkedList.splice(item.cartId)
+          ? setCheckedList(checkedList.filter((item1) => item1 !== item.cartId))
           : setCheckedList([...checkedList, item.cartId]);
         return { ...item, checked: check };
       }),
@@ -244,7 +249,13 @@ export default function cart() {
     //선택 카트 아이템 삭제 처리
 
     console.log(checkedList);
-    checkedList.map((item) => axios.put(`${baseUrl}/v1/api/carts/` + item));
+    checkedList.map((item) =>
+      axios.put(`${baseUrl}/v1/api/carts/` + item, {
+        headers: {
+          Authorization: `Bearer ${cookies.id}`,
+        },
+      })
+    );
     location.reload();
   };
 
@@ -252,10 +263,22 @@ export default function cart() {
     //x버튼으로 아이템 삭제 처리
     cartItems.cartList
       .filter((item) => item.cartId === id)
-      .map((item) => axios.put(`${baseUrl}/v1/api/carts/` + id));
+      .map((item) =>
+        axios.put(`${baseUrl}/v1/api/carts/` + id, {
+          headers: {
+            Authorization: `Bearer ${cookies.id}`,
+          },
+        })
+      );
     freezeCartItems.freezeCartList
       .filter((item) => item.cartId === id)
-      .map((item) => axios.put(`${baseUrl}/v1/api/carts/` + id));
+      .map((item) =>
+        axios.put(`${baseUrl}/v1/api/carts/` + id, {
+          headers: {
+            Authorization: `Bearer ${cookies.id}`,
+          },
+        })
+      );
     location.reload();
   };
 
@@ -353,13 +376,7 @@ export default function cart() {
                   <button
                     id="box-button-02"
                     onClick={() => {
-                      // setBuyData({
-                      //   productId: element.productId,
-                      //   productCount: element.count,
-                      //   productName: element.productName,
-                      //   price: element.productPrice,
-                      //   thumbnail: element.productThumbnail,
-                      // });
+                      setBuyNow(element.cartId);
                       router.push(`/payment`);
                     }}
                   >
@@ -437,13 +454,7 @@ export default function cart() {
                   <button
                     id="box-button-02"
                     onClick={() => {
-                      // setBuyData({
-                      //   productId: element.productId,
-                      //   productCount: element.count,
-                      //   productName: element.productName,
-                      //   price: element.productPrice,
-                      //   thumbnail: element.productThumbnail,
-                      // });
+                      setBuyNow(element.cartId);
                       router.push(`/payment`);
                     }}
                   >

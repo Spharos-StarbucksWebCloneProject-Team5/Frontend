@@ -6,17 +6,17 @@ import { useCookies } from "react-cookie";
 export default function ShippingInfo() {
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
   const baseUrl = Config().baseUrl;
-  useEffect(() => {
-    console.log(cookies.id);
+  // useEffect(() => {
+  //   console.log(cookies.id);
 
-    axios
-      .get(`${baseUrl}/v1/api/shippingAddress`, {
-        headers: {
-          Authorization: `Bearer ${cookies.id}`,
-        },
-      })
-      .then((res) => {});
-  }, []);
+  //   axios
+  //     .get(`${baseUrl}/v1/api/shippingAddress`, {
+  //       headers: {
+  //         Authorization: `Bearer ${cookies.id}`,
+  //       },
+  //     })
+  //     .then((res) => {});
+  // }, []);
 
   return (
     <section className="padding-lr-20">

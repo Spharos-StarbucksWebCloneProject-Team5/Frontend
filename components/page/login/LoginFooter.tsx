@@ -10,7 +10,7 @@ export default function LoginFooter() {
             <Link href="">아이디 찾기</Link>
           </li>
           <li>
-            <Link href="">비밀번호 찾기</Link>
+            <Link href="/findPassword">비밀번호 찾기</Link>
           </li>
           <li>
             <Link href="/signup">회원가입</Link>
