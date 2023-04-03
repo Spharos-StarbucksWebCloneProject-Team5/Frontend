@@ -8,15 +8,26 @@ import {
   productImageType,
   productListCardType,
 } from "../../types/product/fetchDataType";
+import { useRecoilState } from "recoil";
+import { buyNowState } from "@/state/atom/paymentState";
+import ProductOrderSection from "@/components/page/product/ProductOrderSection";
 
 export default function Product() {
   const { query, push } = useRouter();
   const baseUrl = Config().baseUrl;
-  const [productData, setProductData] = useState<productListCardType>();
+  const [productData, setProductData] = useState<productListCardType>({
+    id: 0,
+    description: "",
+    name: "",
+    price: 0,
+    thumbnail: "",
+    isNew: false,
+  });
   const [productImageData, setProductImageData] = useState<productImageType[]>(
     []
   );
-  console.log(query);
+
+  //console.log(query);
   useEffect(() => {
     //if (!router.isReady) return;
     axios(`${baseUrl}/v1/api/products/${query.productId}`).then((res) => {
@@ -36,18 +47,19 @@ export default function Product() {
   //   });
   // }, []);
 
-  const movePayment = () => {
-    push(`/payment`);
-  };
+  // const movePayment = () => {
+  //   setBuyProduct(productData?.id, count);
+  //   push(`/payment`);
+  // };
 
   return (
     <>
       <Head>
-        <title>{productData?.name}</title>
+        <title>{productData.name}</title>
       </Head>
       <section id="thumb-details">
         <div className="thumb">
-          <img className="thumbnail" src={productData?.thumbnail} alt="" />
+          <img className="thumbnail" src={productData.thumbnail} alt="" />
         </div>
       </section>
 
@@ -55,16 +67,16 @@ export default function Product() {
         <div className="product-details-list">
           <div className="product-name">
             <h3>
-              {productData?.name}
+              {productData.name}
               <img src="../assets/images/icons/share.png" />
             </h3>
           </div>
           <div className="product-description">
-            <p>{productData?.description}</p>
+            <p>{productData.description}</p>
           </div>
           <div className="product-price">
             <p>
-              <span>{productData?.price.toLocaleString()}</span>원
+              <span>{productData.price.toLocaleString()}</span>원
             </p>
           </div>
         </div>
@@ -100,7 +112,7 @@ export default function Product() {
         <div></div>
       </section>
 
-      <footer>
+      {/* <footer>
         <div className="product-footer">
           <div className="product-add-details">
             <img src="../assets/images/icons/grayLine.png" />
@@ -109,7 +121,12 @@ export default function Product() {
             <p>구매하기</p>
           </div>
         </div>
-      </footer>
+      </footer> */}
+      <ProductOrderSection
+        productId={productData.id}
+        productName={productData?.name}
+        productPrice={productData?.price}
+      />
     </>
   );
 }

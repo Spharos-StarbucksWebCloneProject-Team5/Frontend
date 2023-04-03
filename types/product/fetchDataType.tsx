@@ -4,7 +4,7 @@ export interface productListCardType {
   name: string;
   price: number;
   thumbnail: string;
-  isNew?: boolean;
+  isNew: boolean;
 }
 export interface productAllType {
   productId: number;
@@ -38,4 +38,26 @@ export interface eventProductListType {
   id: number;
   eventId: number;
   productId: number;
+}
+
+export interface productBuyType {
+  productId: number;
+  productName: string;
+  price: number;
+  thumbnail: string;
+  count: number;
+}
+
+export interface detailBuyType {
+  productId: number;
+  count: number;
+}
+
+export interface orderHistoryType {
+  productId: number;
+  productName: string;
+  price: number;
+  thumbnail: string;
+  count: number;
+  payType: number;
 }
