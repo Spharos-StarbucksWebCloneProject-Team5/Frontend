@@ -29,6 +29,8 @@ export default function Header() {
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
 
+  console.log(router.pathname)
+
   const handleLogout = () => {
     Swal.fire({
       title: "로그아웃 하시겠습니까?",
@@ -83,7 +85,7 @@ export default function Header() {
     <header>
       {
         router.pathname === "/shippingAddressChange" ||
-          router.pathname === "/shippingAddressModify" ||
+          router.pathname === "/shippingAddressModify/[shippingAddressId]" ||
           router.pathname === "/shippingAddressRegister" ? (
           <HeaderTopShipping />
         ) : (

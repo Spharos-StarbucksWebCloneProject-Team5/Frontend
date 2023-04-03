@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import CloseButton from '../ui/CloseButton';
 
 export default function HeaderTopShipping() {
-  const { pathname } = useRouter();
+  const { pathname, query, isReady } = useRouter();
+  console.log(query);
+
 
   return (
     <div className="shipping-header-top">
@@ -11,7 +13,7 @@ export default function HeaderTopShipping() {
       </div>
       <div className='shipping-header-name'>
         <p>배송지 {
-          pathname === "/shippingAddressModify" ? "수정" :
+          pathname === "/shippingAddressModify/[shippingAddressId]" ? "수정" :
             pathname === "/shippingAddressRegister" ? "등록" : "변경"
         }</p>
       </div>

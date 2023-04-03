@@ -6,10 +6,14 @@ import axios from 'axios';
 import Config from '@/configs/config.export';
 import StButton from '@/components/ui/StButton'
 import { useCookies } from 'react-cookie';
+import { useRouter } from 'next/router';
 
 export default function ShippingAddressModify() {
+  const router = useRouter();
   const baseUrl = Config().baseUrl;
   const [cookies] = useCookies(["id"]);
+  console.log(router.pathname)
+  console.log(router.query.shippingAddressId)
 
   const handleShippingAddressModify = () => {
     // axios.put(`${baseUrl}/v1/api/shippingAddress/${id}`, {
@@ -21,11 +25,15 @@ export default function ShippingAddressModify() {
   }
 
   // useEffect(() => {
-  //   axios.get(`${baseUrl}/v1/api/shippingAddress`, {
+  //   if (!isReady) return;
+  //   console.log(query)
+  //   axios.get(`${baseUrl}/v1/api/shippingAddress/${query}`, {
   //     headers: {
   //       Authorization: `Bearer ${cookies.id}`,
   //     },
   //   }).then((res) => {
+  //     console.log(query)
+  //     console.log(res.data)
   //   });
   // }, []);
 

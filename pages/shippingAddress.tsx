@@ -7,17 +7,18 @@ import axios from 'axios';
 
 import Config from '@/configs/config.export';
 import StButton from '@/components/ui/StButton';
+
 import { ShippingAddressReq } from '@/types/shippingAddress/shipAddressDataType';
 
 export default function ShippingAddress() {
-  const { push } = useRouter();
+  const router = useRouter();
   const baseUrl = Config().baseUrl;
   const [cookies] = useCookies(["id"]);
 
   const [allShippingAddress, setAllShippingAddress] = useState<ShippingAddressReq[]>([]);
 
   const handleShippingAdd = () => {
-    push("/shippingAddressRegister")
+    router.push("/shippingAddressRegister")
   }
 
   const handleShippingDelete = () => {
@@ -29,37 +30,59 @@ export default function ShippingAddress() {
     // });
   }
 
-  // useEffect(() => {
-  //   axios.get(`${baseUrl}/v1/api/shippingAddress`, {
-  //     headers: {
-  //       Authorization: `Bearer ${cookies.id}`,
-  //     },
-  //   }).then((res) => {
-  //     setAllShippingAddress(res.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get(`${baseUrl}/v1/api/shippingAddress`, {
+      headers: {
+        Authorization: `Bearer ${cookies.id}`,
+      },
+    }).then((res) => {
+      console.log(res.data)
+      setAllShippingAddress(res.data);
+    });
+  }, []);
 
   return (
     <>
       <section id="shipping-header">
         <p>배송지 관리</p>
       </section>
-      <section id="shipping-manage-list">
-        <div className="shipping-manage">
-          <div className="shipping-info">
-            <div className="shipping-name">
-              <div className="name">춘식이 (집)</div>
-              <div className="is-primary">기본</div>
+      {
+        allShippingAddress && allShippingAddress.map((item, idx) => (
+          <section id="shipping-manage-list" key={idx}>
+            <div className="shipping-manage">
+              <div className="shipping-info">
+                <div className="shipping-name">
+                  <div className="name">
+                    {item.receiver} ({item.nickname})
+                  </div>
+                  {
+                    item.choiceMain === true ?
+                      <div className="is-primary">기본</div> : null
+                  }
+                </div>
+              </div>
+              <Link href={`/shippingAddressModify/${item.id}`}>수정</Link>
+              {
+                item.choiceMain !== true ?
+                  <>
+                    <div>|</div>
+                    <div onClick={handleShippingDelete}>삭제</div>
+                  </>
+                  : null
+              }
             </div>
-          </div>
-          <Link href="/shippingAddressModify">수정</Link>
-        </div>
-        <p>(48058) 부산광역시 해운대구 센텀남대로 35(우동) 2층</p>
-        <p>상세주소</p>
-        <p>010-1234-5678</p>
-        <p>부재시 문 앞에 놓아주세요.</p>
-      </section>
-      <section id="shipping-manage-list">
+            <p>({item.zipCode}) {item.address}</p>
+            <p>{item.detailAddress}</p>
+            <p>{item.shippingPhone1}</p>
+            {
+              item.shippingPhone2 && item.shippingPhone2 !== "" ?
+                <p>{item.shippingPhone2}</p> : null
+            }
+            <p>{item.shippingMemo}</p>
+          </section>
+        ))
+      }
+      {/* <section id="shipping-manage-list">
         <div className="shipping-manage">
           <div className="shipping-info">
             <div className="shipping-name">
@@ -90,7 +113,7 @@ export default function ShippingAddress() {
         <p>상세주소</p>
         <p>010-1234-5678</p>
         <p>부재시 문 앞에 놓아주세요.</p>
-      </section>
+      </section> */}
       <section className="submit-container">
         <StButton
           buttonText="+ 새 배송지 추가"
