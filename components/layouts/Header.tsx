@@ -31,8 +31,6 @@ export default function Header() {
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
   //const [remainingDuration, setRemainingDuration] = useRecoilState(timerState);
 
-  console.log(router.pathname)
-
   const handleLogout = () => {
     Swal.fire({
       title: "로그아웃 하시겠습니까?",
@@ -122,37 +120,37 @@ export default function Header() {
                 router.pathname === "/shippingAddress" ||
                 router.pathname === "/signup" ? (
                 <BackButton />
-          ) : router.pathname === "/payment" ? (
-            <BackButton3 />
-          ) : (
-            <div onClick={() => setIsMenuModalOpen(true)}>
-              <img src="assets/images/icons/menu.svg" alt="" />
+              ) : router.pathname === "/payment" ? (
+                <BackButton3 />
+              ) : (
+                <div onClick={() => setIsMenuModalOpen(true)}>
+                  <img src="assets/images/icons/menu.svg" alt="" />
+                </div>
+              )}
             </div>
-          )}
-        </div>
             <Link href={"/"}>
               <h1>온라인 스토어</h1>
             </Link>
             <nav>
-          <ul>
-            <li onClick={() => router.push("/search")}>
-              <img src="assets/images/icons/search.svg" />
-            </li>
-            <li onClick={() => router.push("/cart")}>
-              <p className="cart-badge">{cartCnt}</p>
-              <img src="assets/images/icons/shopping-cart.svg" />
-            </li>
-            {isLogin.isLogin ? (
-              <li onClick={handleLogout}>
-                <img src="assets/images/icons/logout.png" />
-              </li>
-            ) : (
-              <li onClick={() => router.push("/login")}>
-                <img src="assets/images/icons/user.svg" />
-              </li>
-            )}
-          </ul>
-        </nav>
+              <ul>
+                <li onClick={() => router.push("/search")}>
+                  <img src="assets/images/icons/search.svg" />
+                </li>
+                <li onClick={() => router.push("/cart")}>
+                  <p className="cart-badge">{cartCnt}</p>
+                  <img src="assets/images/icons/shopping-cart.svg" />
+                </li>
+                {isLogin.isLogin ? (
+                  <li onClick={handleLogout}>
+                    <img src="assets/images/icons/logout.png" />
+                  </li>
+                ) : (
+                  <li onClick={() => router.push("/login")}>
+                    <img src="assets/images/icons/user.svg" />
+                  </li>
+                )}
+              </ul>
+            </nav>
           </div>
         )
       }

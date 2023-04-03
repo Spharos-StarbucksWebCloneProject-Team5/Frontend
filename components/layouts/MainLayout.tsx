@@ -30,7 +30,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   }, []);
 
   const router = useRouter();
-  console.log(router.pathname);
   console.log(isLogin);
 
   return (
@@ -42,7 +41,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       </Head>
 
       {(router.pathname && router.pathname === "/menu") ||
-      router.pathname === "/search" ? null : (
+        router.pathname === "/search" ? null : (
         <Header />
       )}
 
