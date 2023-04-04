@@ -1,27 +1,25 @@
-import Link from "next/link";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-import { getImageSize } from "react-image-size";
+import axios from "axios";
 
 import { productListCardType } from "@/types/product/fetchDataType";
-import axios from "axios";
 import Config from "@/configs/config.export";
 
 export default function ProductListCard(props: { productId: number }) {
   const { baseUrl } = Config();
+  const { push } = useRouter();
+
   const [data, setData] = useState<productListCardType>();
-  const [size, setSize] = useState({
-    width: 0,
-    height: 0,
-  });
+
+  const handleLink = () => {
+    push(`/products/${data?.id}`);
+  }
 
   useEffect(() => {
     axios(`${baseUrl}/v1/api/products/${props.productId}`)
       .then((res) => {
-        getImageSize(res.data.thumbnail).then((res) => {
-          setSize(res);
-        });
         setData(res.data);
       });
   }, []);
@@ -30,18 +28,16 @@ export default function ProductListCard(props: { productId: number }) {
     <>
       {data && (
         <div key={data.id} className="recommand-product-item">
-          <div className="recommand-product-item__img">
-            <Link href={`/products/${data.id}`}>
-              <Image
-                src={data.thumbnail}
-                alt={data.description}
-                width={160}
-                height={160}
-                priority
-              />
-            </Link>
+          <div className="recommand-product-item__img" onClick={handleLink}>
+            <Image
+              src={data.thumbnail}
+              alt={data.description}
+              width={160}
+              height={160}
+              priority
+            />
           </div>
-          <div className="recommand-product-item__info">
+          <div className="recommand-product-item__info" onClick={handleLink}>
             {data.isNew ? <p className="item-new">New</p> : null}
             <p className="item-title">{data.name}</p>
             <p className="item-price">

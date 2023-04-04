@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { productListCardType } from "@/types/product/fetchDataType";
 import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
-import Config from "@/configs/config.export";
 import { useRouter } from "next/router";
+
+import axios from "axios";
+
+import { productListCardType } from "@/types/product/fetchDataType";
+import Config from "@/configs/config.export";
 
 export default function ColProductListCard(props: { productId: number }) {
   const { baseUrl } = Config();
   const { push } = useRouter();
 
-  const [data, setData] = useState<productListCardType>({
-    id: 0,
-    description: "",
-    name: "",
-    price: 0,
-    thumbnail: "",
-    isNew: false,
-  });
+  const [data, setData] = useState<productListCardType>();
 
   const handleLink = () => {
-    push(`/products/${data.id}`);
+    push(`/products/${data?.id}`);
   }
 
   useEffect(() => {
