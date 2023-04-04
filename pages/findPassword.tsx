@@ -8,11 +8,12 @@ import Swal from "sweetalert2";
 import { SignupErrType } from "@/types/signup/signupErrType";
 import StButton from "@/components/ui/StButton";
 import { useCookies } from "react-cookie";
+import { findPasswordType, loginData } from "@/types/UserRequest/LoginData";
 
-interface ChildProps {
-  inputData: inputRegisterType;
-  setInputData: React.Dispatch<React.SetStateAction<inputRegisterType>>;
-}
+// interface ChildProps {
+//   inputData: inputRegisterType;
+//   setInputData: React.Dispatch<React.SetStateAction<inputRegisterType>>;
+// }
 
 const renderer = (props: {
   hours: any;
@@ -39,12 +40,13 @@ const renderer = (props: {
   }
 };
 
-const findPassword = ({ inputData, setInputData }: ChildProps) => {
+const findPassword = () => {
   const [confirmKey, setConfirmKey] = useState<string>("");
   const [confirmView, setConfirmView] = useState<boolean>(false);
   const [duplicateView, setDuplicateView] = useState<boolean>(false);
   const [confirmTime, setConfirmTime] = useState<number>();
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
+  const [inputData, setInputData] = useState<findPasswordType>({email:"", password: "",isUserConfirm:false});
 
   const [errMsg, setErrMsg] = useState<SignupErrType>({
     emailErr: "",
@@ -84,7 +86,7 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
         }
         //return;
         axios.put(`${baseUrl}/api/v1/users/modify`, {
-          email: inputData.userEmail,
+          email: inputData.email,
           password: value,
         });
       } else {
@@ -99,17 +101,17 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
   };
 
   const handleEmailConfirm = () => {
-    if (inputData.userEmail === "") {
+    if (inputData.email === "") {
       setErrMsg({ ...errMsg, emailErr: "이메일을 입력해주세요." });
       return;
     }
-    if (!emailRegex.test(inputData.userEmail)) {
+    if (!emailRegex.test(inputData.email)) {
       setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." });
       return;
     }
     //이메일 인증
     axios
-      .post(`${baseUrl}/api/v1/users/email`, { email: inputData.userEmail })
+      .post(`${baseUrl}/api/v1/users/email`, { email: inputData.email })
       .then((res) => {
         console.log(res.data.result);
         if (res.data.result === "success") {
@@ -119,7 +121,7 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
         }
         Swal.fire({
           icon: "success",
-          text: `인증번호가 ${inputData.userEmail}로 전송되었습니다.`,
+          text: `인증번호가 ${inputData.email}로 전송되었습니다.`,
           customClass: {
             confirmButton: "swal-confirm-button",
           },
@@ -132,7 +134,7 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
           setDuplicateView(false);
           setInputData({
             ...inputData,
-            userEmail: "",
+            email: "",
           });
           alert(err.response.data.massage);
           setErrMsg({ ...errMsg, emailErr: "" });
@@ -141,7 +143,7 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
       });
 
     axios
-      .post(`${baseUrl}/api/v1/email`, { to: inputData.userEmail })
+      .post(`${baseUrl}/api/v1/email`, { to: inputData.email })
       .then((res) => {
         console.log(res);
       })
@@ -186,13 +188,13 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
           <input
             id="email-input"
             type="email"
-            name="userEmail"
+            name="email"
             placeholder="이메일을 입력해주세요."
             onChange={handleChange}
-            value={inputData.userEmail}
+            value={inputData.email}
             required={true}
-            className={inputData.isUserConfirm ? "isDisable" : ""}
-            disabled={inputData.isUserConfirm}
+            //className={inputData.isUserConfirm ? "isDisable" : ""}
+            //disabled={inputData.isUserConfirm}
           />
           <div className="email-confirm-button">
             <p>{errMsg.emailErr}</p>
@@ -255,6 +257,7 @@ const findPassword = ({ inputData, setInputData }: ChildProps) => {
           />
           <p>{errMsg.confirmPasswordErr}</p>
         </div>
+        
       </form>
     </>
   );

@@ -19,6 +19,7 @@ import axios from "axios";
 import Config from "@/configs/config.export";
 import HeaderTopShipping from "./HeaderTopShipping";
 import BackButton3 from "../ui/BackButton3";
+import BackButton2 from "../ui/BackButton2";
 
 export default function Header() {
   const router = useRouter();
@@ -116,15 +117,16 @@ export default function Header() {
           <div className="header-top">
             <div className="menu-icon">
               {router.pathname === "/cart" ||
-                router.pathname === "/listview" ||
                 router.pathname === "/shippingAddress" ||
-                router.pathname === "/signup" ? (
+                router.pathname === "/signup" ||
+                router.pathname === "/products/[productId]"? (
                 <BackButton />
-              ) : router.pathname === "/payment" ? (
+              ):router.pathname === "/listview" ?<BackButton2/>
+               : router.pathname === "/payment" ? (
                 <BackButton3 />
               ) : (
                 <div onClick={() => setIsMenuModalOpen(true)}>
-                  <img src="assets/images/icons/menu.svg" alt="" />
+                  <img src="/assets/images/icons/menu.svg" alt="" />
                 </div>
               )}
             </div>
@@ -134,19 +136,19 @@ export default function Header() {
             <nav>
               <ul>
                 <li onClick={() => router.push("/search")}>
-                  <img src="assets/images/icons/search.svg" />
+                  <img src="/assets/images/icons/search.svg" />
                 </li>
                 <li onClick={() => router.push("/cart")}>
                   <p className="cart-badge">{cartCnt}</p>
-                  <img src="assets/images/icons/shopping-cart.svg" />
+                  <img src="/assets/images/icons/shopping-cart.svg" />
                 </li>
                 {isLogin.isLogin ? (
                   <li onClick={handleLogout}>
-                    <img src="assets/images/icons/logout.png" />
+                    <img src="/assets/images/icons/logout.png" />
                   </li>
                 ) : (
                   <li onClick={() => router.push("/login")}>
-                    <img src="assets/images/icons/user.svg" />
+                    <img src="/assets/images/icons/user.svg" />
                   </li>
                 )}
               </ul>

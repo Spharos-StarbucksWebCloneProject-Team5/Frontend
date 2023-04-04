@@ -18,6 +18,7 @@ export default function ProductListView() {
 
   const router = useRouter();
 
+  //Category.tsx에서 push 받은 쿼리로 url 만들고 상품 필터
   useEffect(() => {
     console.log(router.query)
     let url = ''
@@ -41,7 +42,7 @@ export default function ProductListView() {
 
   const fetchData = () => {
     console.log(queryUrl)
-    axios(`${baseUrl}/v1/api/categories?${queryUrl}&pageNum=${page + 1}`).then((res) => {
+    axios(`${baseUrl}/v1/api/categories/?${queryUrl}&pageNum=${page + 1}`).then((res) => {
       setPageData(res.data);
       setProductData([...productData, ...res.data.content]);
     });

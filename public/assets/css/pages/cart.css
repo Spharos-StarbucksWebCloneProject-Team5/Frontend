@@ -422,3 +422,12 @@ input[type="checkbox"]:checked {
   margin: 10px 5px;
   letter-spacing: -0.2px;
 }
+
+.countModifyModal {
+  position: fixed;
+  z-Index: 9999;
+  top: 0px;
+  background-color: white; 
+  height: 100vh; 
+  width: 100%;
+}

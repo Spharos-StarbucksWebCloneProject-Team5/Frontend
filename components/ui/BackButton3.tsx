@@ -24,16 +24,8 @@ export default function BackButton3() {
           productId: 0,
           count: 0,
         });
-        setProductData([
-          {
-            productId: 0,
-            productName: "",
-            price: 0,
-            thumbnail: "",
-            count: 0,
-          },
-        ]);
-        router.back();
+        setProductData([]);
+        router.push("/");
       }}
     >
       <Image

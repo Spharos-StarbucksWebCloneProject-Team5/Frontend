@@ -1,7 +1,7 @@
 import MiddleLine from "@/components/ui/MiddleLine";
 import CartFooter from "@/components/page/cart/CartFooter";
 import Config from "@/configs/config.export";
-import { allCartListState, cartIsCheckState } from "@/state/atom/cartState";
+import { allCartListState, cartIsCheckState, countModalState } from "@/state/atom/cartState";
 import { cartListState } from "@/state/atom/cartState";
 import { freezeCartListState } from "@/state/atom/cartState";
 
@@ -63,13 +63,10 @@ export default function cart() {
         text: "로그인이 필요합니다!",
       });
       router.push("/login");
-      return;
+      //return;
     }
-  }, []);
-
-  useEffect(() => {
-    console.log(cookies.id);
-    axios
+    else{
+      axios
       .get(`${baseUrl}/v1/api/carts/get`, {
         headers: {
           Authorization: `Bearer ${cookies.id}`,
@@ -88,7 +85,13 @@ export default function cart() {
           ),
         });
       });
+    }
   }, []);
+
+  //useEffect(() => {
+    //console.log(cookies.id);
+    
+  //}, []);
 
   useEffect(() => {
     let check = true;
@@ -282,7 +285,7 @@ export default function cart() {
     location.reload();
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useRecoilState(countModalState);
   const [countCartId, setCountCartId] = useState<number>(0);
 
   const showModal = (cartId: number) => {
@@ -292,6 +295,9 @@ export default function cart() {
 
   return (
     <>
+    {modalOpen && (
+        <CountModal  cartId={countCartId} />
+      )}
       <Head>
         <title>Cart</title>
       </Head>
@@ -518,9 +524,7 @@ export default function cart() {
         allItems={allCartItems}
       />
 
-      {modalOpen && (
-        <CountModal setModalOpen={setModalOpen} cartId={countCartId} />
-      )}
+      
     </>
   );
 }
