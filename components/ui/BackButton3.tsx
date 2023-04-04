@@ -25,7 +25,7 @@ export default function BackButton3() {
           count: 0,
         });
         setProductData([]);
-        router.push("/");
+        router.back();
       }}
     >
       <Image

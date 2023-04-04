@@ -1,15 +1,22 @@
-import { useState, useRef } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
+import Image from "next/image";
+import Sheet from "react-modal-sheet";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
+import { useCookies } from "react-cookie";
+
+import axios from "axios";
+import Swal from "sweetalert2";
+
 import styled from "styled-components";
 import myStyle from "@/public/assets/css/modules/ProductOrderSection.module.css";
-import Sheet, { SheetRef } from "react-modal-sheet";
-import Separator from "@/components/ui/Separator";
-import { useRecoilState } from "recoil";
-import { buyNowState } from "@/state/atom/paymentState";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { useCookies } from "react-cookie";
+
 import Config from "@/configs/config.export";
-import Swal from "sweetalert2";
+import Separator from "@/components/ui/Separator";
+import ButtonUi from "@/components/ui/ButtonUi";
+
+import { buyNowState } from "@/state/atom/paymentState";
+import { userLoginState } from "@/state/atom/userLoginState";
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -48,35 +55,77 @@ export default function ProductOrderSection(props: {
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [count, setCount] = useState<number>(1);
+  const [successModal, setSuccessModal] = useState(false);
   const [buyProduct, setBuyProduct] = useRecoilState(buyNowState);
-  const [cookies, setCookie, removeCookie] = useCookies(["id"]);
+  const [cookies] = useCookies(["id"]);
   const baseUrl = Config().baseUrl;
-  const ref = useRef<SheetRef>();
   const router = useRouter();
+  const { isLogin } = useRecoilValue(userLoginState);
+  const myLogin = cookies.id;
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
 
   const minusCount = () => {
+    if (count === 1) {
+      Swal.fire({
+        toast: true,
+        text: '최소 수량은 1개 입니다.',
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        color: "#067040"
+      });
+      return;
+    }
     if (count !== 0) {
       setCount(count - 1);
     }
   };
 
   const addCount = () => {
-    setCount(count + 1);
+    if (count === 3) {
+      Swal.fire({
+        toast: true,
+        text: '최대 수량은 3개 입니다.',
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        color: "#067040"
+      });
+      return;
+    } else {
+      setCount(count + 1);
+    }
   };
 
   const buyHandle = () => {
-    setBuyProduct({ productId: props.productId, count: count });
-    router.push(`/payment`);
+    if (!myLogin && !isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인이 필요합니다!",
+      });
+      router.push("/login");
+      return;
+    } else {
+      setBuyProduct({ productId: props.productId, count: count });
+      router.push(`/payment`);
+    }
   };
 
   const addCart = () => {
-    //console.log(`buyProduct------${buyProduct.productId}`)
-    axios
-      .post(
+    if (!myLogin && !isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인이 필요합니다!",
+      });
+      router.push("/login");
+      return;
+    } else {
+      axios.post(
         `${baseUrl}/v1/api/carts`,
         {
           productId: props.productId,
@@ -88,27 +137,33 @@ export default function ProductOrderSection(props: {
             Authorization: `Bearer ${cookies.id}`,
           },
         }
-      )
-      .then((res) => {
+      ).then((res) => {
         Swal.fire({
-          title: "장바구니에 추가되었습니다",
-          showDenyButton: true,
-          showCancelButton: false,
-          confirmButtonText: `장바구니 가기`,
-          denyButtonText: `상품 더보기`,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            router.push(`/cart`);
-          } else {
-            router.push(`/listview`);
-          }
+          toast: true,
+          text: '장바구니에 상품을 담았습니다.',
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          color: "#067040"
         });
-      });
+        setSuccessModal(true);
+        setIsOpen(false);
+      })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
+
   let totalPrice = count * props.productPrice;
 
   return (
     <>
+      <SuccessViewModal
+        isModalOpen={successModal}
+        setIsModalOpen={setSuccessModal}
+      />
       <div
         className={
           isOpen ? myStyle.productOrderSectionOpen : myStyle.productOrderSection
@@ -117,11 +172,14 @@ export default function ProductOrderSection(props: {
         {!isOpen ? <OrderToggleButton onClick={handleOpen} /> : null}
 
         {!isOpen ? (
-          <OrderButton onClick={handleOpen}>구매하기</OrderButton>
+          <ButtonUi type="button" text="구매하기" handler={handleOpen} size="large" colorType="primary" />
         ) : (
           <div className={myStyle.productOrderSectionOpenBottomWrap}>
-            <img
+            <Image
               src="../assets/images/icons/shopping-cart.svg"
+              width={20}
+              height={20}
+              alt="shopping cart icon"
               onClick={addCart}
             />
             <OrderButton38widthColorReverse>
@@ -158,15 +216,25 @@ export default function ProductOrderSection(props: {
 
                     <div className={myStyle.QtyCountWrap}>
                       <div className={myStyle.QtyCount}>
-                        <img
-                          src="../assets/images/icons/minus.png"
-                          onClick={minusCount}
-                        />
-                        {count}
-                        <img
-                          src="../assets/images/icons/add.png"
-                          onClick={addCount}
-                        />
+                        <div className={count === 1 ? myStyle.QtyCountDisabled : myStyle.QtyCount}>
+                          <div className="order-count">
+                          <Image
+                            src="/assets/images/icons/minus.png"
+                            onClick={minusCount}
+                            width={20}
+                            height={20}
+                            alt="-Button"
+                          />
+                          <p>{count}</p>
+                          <Image
+                            src="/assets/images/icons/add.png"
+                            onClick={addCount}
+                            width={20}
+                            height={20}
+                            alt="+Button"
+                          />
+                          </div>
+                        </div>
                       </div>
                       <div className={myStyle.priceBold}>
                         {props.productPrice.toLocaleString("en")}원
@@ -191,3 +259,55 @@ export default function ProductOrderSection(props: {
     </>
   );
 }
+
+const SuccessViewModal = (props: { isModalOpen: boolean, setIsModalOpen: Dispatch<SetStateAction<boolean>> }) => {
+
+  if (!props.isModalOpen) { return null; }
+
+  return (
+    <>
+      <SuccessModalWarp>
+        <div className={myStyle.notiWrap}>
+          <div>
+            <p>장바구니에 추가되었습니다.</p>
+            <Image
+              src="/assets/images/icons/close.png"
+              alt="close"
+              width={20}
+              height={20}
+              onClick={() => props.setIsModalOpen(false)}
+            />
+          </div>
+          <div className={myStyle.buttonWrap}>
+            <ButtonUi
+              type="button"
+              text="장바구니로 이동"
+              size="medium"
+              colorType="secondary"
+              link="/cart"
+            />
+            <ButtonUi
+              type="button"
+              text="상품 더보기"
+              size="medium"
+              colorType="primary"
+              link="/listview?category=0"
+            />
+          </div>
+        </div>
+
+      </SuccessModalWarp>
+    </>
+  )
+}
+const SuccessModalWarp = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%
+  height: 100%
+  z-index: 890;
+  padding: 0;
+  margin: 0;
+`;
