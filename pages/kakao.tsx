@@ -13,11 +13,10 @@ interface ResponseType {
 
 export default function Kakao() {
   const router = useRouter();
-  const { code: authCode, error: kakaoServerError } = router.query;
+  const code = router.query.code;
   //const code = router.query
   //console.log(typeof JSON.stringify(code))
   //const strCode = JSON.stringify(code)
-  console.log(authCode)
   const baseUrl = Config().baseUrl;
 
 //  useEffect(
@@ -35,23 +34,19 @@ export default function Kakao() {
 //     },
 //     [router]
 //   );
-  useEffect(()=>{
-    fetch(`${baseUrl}/login/kakao`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            authCode: authCode,
-          }),
-      }).then((res) =>{console.log(res) })
-    .catch((error) => {
-        console.log('kakaoLogin Failed');
-    });
-    router.push('/');
+
+
+console.log(code)
+useEffect(()=>{
+   
+  if(code !== undefined){
+    axios.get(`${baseUrl}/login/kakao?code=${code}`).then((res)=>{
+      console.log("@@@"+res)
+      console.log(JSON.stringify(res))
+    })
+  }
   
-    
-}, []);
+}, [code]);
  
 // useEffect(async(code: string | string[]) => {3
 //     await axios.get(`${baseUrl}/login/kakao?code=${code}`).then((res) => {console.log(res)})
