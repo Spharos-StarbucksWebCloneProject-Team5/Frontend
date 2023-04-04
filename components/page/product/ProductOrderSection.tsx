@@ -1,4 +1,4 @@
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import Sheet from "react-modal-sheet";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -89,7 +89,7 @@ export default function ProductOrderSection(props: {
     if (count === 3) {
       Swal.fire({
         toast: true,
-        text: '최대 수량은 3개 입니다.',
+        text: '최대 수량은 5개 입니다.',
         position: 'top',
         showConfirmButton: false,
         timer: 2000,
@@ -105,7 +105,7 @@ export default function ProductOrderSection(props: {
   const buyHandle = () => {
     if (!myLogin && !isLogin) {
       Swal.fire({
-        icon: "warning",
+        icon: "info",
         text: "로그인이 필요합니다!",
       });
       router.push("/login");
@@ -119,7 +119,7 @@ export default function ProductOrderSection(props: {
   const addCart = () => {
     if (!myLogin && !isLogin) {
       Swal.fire({
-        icon: "warning",
+        icon: "info",
         text: "로그인이 필요합니다!",
       });
       router.push("/login");
