@@ -53,7 +53,7 @@ export default function MenuModal() {
       </div>
       <section className="section-top">
         <div className="all-product">
-          <div onClick={() => handlePushClose("/listview?category=all")}>
+          <div onClick={() => handlePushClose("/listview?category=0")}>
             전체 상품 보기
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>

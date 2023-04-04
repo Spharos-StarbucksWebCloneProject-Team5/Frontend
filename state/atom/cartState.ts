@@ -34,3 +34,9 @@ export const countState = atom({
   default: 0,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const countModalState = atom({
+  key: "countModalState",
+  default: false,
+  //effects_UNSTABLE: [persistAtom],
+});

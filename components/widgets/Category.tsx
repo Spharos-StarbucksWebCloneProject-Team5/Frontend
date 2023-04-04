@@ -19,6 +19,7 @@ export default function Category() {
   const [categoryList, setCategoryList] = useState<MenuDataType[]>([]);
   const [menuListDepth2, setMenuListDepth2] = useState<menuListDepth2[]>([]);
 
+  //카테고리 데이터 받아옴
   useEffect(() => {
     axios.get(`${baseUrl}/v1/api/categories/main`).then((res) => {
       console.log(res.data);
@@ -30,22 +31,23 @@ export default function Category() {
     });
   }, []);
 
+  //메인 카테고리 쿼리 만들기
   useEffect(() => {
     //console.log("필터링데이터", filterData);
     let queryUrl = "";
     filterData.forEach((item) => {
       queryUrl += `&${item.key}=${item.value}`;
     });
-
     router.push(`/listview?category=${router.query.category}${queryUrl}`);
   }, [filterData]);
 
+  //서브카테고리 쿼리 만들기
   useEffect(() => {
     setMenuList(
       menuListDepth2.find(
         (item) => item.id.toString() === router.query.category
       )?.data || []
-    ); // 1번 메뉴의 서브메뉴
+    ); 
   }, [router]);
 
   return (

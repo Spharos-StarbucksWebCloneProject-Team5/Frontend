@@ -19,6 +19,7 @@ import BackButton2 from "@/components/ui/BackButton2";
 import { timerState } from "@/state/atom/timerState";
 import { useIdleTimer } from "react-idle-timer";
 
+
 export default function Login() {
   
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function Login() {
     window.Kakao.Auth.authorize({
       redirectUri: `http://localhost:6600/kakao`, 
     });
+    //loginHandler
   }
 
   const handleKakao = () => {

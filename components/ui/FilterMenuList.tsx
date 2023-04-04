@@ -10,18 +10,21 @@ export default function FilterMenuList(props: { data: MenuDataType[],filterFile:
   const [categoryMain, setCategoryMain] = useState<MenuDataType[]>();
   const [categoryMiddle, setCategoryMiddle] = useState<MenuDataType[]>();
   const [categoryId, setCategoryId] = useState<number>(0);
+  const [subCategoryId, setSubCategoryId] = useState<number[]>([]);
 
   const handleAddQuery = (item: MenuDataType) => {
     console.log(item);
     if (item.key === "category" && item.id === 0) {
       router.push(`/listview?category=0`);
+      setCategoryId(0);
       setCategoryMiddle([]);
       return;
     }
     if (item.key === "category" && item.id !== 0) {
       router.push(`/listview?category=${item.id}`);
       setCategoryId(item.id);
-
+      setCategoryMiddle([]);
+      
       axios.get(`${baseUrl}/v1/api/categories/middle`).then((res) => {
         console.log(res.data[item.id-1].data);
         setCategoryMiddle(res.data[item.id-1].data);
@@ -34,6 +37,7 @@ export default function FilterMenuList(props: { data: MenuDataType[],filterFile:
       
     } else if (item.key === "subCategory" && item.id !== 0) {
       router.push(`/listview?category=${categoryId}&subCategory=${item.id}`);
+      subCategoryId.includes(item.id)? setSubCategoryId(subCategoryId.filter(item2=>item2!==item.id)):setSubCategoryId([...subCategoryId,item.id])
       return;
     } 
     
@@ -57,7 +61,7 @@ export default function FilterMenuList(props: { data: MenuDataType[],filterFile:
                 <li
                   key={item.id}
                   onClick={() => handleAddQuery(item)}
-                  // className={item.key ===  ? "active" : ""}
+                   className={item.id === categoryId ? "active" : ""}
                 >
                   <p>{item.name}</p>
                 </li>
@@ -69,7 +73,7 @@ export default function FilterMenuList(props: { data: MenuDataType[],filterFile:
                 <li
                   key={item.id}
                   onClick={() => handleAddQuery(item)}
-                  // className={item.key ===  ? "active" : ""}
+                   className={subCategoryId.includes(item.id) ? "active" : ""}
                 >
                   <p>{item.name}</p>
                 </li>

@@ -14,26 +14,46 @@ interface ResponseType {
 export default function Kakao() {
   const router = useRouter();
   const { code: authCode, error: kakaoServerError } = router.query;
- // const code = router.query
-  //console.log(code)
+  //const code = router.query
+  //console.log(typeof JSON.stringify(code))
+  //const strCode = JSON.stringify(code)
+  console.log(authCode)
   const baseUrl = Config().baseUrl;
 
-  const loginHandler = useCallback(
+//  useEffect(
     
-    async (code: string | string[]) => { 
-      // 백엔드에 전송2
-      await axios.get(`${baseUrl}/login/kakao?code=${code}`).then((res) => console.log(res));
+//     async () => { 
+//         console.log(code)
+//       // 백엔드에 전송2
+//       await axios.get(`${baseUrl}/login/kakao?code=${code}`).then((res) => console.log(res));
       
-      //if (response.ok) { // 성공하면 홈으로 리다이렉트
-        router.push('/');
-     // } else { // 실패하면 에러 페이지로 리다이렉트
-      //  router.push('/login');
-     /// }
-    },
-    [router]
-  );
+//       //if (response.ok) { // 성공하면 홈으로 리다이렉트
+//         router.push('/');
+//      // } else { // 실패하면 에러 페이지로 리다이렉트
+//       //  router.push('/login');
+//      /// }
+//     },
+//     [router]
+//   );
+  useEffect(()=>{
+    fetch(`${baseUrl}/login/kakao`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            authCode: authCode,
+          }),
+      }).then((res) =>{console.log(res) })
+    .catch((error) => {
+        console.log('kakaoLogin Failed');
+    });
+    router.push('/');
+  
+    
+}, []);
  
-// useEffect(async(code: string | string[]) => {
+// useEffect(async(code: string | string[]) => {3
 //     await axios.get(`${baseUrl}/login/kakao?code=${code}`).then((res) => {console.log(res)})
 //         .catch((error) => {
 //             console.log('kakaoLogin Failed');
