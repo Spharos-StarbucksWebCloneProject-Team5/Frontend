@@ -56,6 +56,7 @@ export default function Header() {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("userId");
+        localStorage.removeItem("nickname");
         removeCookie("id");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({

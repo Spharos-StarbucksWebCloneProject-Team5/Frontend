@@ -369,7 +369,8 @@ export default function cart() {
                 </div>
                 <div className="text-order-amount">
                   <p>주문 금액</p>
-                  <p>{element.productPrice}원</p>
+                  <p>{(Number(element.productPrice) * Number(element.count))
+                 .toLocaleString("en")}원</p>
                 </div>
                 <div className="box-button">
                   <button
@@ -391,7 +392,7 @@ export default function cart() {
                 </div>
               </div>
             </div>
-          ))}
+                  ))}
           <section>
             <div className="cart-total-check">
               <p>
@@ -422,7 +423,6 @@ export default function cart() {
                   handleFreezeCart(element.cartId, !element.checked)
                 }
               />
-              {/* <div className="check-all" /> */}
               <div className="box-cart-product">
                 <div className="cart-product-info">
                   <img
@@ -448,7 +448,8 @@ export default function cart() {
                 </div>
                 <div className="text-order-amount">
                   <p>주문 금액</p>
-                  <p>{element.productPrice.toLocaleString("en")}원</p>
+                  <p>{(Number(element.productPrice) * Number(element.count))
+                 .toLocaleString("en")}원</p>
                 </div>
                 <div className="box-button">
                   <button
