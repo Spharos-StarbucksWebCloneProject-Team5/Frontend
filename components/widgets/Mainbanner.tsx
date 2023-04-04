@@ -34,16 +34,9 @@ export default function Mainbanner() {
       });
   }, []);
 
-  const getSize = (url: string) => {
-    let myImage = {
-      width: 0,
-      height: 0,
-    };
-    getImageSize(url).then((res) => {
-      myImage.width = res.width;
-      myImage.height = res.height;
-    });
-    return myImage;
+  const getSize: any = async (url: string) => {
+    const size = await getImageSize(url)
+    return size;
   };
 
   return (
@@ -55,7 +48,6 @@ export default function Mainbanner() {
           slidesPerView={1}
           pagination={{ clickable: false }}
           autoplay={{ delay: 2000 }}
-          loop={true}
         >
           {slideData &&
             slideData.map((slide: bannerInfoType, idx: number) => {
@@ -65,8 +57,8 @@ export default function Mainbanner() {
                     <div className="event-banner__item__img">
                       <Image
                         src={slide.titleImage}
-                        width={getSize(slide.titleImage).width}
-                        height={getSize(slide.titleImage).height}
+                        width={getSize(slide.titleImage).width === undefined ? 600 : getSize(slide.titleImage).width}
+                        height={getSize(slide.titleImage).height === undefined ? 600 : getSize(slide.titleImage).height}
                         alt={slide.description}
                         priority
                       />
