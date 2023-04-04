@@ -5,7 +5,7 @@ import Config from '@/configs/config.export';
 import StButton from '@/components/ui/StButton'
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
-import { ShippingAddressModifyReq } from '@/types/shippingAddress/shipAddressDataType';
+import { ShippingAddressModifyReq, ShippingAddressReq } from '@/types/shippingAddress/shipAddressDataType';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 
@@ -14,7 +14,7 @@ export default function ShippingAddressInfo() {
   const baseUrl = Config().baseUrl;
   const [cookies] = useCookies(["id"]);
 
-  console.log(cookies)
+  const [allShippingAddress, setAllShippingAddress] = useState<ShippingAddressReq[]>([]);
 
   const [shippingAddressModify, setShippingAddressModify] = useState<ShippingAddressModifyReq>({
     receiver: "",
@@ -29,20 +29,25 @@ export default function ShippingAddressInfo() {
   });
 
   const handleShippingAddressAdd = () => {
-    axios.post(`${baseUrl}/v1/api/shippingAddress`, {
-      headers: {
-        Authorization: `Bearer ${cookies.id}`,
+    axios.post(`${baseUrl}/v1/api/shippingAddress`,
+      {
+        nickname: shippingAddressModify.nickname,
+        receiver: shippingAddressModify.receiver,
+        zipCode: shippingAddressModify.zipCode,
+        address: shippingAddressModify.address,
+        detailAddress: shippingAddressModify.detailAddress,
+        shippingPhone1: shippingAddressModify.shippingPhone1,
+        shippingPhone2: shippingAddressModify.shippingPhone2,
+        shippingMemo: shippingAddressModify.shippingMemo,
+        choiceMain: shippingAddressModify.choiceMain,
       },
-      nickname: shippingAddressModify.nickname,
-      receiver: shippingAddressModify.receiver,
-      zipCode: shippingAddressModify.zipCode,
-      address: shippingAddressModify.address,
-      detailAddress: shippingAddressModify.detailAddress,
-      shippingPhone1: shippingAddressModify.shippingPhone1,
-      shippingPhone2: shippingAddressModify.shippingPhone2,
-      shippingMemo: shippingAddressModify.shippingMemo,
-      choiceMain: shippingAddressModify.choiceMain,
-    }).then((res) => {
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${cookies.id}`,
+        },
+      }
+    ).then((res) => {
       Swal.fire({
         icon: "success",
         text: `배송지가 등록되었습니다.`,
@@ -84,6 +89,17 @@ export default function ShippingAddressInfo() {
   useEffect(() => {
     console.log(shippingAddressModify);
   }, [shippingAddressModify]);
+
+  useEffect(() => {
+    axios.get(`${baseUrl}/v1/api/shippingAddress`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${cookies.id}`,
+      },
+    }).then((res) => {
+      setAllShippingAddress(res.data);
+    });
+  }, []);
 
   return (
     <>

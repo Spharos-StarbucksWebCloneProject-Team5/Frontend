@@ -9,10 +9,15 @@ import Config from '@/configs/config.export';
 import StButton from '@/components/ui/StButton';
 
 import { ShippingAddressReq } from '@/types/shippingAddress/shipAddressDataType';
+import Swal from 'sweetalert2';
+import { useRecoilValue } from 'recoil';
+import { userLoginState } from '@/state/atom/userLoginState';
 
 export default function ShippingAddress() {
   const router = useRouter();
   const baseUrl = Config().baseUrl;
+
+  const { isLogin } = useRecoilValue(userLoginState);
   const [cookies] = useCookies(["id"]);
 
   const [allShippingAddress, setAllShippingAddress] = useState<ShippingAddressReq[]>([]);
@@ -21,22 +26,44 @@ export default function ShippingAddress() {
     router.push("/shippingAddressRegister")
   }
 
-  const handleShippingDelete = () => {
-    // axios.delete(`${baseUrl}/v1/api/shippingAddress/${id}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${cookies.id}`,
-    //   },
-    // }).then((res) => {
-    // });
+  const handleShippingDelete = (shippingAddressId: number) => {
+    Swal.fire({
+      icon: "warning",
+      text: `배송지를 삭제하시겠습니까?`,
+      cancelButtonText: "cancle",
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "swal-confirm-button",
+        cancelButton: "swal-cancel-button",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`${baseUrl}/v1/api/shippingAddress/${shippingAddressId}`, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${cookies.id}`,
+          },
+        })
+        Swal.fire({
+          icon: "success",
+          text: `배송지가 삭제되었습니다.`,
+          customClass: {
+            confirmButton: "swal-confirm-button",
+          },
+        }).then((result) => {
+          router.reload();
+        });
+      }
+    });
   }
 
   useEffect(() => {
     axios.get(`${baseUrl}/v1/api/shippingAddress`, {
+      withCredentials: true,
       headers: {
         Authorization: `Bearer ${cookies.id}`,
       },
     }).then((res) => {
-      console.log(res.data)
       setAllShippingAddress(res.data);
     });
   }, []);
@@ -46,74 +73,44 @@ export default function ShippingAddress() {
       <section id="shipping-header">
         <p>배송지 관리</p>
       </section>
-      {
-        allShippingAddress && allShippingAddress.map((item, idx) => (
-          <section id="shipping-manage-list" key={idx}>
-            <div className="shipping-manage">
-              <div className="shipping-info">
-                <div className="shipping-name">
-                  <div className="name">
-                    {item.receiver} ({item.nickname})
+      <div className='shipping-address-section-box'>
+        {
+          allShippingAddress && allShippingAddress.map((item, idx) => (
+            <section id="shipping-manage-list" key={idx}>
+              <div className="shipping-manage">
+                <div className="shipping-info">
+                  <div className="shipping-name">
+                    <div className="name">
+                      {item.receiver} ({item.nickname})
+                    </div>
+                    {
+                      item.choiceMain === true ?
+                        <div className="is-primary">기본</div> : null
+                    }
                   </div>
-                  {
-                    item.choiceMain === true ?
-                      <div className="is-primary">기본</div> : null
-                  }
                 </div>
+                <Link href={`/shippingAddressModify/${item.id}`}>수정</Link>
+                {
+                  item.choiceMain !== true ?
+                    <>
+                      <div>|</div>
+                      <div onClick={() => handleShippingDelete(item.id)}>삭제</div>
+                    </>
+                    : null
+                }
               </div>
-              <Link href={`/shippingAddressModify/${item.id}`}>수정</Link>
+              <p>({item.zipCode}) {item.address}</p>
+              <p>{item.detailAddress}</p>
+              <p>{item.shippingPhone1}</p>
               {
-                item.choiceMain !== true ?
-                  <>
-                    <div>|</div>
-                    <div onClick={handleShippingDelete}>삭제</div>
-                  </>
-                  : null
+                item.shippingPhone2 && item.shippingPhone2 !== "" ?
+                  <p>{item.shippingPhone2}</p> : null
               }
-            </div>
-            <p>({item.zipCode}) {item.address}</p>
-            <p>{item.detailAddress}</p>
-            <p>{item.shippingPhone1}</p>
-            {
-              item.shippingPhone2 && item.shippingPhone2 !== "" ?
-                <p>{item.shippingPhone2}</p> : null
-            }
-            <p>{item.shippingMemo}</p>
-          </section>
-        ))
-      }
-      {/* <section id="shipping-manage-list">
-        <div className="shipping-manage">
-          <div className="shipping-info">
-            <div className="shipping-name">
-              <div className="name">죠르디</div>
-            </div>
-          </div>
-          <Link href="/shippingAddressModify">수정</Link>
-          <div>|</div>
-          <div onClick={handleShippingDelete}>삭제</div>
-        </div>
-        <p>(48950) 부산광역시 중구 용두산길 35-7(광복동2가) 용두산공원</p>
-        <p>상세주소</p>
-        <p>010-1234-5678</p>
-        <p>배송 전 연락 바랍니다.</p>
-      </section>
-      <section id="shipping-manage-list">
-        <div className="shipping-manage">
-          <div className="shipping-info">
-            <div className="shipping-name">
-              <div className="name">어피치(회사)</div>
-            </div>
-          </div>
-          <Link href="/shippingAddressModify">수정</Link>
-          <div>|</div>
-          <div onClick={handleShippingDelete}>삭제</div>
-        </div>
-        <p>(48058) 부산광역시 해운대구 센텀남대로 35(우동) 2층</p>
-        <p>상세주소</p>
-        <p>010-1234-5678</p>
-        <p>부재시 문 앞에 놓아주세요.</p>
-      </section> */}
+              <p>{item.shippingMemo}</p>
+            </section>
+          ))
+        }
+      </div>
       <section className="submit-container">
         <StButton
           buttonText="+ 새 배송지 추가"

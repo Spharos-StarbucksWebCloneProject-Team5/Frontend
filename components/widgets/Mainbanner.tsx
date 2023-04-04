@@ -27,7 +27,6 @@ export default function Mainbanner() {
     axios
       .get(`${baseUrl}/v1/api/events/image`)
       .then((res) => {
-        console.log(res.data);
         setSlideData(res.data);
       })
       .catch((err) => {
