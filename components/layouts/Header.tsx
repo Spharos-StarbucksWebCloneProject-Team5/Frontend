@@ -120,16 +120,16 @@ export default function Header() {
               {router.pathname === "/cart" ||
                 router.pathname === "/shippingAddress" ||
                 router.pathname === "/signup" ||
-                router.pathname === "/products/[productId]"? (
+                router.pathname === "/products/[productId]" ? (
                 <BackButton />
-              ):router.pathname === "/listview" ?<BackButton2/>
-               : router.pathname === "/payment" ? (
-                <BackButton3 />
-              ) : (
-                <div onClick={() => setIsMenuModalOpen(true)}>
-                  <img src="/assets/images/icons/menu.svg" alt="" />
-                </div>
-              )}
+              ) : router.pathname === "/listview" ? <BackButton2 />
+                : router.pathname === "/payment" ? (
+                  <BackButton3 />
+                ) : (
+                  <div onClick={() => setIsMenuModalOpen(true)}>
+                    <img src="/assets/images/icons/menu.svg" alt="" />
+                  </div>
+                )}
             </div>
             <Link href={"/"}>
               <h1>온라인 스토어</h1>

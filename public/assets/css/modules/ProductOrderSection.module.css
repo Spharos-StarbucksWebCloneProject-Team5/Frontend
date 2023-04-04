@@ -72,6 +72,21 @@
   height: auto;
 }
 
+.order-count{
+  display: flex;
+  align-items: center;
+}
+
+.order-count p{
+  font-size: 1.3rem;
+  margin: 0 10px;
+}
+
+.disabled {
+  opacity: 0.3;
+  cursor: not-allowed
+}
+
 .priceBold {
   font-weight: bold;
 }
@@ -89,4 +104,13 @@
   justify-content: right;
   line-height: 17px;
   padding-left: 10px;
+}
+
+.notiWrap .buttonWrap{
+  padding: 0.5rem 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box !important;
 }

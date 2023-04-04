@@ -1,11 +1,30 @@
+import Config from "@/configs/config.export";
 import { paymentState } from "@/state/atom/paymentState";
+import { ShippingAddressReq } from "@/types/shippingAddress/shipAddressDataType";
+import axios from "axios";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useRecoilState } from "recoil";
 
 export default function paymentInfo() {
   const [payData, setPayData] = useRecoilState(paymentState);
   const router = useRouter();
+  const [cookies] = useCookies(["id"]);
+  const baseUrl = Config().baseUrl;
+
+  const [shippingAddress, setShippingAddress] = useState<ShippingAddressReq>({
+    id: 0,
+    receiver: "",
+    nickname: "",
+    choiceMain: false,
+    zipCode: 0,
+    address: "",
+    detailAddress: "",
+    shippingPhone1: "",
+    shippingPhone2: "",
+    shippingMemo: "",
+  });
 
   const goMain = () => {
     setPayData([]);
@@ -22,6 +41,17 @@ export default function paymentInfo() {
   let shipPrice = orderPrice < 30000 ? 3000 : 0;
   let totalPrice = orderPrice + shipPrice;
 
+  useEffect(() => {
+    axios.get(`${baseUrl}/v1/api/shippingAddress/main`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${cookies.id}`,
+      },
+    }).then((res) => {
+      setShippingAddress(res.data);
+    });
+  }, []);
+
   return (
     <div className="container">
       <form className="payment-info-form">
@@ -33,16 +63,18 @@ export default function paymentInfo() {
         <div className="pay-info-address-form">
           <h1>배송정보</h1>
         </div>
-        <div className="pay-info-address">
-          <p>스파로스 아카데미(학원)</p>
-          <p>
-            (48060) 부산광역시 해운대구 APEC로 17(우동)
-            <br />
-            센텀리더스마크 스파로스 아카데미 401호
-            <br />
-            010-0213-0622
-          </p>
-        </div>
+        {
+          <div className="pay-info-address">
+            <p>{shippingAddress.receiver}({shippingAddress.nickname})</p>
+            <p>
+              ({shippingAddress.zipCode}) {shippingAddress.address}
+              <br />
+              {shippingAddress.detailAddress}
+              <br />
+              {shippingAddress.shippingPhone1}
+            </p>
+          </div>
+        }
 
         <div className="payment-product-list-form">
           <div className="payment-product-list">
@@ -74,7 +106,7 @@ export default function paymentInfo() {
 
         <div className="payment-total-sum-list">
           <div className="payment-total-sum">
-            {payData[0].payType === 1 ? <p>스타벅스 카드</p> : <p>신용카드</p>}
+            {payData[0]?.payType === 1 ? <p>스타벅스 카드</p> : <p>신용카드</p>}
 
             <p>{totalPrice.toLocaleString("en")}원</p>
           </div>
