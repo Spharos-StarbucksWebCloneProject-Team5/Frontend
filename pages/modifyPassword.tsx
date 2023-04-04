@@ -9,6 +9,7 @@ import { SignupErrType } from "@/types/signup/signupErrType";
 import StButton from "@/components/ui/StButton";
 import { useCookies } from "react-cookie";
 import { findPasswordType, loginData } from "@/types/UserRequest/LoginData";
+import { useRouter } from "next/router";
 
 // interface ChildProps {
 //   inputData: inputRegisterType;
@@ -40,7 +41,7 @@ const renderer = (props: {
   }
 };
 
-const findPassword = () => {
+const modifyPassword = () => {
   const [confirmKey, setConfirmKey] = useState<string>("");
   const [confirmView, setConfirmView] = useState<boolean>(false);
   const [duplicateView, setDuplicateView] = useState<boolean>(false);
@@ -56,6 +57,7 @@ const findPassword = () => {
   });
 
   const baseUrl = Config().baseUrl;
+  const router = useRouter();
 
   const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
 
@@ -85,10 +87,6 @@ const findPassword = () => {
           });
         }
         //return;
-        axios.put(`${baseUrl}/api/v1/users/modify`, {
-          email: inputData.email,
-          password: value,
-        });
       } else {
         setErrMsg({ ...errMsg, passwordErr: "" });
       }
@@ -99,6 +97,14 @@ const findPassword = () => {
       [name]: value,
     });
   };
+  
+  const handleModify = () =>{
+    axios.put(`${baseUrl}/api/v1/users/modify`, {
+      email: inputData.email,
+      password: inputData.password,
+    });
+    router.push('/login')
+  }
 
   const handleEmailConfirm = () => {
     if (inputData.email === "") {
@@ -257,10 +263,14 @@ const findPassword = () => {
           />
           <p>{errMsg.confirmPasswordErr}</p>
         </div>
-        
       </form>
+      <StButton
+          buttonText="왼료"
+          textSize="1.1rem"
+          handler={handleModify}
+        />
     </>
   );
 };
 
-export default findPassword;
+export default modifyPassword;
