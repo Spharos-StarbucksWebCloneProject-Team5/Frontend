@@ -36,9 +36,6 @@ export default function payment() {
 
   //const [recoilList,setRecoilList] = useState<string[]>([""])
 
-  // useEffect(() => {
-
-  // }, []);
   useEffect(() => {
     const myLogin = cookies.id;
     //console.log(isLogin);

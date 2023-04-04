@@ -1,3 +1,7 @@
+.shipping-address-section-box{
+  margin-bottom: 70px;
+}
+
 #shipping-manage-list {
   padding: 20px 0px;
   border-bottom: 1.5px solid rgba(128, 128, 128, 0.381);
@@ -7,7 +11,7 @@
 .shipping-manage {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin: 0;
 }
 

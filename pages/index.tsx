@@ -8,10 +8,7 @@ import Config from "@/configs/config.export";
 import axios from "axios";
 import { eventType } from "@/types/main/eventDataType";
 import Mainbanner from "@/components/widgets/Mainbanner";
-import { useIdleTimer } from "react-idle-timer";
-import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
-import { TIMEOUT } from "dns";
 import { useRouter } from "next/router";
 
 const Home: NextPageWithLayout = () => {

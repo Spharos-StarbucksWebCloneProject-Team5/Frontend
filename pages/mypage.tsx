@@ -1,13 +1,34 @@
+import Config from '@/configs/config.export';
+import { userLoginState } from '@/state/atom/userLoginState';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useCookies } from 'react-cookie';
+import { useRecoilValue } from 'recoil';
+import Swal from 'sweetalert2';
 
 export default function mypage() {
   const { push } = useRouter();
+  const baseUrl = Config().baseUrl;
+
+  const { isLogin } = useRecoilValue(userLoginState);
+  const [cookies] = useCookies(["id"]);
 
   function btnClick() {
     console.log("Click Button")
   }
+
+  useEffect(() => {
+    const myLogin = cookies.id;
+    if (!myLogin && !isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인이 필요합니다!",
+      });
+      push("/login");
+      return;
+    }
+  }, []);
 
   return (
     <>
