@@ -131,7 +131,7 @@ input[type="checkbox"]:checked {
 .box-cart-product {
   display: flex;
   flex-direction: column;
-  width: 22rem;
+  width: 81%;
   padding: 0px 25px 0px 5px;
 }
 
@@ -190,12 +190,8 @@ input[type="checkbox"]:checked {
   color: var(--color-gray-text);
   border: 1px solid var(--color-gray-button);
   padding: 5px;
-  width: 159px;
+  width: 40%;
   cursor: pointer;
-}
-
-#box-button-01 {
-  margin-right: -4px;
 }
 
 #box-button-02 {

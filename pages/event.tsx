@@ -52,6 +52,7 @@ export default function Event() {
                 alt={imageData.description}
                 width={390}
                 height={1000}
+                priority
               />
             )
           }

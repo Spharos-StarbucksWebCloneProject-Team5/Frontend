@@ -47,7 +47,8 @@ export default function Mainbanner() {
           spaceBetween={0}
           slidesPerView={1}
           pagination={{ clickable: false }}
-          autoplay={{ delay: 2000 }}
+          autoplay={{ delay: 2000, disableOnInteraction: false }}
+          loop={true}
         >
           {slideData &&
             slideData.map((slide: bannerInfoType, idx: number) => {
