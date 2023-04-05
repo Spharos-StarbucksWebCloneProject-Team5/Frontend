@@ -1,13 +1,15 @@
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+
+import Config from "@/configs/config.export";
+
+import { searchState } from "@/state/atom/searchState";
+import { tagData } from "@/datas/tagData";
+
 import CloseButton from "@/components/ui/CloseButton";
 import MiddleLine from "@/components/ui/MiddleLine";
-import Config from "@/configs/config.export";
-import { searchState } from "@/state/atom/searchState";
-import axios from "axios";
-import { useRouter } from "next/router";
-
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { tagData } from "@/datas/tagData";
+import Swal from "sweetalert2";
 
 export default function search() {
   const baseUrl = Config().baseUrl;
@@ -29,8 +31,16 @@ export default function search() {
         ...recentSearch.filter((item) => item !== search),
         search,
       ]);
-    } else setRecentSearch([...recentSearch, search]);
-    router.push(`/search/${search}`);
+    }
+    if (search.length !== 0) {
+      setRecentSearch([...recentSearch, search]);
+      router.push(`/search/${search}`);
+    }else{
+      Swal.fire({
+        icon: "info",
+        text: "검색어를 입력해 주세요.",
+      });
+    }
   };
   //엔터키 눌렀을 때
   const enterHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -62,6 +72,10 @@ export default function search() {
     router.push(`/search/${tagSlice}`);
   };
 
+  useEffect(() => {
+    console.log(recentSearch.length)
+  }, [])
+
   return (
     <>
       <div className="search-top">
@@ -86,31 +100,40 @@ export default function search() {
           </ul>
         </div>
       </div>
-      <div className="search-latest">
-        <div className="search-latest-title">
-          <h3>최근 검색어</h3>
-        </div>
-        <div className="search-latest-keywords">
-          {recentSearch
-            ? recentSearch
-                .slice(0)
-                .reverse()
-                .map((item,idx) => (
-                  <div className="keywords" key={idx}>
-                    {item}
-                    <img
-                      src="assets/images/icons/close.png"
-                      onClick={() => handleDelete(item)}
-                    />
-                  </div>
-                ))
-            : ""}
-        </div>
-        <MiddleLine />
-        <div className="delete-keywords">
-          <button onClick={allDelete}>전체삭제</button>
-        </div>
-      </div>
+
+      {
+        recentSearch.length !== 0 ?
+          <div className="search-latest">
+            <div className="search-latest-title">
+              <h3>최근 검색어</h3>
+            </div>
+            <div className="search-latest-keywords">
+              {recentSearch
+                ? recentSearch
+                  .slice(0)
+                  .reverse()
+                  .map((item) => (
+                    <div className="keywords" key={item}>
+                      {item}
+                      <img
+                        src="assets/images/icons/close.png"
+                        onClick={() => handleDelete(item)}
+                      />
+                    </div>
+                  ))
+                : ""}
+            </div>
+            <MiddleLine />
+            <div className="delete-keywords">
+              <button onClick={allDelete}>전체삭제</button>
+            </div>
+          </div>
+          :
+          <div className="none-recent-search">
+            <p>최근 검색어가 없습니다.</p>
+          </div>
+      }
+
 
       <div className="recommand-tag">
         <div className="recommand-tage-title">

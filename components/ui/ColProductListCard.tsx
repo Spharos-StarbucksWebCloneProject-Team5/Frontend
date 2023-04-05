@@ -1,18 +1,44 @@
-import React from "react";
-import { productListCardType } from "@/types/product/fetchDataType";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-export default function ColProductListCard(props: {
-  data: productListCardType;
-}) {
+import axios from "axios";
+
+import { productListCardType } from "@/types/product/fetchDataType";
+import Config from "@/configs/config.export";
+
+export default function ColProductListCard(props: { productId: number }) {
+  const { baseUrl } = Config();
+  const { push } = useRouter();
+
+  const [data, setData] = useState<productListCardType>();
+
+  const handleLink = () => {
+    push(`/products/${data?.id}`);
+  }
+
+  useEffect(() => {
+    axios(`${baseUrl}/v1/api/products/${props.productId}`)
+      .then((res) => {
+        setData(res.data);
+      });
+  }, []);
+
   return (
     <>
-      {props.data && (
-        <div className="chunsik-item">
-          <img src={props.data.thumbnail} alt={props.data.description} />
+      {data && (
+        <div className="chunsik-item" onClick={handleLink}>
+          <Image
+            src={data.thumbnail}
+            alt={data.description}
+            width={100}
+            height={100}
+            priority
+          />
           <div className="chunsik-item-info">
-            <p className="item-title">{props.data.name}</p>
+            <p className="item-title">{data.name}</p>
             <p className="item-price">
-              <span>{props.data.price.toLocaleString()}</span>원
+              <span>{data.price.toLocaleString()}</span>원
             </p>
           </div>
         </div>

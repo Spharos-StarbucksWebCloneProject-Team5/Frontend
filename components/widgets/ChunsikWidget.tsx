@@ -24,8 +24,8 @@ export default function ChunsikWidget(props: { data: eventType }) {
       <div className="recommand-md-products">
         <h2>{props.data.name}</h2>
         {chunsikItemList &&
-          chunsikItemList.map((item: productListCardType) => (
-            <ColProductListCard key={item.id} data={item} />
+          chunsikItemList.map((item) => (
+            <ColProductListCard key={item.id} productId={item.id} />
           ))}
       </div>
     </section>

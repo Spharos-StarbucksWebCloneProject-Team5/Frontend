@@ -29,6 +29,7 @@ export default function Category() {
       console.log(res.data);
       setMenuListDepth2(res.data);
     });
+    console.log("필터데이터"+filterData);
   }, []);
 
 
@@ -39,6 +40,7 @@ export default function Category() {
       queryUrl += `&${item.key}=${item.value}`;
     });
     router.push(`/listview?category=${router.query.category}${queryUrl}`);
+    console.log("필터데이터"+filterData.length);
   }, [filterData]);
 
 
