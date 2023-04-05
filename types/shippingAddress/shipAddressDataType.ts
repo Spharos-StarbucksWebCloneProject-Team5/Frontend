@@ -35,3 +35,10 @@ export interface ShippingAddressRes {
   shippingPhone2: string;
   shippingMemo: string;
 }
+
+export interface shippingPayment{
+  preparingProduct: number,
+  preparingForDelivery: number,
+  shipping: number,
+  deliveryCompleted: number
+}

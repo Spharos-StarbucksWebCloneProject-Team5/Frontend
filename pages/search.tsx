@@ -100,6 +100,7 @@ export default function search() {
           </ul>
         </div>
       </div>
+
       {
         recentSearch.length !== 0 ?
           <div className="search-latest">
@@ -132,6 +133,7 @@ export default function search() {
             <p>최근 검색어가 없습니다.</p>
           </div>
       }
+
 
       <div className="recommand-tag">
         <div className="recommand-tage-title">

@@ -105,7 +105,7 @@ export const menuListDepth2 = [
   },
 ];
 
-export const menuListDepth3 =[
+export const menuListDepth4 = [
   {
     id: 1,
     name: "가격",
@@ -113,34 +113,27 @@ export const menuListDepth3 =[
       {
         id: 1,
         price: "1만원미만",
-        
       },
       {
         id: 2,
         name: "1만원대",
-        
       },
       {
         id: 3,
         name: "2만원대",
-        
       },
       {
         id: 4,
         name: "3만원대",
-        
       },
       {
         id: 5,
         name: "4만원대",
-        
       },
       {
         id: 6,
         name: "5만원이상",
-        
       },
-      
     ],
     id: 2,
     name: "시즌",
@@ -148,43 +141,62 @@ export const menuListDepth3 =[
       {
         id: 7,
         name: "커티스 쿨릭",
-        
       },
       {
         id: 8,
         name: "체리블라썸",
-        
       },
       {
         id: 9,
         name: "밸런타인데이",
-        
       },
       {
         id: 10,
         name: "New Year",
-       
       },
       {
         id: 11,
         name: "데스크 컬렉션",
-        
       },
       {
         id: 12,
         name: "Christmas",
-        
       },
       {
         id: 13,
         name: "여주자유CC",
-        
       },
       {
         id: 14,
         name: "Autumn",
-       
       },
     ],
+  },
+];
+
+export const menuListDepth3 = [
+  {
+    id: 1,
+    name: "1만원미만",
+  },
+  {
+    id: 2,
+    name: "1만원대",
+  },
+  {
+    id: 3,
+    name: "2만원대",
+  },
+  {
+    id: 4,
+    name: "3만원대",
+  },
+  {
+    id: 5,
+    name: "4만원대",
+  },
+  {
+    id: 6,
+    name: "5만원이상",
   },
 ];

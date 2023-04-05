@@ -32,7 +32,7 @@ export default function Category() {
     console.log("필터데이터"+filterData);
   }, []);
 
-  //메인 카테고리 쿼리 만들기
+
   useEffect(() => {
     //console.log("필터링데이터", filterData);
     let queryUrl = "";
@@ -43,7 +43,7 @@ export default function Category() {
     console.log("필터데이터"+filterData.length);
   }, [filterData]);
 
-  //서브카테고리 쿼리 만들기
+
   useEffect(() => {
     setMenuList(
       menuListDepth2.find(

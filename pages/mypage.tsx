@@ -1,11 +1,13 @@
-import Config from '@/configs/config.export';
-import { userLoginState } from '@/state/atom/userLoginState';
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-import { useCookies } from 'react-cookie';
-import { useRecoilValue } from 'recoil';
-import Swal from 'sweetalert2';
+import Config from "@/configs/config.export";
+import { userLoginState } from "@/state/atom/userLoginState";
+import axios from "axios";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useRecoilValue } from "recoil";
+import Swal from "sweetalert2";
+import {shippingPayment} from "@/types/shippingAddress/shipAddressDataType"
 
 export default function mypage() {
   const { push } = useRouter();
@@ -13,9 +15,15 @@ export default function mypage() {
 
   const { isLogin } = useRecoilValue(userLoginState);
   const [cookies] = useCookies(["id"]);
+  const [shipStatus,setShipStatus] = useState<shippingPayment>({
+    preparingProduct: 0,
+    preparingForDelivery: 0,
+    shipping: 0,
+    deliveryCompleted: 0
+  });
 
   function btnClick() {
-    console.log("Click Button")
+    console.log("Click Button");
   }
 
   useEffect(() => {
@@ -27,6 +35,15 @@ export default function mypage() {
       });
       push("/login");
       return;
+    } else {
+      axios.get(`${baseUrl}/v1/api/payments/shipping`, {
+        headers: {
+          Authorization: `Bearer ${cookies.id}`,
+        },
+      }).then(res=>{
+        console.log(res)
+        setShipStatus(res.data)
+      })
     }
   }, []);
 
@@ -42,28 +59,28 @@ export default function mypage() {
         </div>
         <div className="order-delivery-status">
           <div className="status">
-            <p>0</p>
+            <p>{shipStatus?.preparingProduct}</p>
             <p>상품준비중</p>
           </div>
           <div className="direction">
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
           <div className="status">
-            <p>0</p>
+            <p>{shipStatus?.preparingForDelivery}</p>
             <p>배송준비중</p>
           </div>
           <div className="direction">
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
           <div className="status">
-            <p>0</p>
+            <p>{shipStatus?.shipping}</p>
             <p>배송중</p>
           </div>
           <div className="direction">
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
           <div className="status">
-            <p>0</p>
+            <p>{shipStatus?.deliveryCompleted}</p>
             <p>배송완료</p>
           </div>
         </div>
@@ -73,14 +90,20 @@ export default function mypage() {
           <p>서비스</p>
         </div>
         <div className="bottom-service" onClick={btnClick}>
-          <img src="assets/images/icons/service/shopping-list.png" alt="shopping-list" />
+          <img
+            src="assets/images/icons/service/shopping-list.png"
+            alt="shopping-list"
+          />
           <div className="bottom-service-button">
             <p>주문 내역</p>
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
         </div>
         <div className="bottom-service" onClick={btnClick}>
-          <img src="assets/images/icons/service/present-box.png" alt="present-box" />
+          <img
+            src="assets/images/icons/service/present-box.png"
+            alt="present-box"
+          />
           <div className="bottom-service-button">
             <p>선물함</p>
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
@@ -93,8 +116,14 @@ export default function mypage() {
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
         </div>
-        <div className="bottom-service" onClick={() => push("/shippingAddress")}>
-          <img src="assets/images/icons/service/delivery-truck.png" alt="delivery-truck" />
+        <div
+          className="bottom-service"
+          onClick={() => push("/shippingAddress")}
+        >
+          <img
+            src="assets/images/icons/service/delivery-truck.png"
+            alt="delivery-truck"
+          />
           <div className="bottom-service-button">
             <p>배송지 관리</p>
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
@@ -107,20 +136,21 @@ export default function mypage() {
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
         </div>
-        <div className="margin-bottom">
-        </div>
+        <div className="margin-bottom"></div>
         <div className="bottom-service-list">
           <p>약관 및 정책</p>
         </div>
         <div className="bottom-service" onClick={btnClick}>
-          <img src="assets/images/icons/service/megaphone.png" alt="megaphone" />
+          <img
+            src="assets/images/icons/service/megaphone.png"
+            alt="megaphone"
+          />
           <div className="bottom-service-button">
             <p>배송지 정보 수집 및 이용 동의</p>
             <img src="assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
         </div>
       </section>
-
     </>
-  )
+  );
 }
