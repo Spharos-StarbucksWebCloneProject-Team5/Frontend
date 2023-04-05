@@ -30,7 +30,7 @@ export default function FilterMenuList(props: { data: MenuDataType[],filterFile:
       setCategoryMiddle([]);
       
       axios.get(`${baseUrl}/v1/api/categories/middle`).then((res) => {
-        console.log("######### "+ res);
+       // console.log("######### "+ res);
         setCategoryMiddle(res.data[item.id-1].data);
       });
 

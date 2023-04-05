@@ -34,7 +34,7 @@ export default function Category() {
 
 
   useEffect(() => {
-    //console.log("필터링데이터", filterData);
+    console.log("필터링데이터", filterData);
     let queryUrl = "";
     filterData.forEach((item) => {
       queryUrl += `&${item.key}=${item.value}`;

@@ -5,7 +5,7 @@ import { allCartListState, cartIsCheckState, countModalState } from "@/state/ato
 import { cartListState } from "@/state/atom/cartState";
 import { freezeCartListState } from "@/state/atom/cartState";
 
-import { loginModalState } from "@/state/atom/loginModalState";
+
 import { userLoginState } from "@/state/atom/userLoginState";
 import {
   allCartType,

@@ -16,8 +16,7 @@ import LoginFooter from "@/components/page/login/LoginFooter";
 import Image from "next/image";
 import BackButton from "@/components/ui/BackButton";
 import BackButton2 from "@/components/ui/BackButton2";
-import { timerState } from "@/state/atom/timerState";
-import { useIdleTimer } from "react-idle-timer";
+
 
 
 export default function Login() {
