@@ -69,18 +69,6 @@ div.container {
   gap: 10px;
 }
 
-.search-latest .search-latest-keywords .keywords {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 20px;
-}
-
-.search-latest .search-latest-keywords .keywords img {
-  width: 10px;
-  height: 10px;
-}
-
 .search-latest .delete-keywords {
   float: right;
 }
@@ -168,6 +156,7 @@ div.container {
 }
 
 .search-latest h3 {
+  padding-left: 3%;
   font-size: 13px;
   color: gray;
 }
@@ -176,13 +165,14 @@ div.container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  
 }
 
 .search-latest .search-latest-keywords .keywords {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 20px;
+  padding: 0 10px;
 }
 
 .search-latest .search-latest-keywords .keywords img {
@@ -216,7 +206,7 @@ div.container {
   text-align: center;
   color: white;
   height: 35px;
-  background-color: #22b673;
+  background-color: var(--color-light-green);
   border-radius: 10px;
 }
 
@@ -227,4 +217,20 @@ div.container {
 .none-recent-search p {
   font-size: 1.1rem;
   text-align: center;
+}
+
+.header-search-result{
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.2);
+  margin-top: 60px;
+  background: #fff;
+  height: 50px;
+  z-index: 999;
+  width: 100%;
+  position: absolute;
+  vertical-align: middle;
+}
+
+.header-search-result p{
+  margin: 0;
+  padding: 15px 20px;
 }

@@ -13,7 +13,7 @@ import { buyNowState } from "@/state/atom/paymentState";
 import ProductOrderSection from "@/components/page/product/ProductOrderSection";
 
 export default function Product() {
-  const { query, push } = useRouter();
+  const { query } = useRouter();
   const baseUrl = Config().baseUrl;
   const [productData, setProductData] = useState<productListCardType>({
     id: 0,
@@ -27,9 +27,7 @@ export default function Product() {
     []
   );
 
-  //console.log(query);
   useEffect(() => {
-    //if (!router.isReady) return;
     axios(`${baseUrl}/v1/api/products/${query.productId}`).then((res) => {
       console.log(res.data);
       setProductData(res.data);
@@ -38,19 +36,6 @@ export default function Product() {
       setProductImageData(res.data);
     });
   }, []);
-
-  // useEffect(() => {${Number(query.productId)}
-  //   axios(`${baseUrl}/v1/api/product-images/1`).then((res) => {
-  //     //console.log(res.data);
-  //     setProductImageData(res.data);
-  //     //console.log(productImageData?.productId);
-  //   });
-  // }, []);
-
-  // const movePayment = () => {
-  //   setBuyProduct(productData?.id, count);
-  //   push(`/payment`);
-  // };
 
   return (
     <>

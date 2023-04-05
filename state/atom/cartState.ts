@@ -29,11 +29,11 @@ export const cartIsCheckState = atom({
   default: false,
 });
 
-export const countState = atom({
-  key: "countState",
-  default: 0,
-  effects_UNSTABLE: [persistAtom],
-});
+// export const countState = atom({
+//   key: "countState",
+//   default: 0,
+//   effects_UNSTABLE: [persistAtom],
+// });
 
 export const countModalState = atom({
   key: "countModalState",

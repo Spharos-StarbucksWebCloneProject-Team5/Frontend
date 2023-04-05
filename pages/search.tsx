@@ -64,7 +64,6 @@ export default function search() {
         ]);
       } else setRecentSearch([...recentSearch, search]);
       
-      
       //router.push(`/search/${search}`);
     }
   };
@@ -85,9 +84,13 @@ export default function search() {
     router.push(`/search/${tagSlice}`);
   };
 
-  useEffect(() => {
-    console.log(recentSearch.length)
-  }, [])
+  const searchClick = (keyword: string) => {
+    if(keyword[0] === '#'){
+      router.push(`/search/${keyword.split('#')[1]}`);
+      return;
+    }
+    router.push(`/search/${keyword}`);
+  }
 
   return (
     <>
@@ -113,7 +116,6 @@ export default function search() {
           </ul>
         </div>
       </div>
-
       {
         recentSearch.length !== 0 ?
           <div className="search-latest">
@@ -125,8 +127,8 @@ export default function search() {
                 ? recentSearch
                   .slice(0)
                   .reverse()
-                  .map((item,idx) => (
-                    <div className="keywords" key={idx}>
+                  .map((item, idx) => (
+                    <div className="keywords" key={idx} onClick={() => searchClick(item)}>
                       {item}
                       <img
                         src="assets/images/icons/close.png"
@@ -136,7 +138,9 @@ export default function search() {
                   ))
                 : ""}
             </div>
-            <MiddleLine />
+            <MiddleLine 
+              gutterSize={15}
+            />
             <div className="delete-keywords">
               <button onClick={allDelete}>전체삭제</button>
             </div>
@@ -146,8 +150,6 @@ export default function search() {
             <p>최근 검색어가 없습니다.</p>
           </div>
       }
-
-
       <div className="recommand-tag">
         <div className="recommand-tage-title">
           <h3>추천태그</h3>

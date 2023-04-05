@@ -43,8 +43,12 @@
 }
 
 .sort {
-  margin-top: 200px;
-  margin-bottom: 20px;
+  margin-top: 140px;
+  border: none;
+}
+
+.sort-search-result {
+  margin-top: 150px;
   border: none;
 }
 
@@ -53,7 +57,3 @@
   height: 300px;
   padding: 0px 17px;
 }
-
-/* .event-product-list .recommand-product-item img {
-  width: 160px;
-} */
