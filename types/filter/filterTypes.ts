@@ -11,7 +11,7 @@ export interface filterDataType {
   isCheck: boolean;
 }
 
-export interface menuListDepth2 {
+export interface middleCategoryList {
   id: number;
   name: string;
   data: MenuDataType[];
