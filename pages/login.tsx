@@ -53,7 +53,7 @@ export default function Login() {
   function kakaoLogin() {
     console.log(window.Kakao.Auth);
     window.Kakao.Auth.authorize({
-      redirectUri: `http://3.36.128.190:8080/kakao`, 
+      redirectUri: `http://3.36.128.190/kakao`, 
     });
     //loginHandler
   }
