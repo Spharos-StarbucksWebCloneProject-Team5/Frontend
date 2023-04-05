@@ -95,8 +95,8 @@ export default function search() {
             ? recentSearch
                 .slice(0)
                 .reverse()
-                .map((item) => (
-                  <div className="keywords" key={item}>
+                .map((item,idx) => (
+                  <div className="keywords" key={idx}>
                     {item}
                     <img
                       src="assets/images/icons/close.png"

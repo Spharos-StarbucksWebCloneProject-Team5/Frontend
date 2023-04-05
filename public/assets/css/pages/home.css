@@ -101,10 +101,11 @@ section .recommand-product-list .recommand-product-item .recommand-product-item_
   height: 20px;
   border-radius: 50%;
   font-size: 12px;
-  background-color: var(--color-red);
+  background-color: var(--color-light-green);
   color: white;
   display: flex;
   justify-self: center;
   align-items: center;
   z-index: 800;
+  text-align: right;
 }

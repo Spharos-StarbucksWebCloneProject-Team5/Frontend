@@ -31,7 +31,7 @@ export default function Category() {
     });
   }, []);
 
-  //메인 카테고리 쿼리 만들기
+
   useEffect(() => {
     //console.log("필터링데이터", filterData);
     let queryUrl = "";
@@ -41,7 +41,7 @@ export default function Category() {
     router.push(`/listview?category=${router.query.category}${queryUrl}`);
   }, [filterData]);
 
-  //서브카테고리 쿼리 만들기
+
   useEffect(() => {
     setMenuList(
       menuListDepth2.find(

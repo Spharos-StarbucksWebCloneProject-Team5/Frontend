@@ -26,11 +26,10 @@ export default function Header() {
   const baseUrl = Config().baseUrl;
 
   const [navBottomData] = useState<bottomNavMenuType[]>(bottomNavData);
-  const cartCnt = useRecoilValue(cartState);
+  const [cartCnt, setCartCnt] = useRecoilState(cartState);
   const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
-  //const [remainingDuration, setRemainingDuration] = useRecoilState(timerState);
 
   const handleLogout = () => {
     Swal.fire({
@@ -83,91 +82,78 @@ export default function Header() {
       }
     });
   };
-
-  // const getAccessToken = () => {
-
-  //     Swal.fire({
-  //       title: "로그인 연장을 하시겠습니까?",
-  //       showDenyButton: true,
-  //       showCancelButton: false,
-  //       confirmButtonText: `확인`,
-  //       denyButtonText: `취소`,
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         const refresh = localStorage.getItem("refreshToken");
-  //         const access = cookies.id;
-  //         axios.post(`${baseUrl}/api/v1/users/reissue`, {
-  //           headers: {
-  //             accessToken: `${access}`,
-  //             refreshToken: `${refresh}`,
-  //           },
-  //         });
-  //       }
-  //     });
-
-  // };
+  if (cookies.id) {
+    axios
+      .get(`${baseUrl}/v1/api/carts/get`, {
+        headers: {
+          Authorization: `Bearer ${cookies.id}`,
+        },
+      })
+      .then((res) => {
+        setCartCnt(res.data.length);
+      });
+  }
 
   return (
     <header>
-      {
-        router.pathname === "/shippingAddressChange" ||
-          router.pathname === "/shippingAddressModify/[shippingAddressId]" ||
-          router.pathname === "/shippingAddressRegister" ? (
-          <HeaderTopShipping />
-        ) : (
-          <div className="header-top">
-            <div className="menu-icon">
-              {router.pathname === "/cart" ||
-                router.pathname === "/shippingAddress" ||
-                router.pathname === "/signup" ||
-                router.pathname === "/products/[productId]" ? (
-                <BackButton />
-              ) : router.pathname === "/listview" ? <BackButton2 />
-                : router.pathname === "/payment" ? (
-                  <BackButton3 />
-                ) : (
-                  <div onClick={() => setIsMenuModalOpen(true)}>
-                    <img src="/assets/images/icons/menu.svg" alt="" />
-                  </div>
-                )}
-            </div>
-            <Link href={"/"}>
-              <h1>온라인 스토어</h1>
-            </Link>
-            <nav>
-              <ul>
-                <li onClick={() => router.push("/search")}>
-                  <img src="/assets/images/icons/search.svg" />
-                </li>
-                <li onClick={() => router.push("/cart")}>
-                  <p className="cart-badge">{cartCnt}</p>
-                  <img src="/assets/images/icons/shopping-cart.svg" />
-                </li>
-                {isLogin.isLogin ? (
-                  <li onClick={handleLogout}>
-                    <img src="/assets/images/icons/logout.png" />
-                  </li>
-                ) : (
-                  <li onClick={() => router.push("/login")}>
-                    <img src="/assets/images/icons/user.svg" />
-                  </li>
-                )}
-              </ul>
-            </nav>
+      {router.pathname === "/shippingAddressChange" ||
+      router.pathname === "/shippingAddressModify/[shippingAddressId]" ||
+      router.pathname === "/shippingAddressRegister" ? (
+        <HeaderTopShipping />
+      ) : (
+        <div className="header-top">
+          <div className="menu-icon">
+            {router.pathname === "/cart" ||
+            router.pathname === "/shippingAddress" ||
+            router.pathname === "/signup" ||
+            router.pathname === "/products/[productId]" ? (
+              <BackButton />
+            ) : router.pathname === "/listview" ? (
+              <BackButton2 />
+            ) : router.pathname === "/payment" ? (
+              <BackButton3 />
+            ) : (
+              <div onClick={() => setIsMenuModalOpen(true)}>
+                <img src="/assets/images/icons/menu.svg" alt="" />
+              </div>
+            )}
           </div>
-        )
-      }
+          <Link href={"/"}>
+            <h1>온라인 스토어</h1>
+          </Link>
+          <nav>
+            <ul>
+              <li onClick={() => router.push("/search")}>
+                <img src="/assets/images/icons/search.svg" />
+              </li>
+              <li onClick={() => router.push("/cart")}>
+                {cookies.id ? <p className="cart-badge">{cartCnt}</p> : ""}
+                <img src="/assets/images/icons/shopping-cart.svg" />
+              </li>
+              {isLogin.isLogin ? (
+                <li onClick={handleLogout}>
+                  <img src="/assets/images/icons/logout.png" />
+                </li>
+              ) : (
+                <li onClick={() => router.push("/login")}>
+                  <img src="/assets/images/icons/user.svg" />
+                </li>
+              )}
+            </ul>
+          </nav>
+        </div>
+      )}
       {router.pathname === "/" ||
-        router.pathname === "/event" ||
-        router.pathname === "/best" ||
-        router.pathname === "/mypage" ? (
+      router.pathname === "/event" ||
+      router.pathname === "/best" ||
+      router.pathname === "/mypage" ? (
         <div className="header-bottom">
           <nav>
             <ul>
               {navBottomData &&
                 navBottomData.map((nav) =>
                   nav.link === "/event?category=1" ||
-                    nav.link === "/best?category=1" ? (
+                  nav.link === "/best?category=1" ? (
                     <li
                       key={nav.id}
                       className={

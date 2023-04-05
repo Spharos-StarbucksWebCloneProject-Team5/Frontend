@@ -287,6 +287,9 @@ export default function cart() {
 
   const [modalOpen, setModalOpen] = useRecoilState(countModalState);
   const [countCartId, setCountCartId] = useState<number>(0);
+  const clickProduct = (id:number) => {
+    router.push(`/products/${id}`)
+  }
 
   const showModal = (cartId: number) => {
     setModalOpen(!modalOpen);
@@ -351,7 +354,7 @@ export default function cart() {
                     src={element.productThumbnail}
                     alt="product"
                   />
-                  <div className="cart-product-info-text">
+                  <div className="cart-product-info-text" onClick={()=>clickProduct(element.productId)}>
                     <p>{element.productName}</p>
                     <p className="price-bold">
                       {element.productPrice.toLocaleString("en")}원
@@ -361,7 +364,7 @@ export default function cart() {
                     className="img-cart-close"
                     src="./assets/images/icons/close.png"
                     alt="close"
-                    onClick={() => handleCloseDelete(element.cartId)}
+                    onClick={() =>{ handleCloseDelete(element.cartId); clickProduct(element.productId)}}
                   />
                 </div>
                 <div className="cart-product-quantity">
@@ -430,7 +433,7 @@ export default function cart() {
                     src={element.productThumbnail}
                     alt="product"
                   />
-                  <div className="cart-product-info-text">
+                  <div className="cart-product-info-text" onClick={()=>clickProduct(element.productId)}>
                     <p>{element.productName}</p>
                     <p className="price-bold">
                       {element.productPrice.toLocaleString("en")}원
@@ -440,7 +443,7 @@ export default function cart() {
                     className="img-cart-close"
                     src="./assets/images/icons/close.png"
                     alt="close"
-                    onClick={() => handleCloseDelete(element.cartId)}
+                    onClick={() => {handleCloseDelete(element.cartId); clickProduct(element.productId)}}
                   />
                 </div>
                 <div className="cart-product-quantity">
