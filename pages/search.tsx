@@ -26,12 +26,6 @@ export default function search() {
 
   //검색버튼 눌렀을 때
   const buttonHandle = () => {
-    if (recentSearch.includes(search)) {
-      setRecentSearch([
-        ...recentSearch.filter((item) => item !== search),
-        search,
-      ]);
-    }
     if (search.length !== 0) {
       setRecentSearch([...recentSearch, search]);
       router.push(`/search/${search}`);
@@ -41,18 +35,36 @@ export default function search() {
         text: "검색어를 입력해 주세요.",
       });
     }
+    if (recentSearch.includes(search)) {
+      setRecentSearch([
+        ...recentSearch.filter((item) => item !== search),
+        search,
+      ]);
+    }
+    
   };
   //엔터키 눌렀을 때
   const enterHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
     //e.preventDefault();
     if (e.key === "Enter") {
+      if (search.length !== 0) {
+        setRecentSearch([...recentSearch, search]);
+        router.push(`/search/${search}`);
+      }else{
+        e.preventDefault();
+        Swal.fire({
+          icon: "info",
+          text: "검색어를 입력해 주세요.",
+        });
+      }
       if (recentSearch.includes(search)) {
         setRecentSearch([
           ...recentSearch.filter((item) => item !== search),
           search,
         ]);
       } else setRecentSearch([...recentSearch, search]);
-      router.push(`/search/${search}`);
+      
+      //router.push(`/search/${search}`);
     }
   };
 
@@ -104,7 +116,6 @@ export default function search() {
           </ul>
         </div>
       </div>
-
       {
         recentSearch.length !== 0 ?
           <div className="search-latest">
@@ -139,8 +150,6 @@ export default function search() {
             <p>최근 검색어가 없습니다.</p>
           </div>
       }
-
-
       <div className="recommand-tag">
         <div className="recommand-tage-title">
           <h3>추천태그</h3>
