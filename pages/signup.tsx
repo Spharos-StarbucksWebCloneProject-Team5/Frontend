@@ -114,6 +114,7 @@ export default function SignUp() {
               .post(`${baseUrl}/api/v1/users/sign-up`, {
                 email: inputData.userEmail,
                 password: inputData.password,
+                name: inputData.userNickname,
               })
               .then((res) => {
                 console.log(res);
@@ -148,6 +149,7 @@ export default function SignUp() {
               .post(`${baseUrl}/api/v1/users/sign-up`, {
                 email: inputData.userEmail,
                 password: inputData.password,
+                name: inputData.userNickname,
               })
               .then((res) => {
                 console.log(res);

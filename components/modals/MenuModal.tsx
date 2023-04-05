@@ -32,6 +32,11 @@ export default function MenuModal() {
   };
   if (!isMenuModalOpen) return null;
 
+  const handleCategory = (id: number) => {
+    router.push(`/listview?category=${id}`);
+    setIsMenuModalOpen(false);
+  }
+
   return (
     <div className={isMenuModalOpen ? "modal menu-slide-right" : "modal"}>
       <div className="welcome">
@@ -62,7 +67,7 @@ export default function MenuModal() {
         <div className="menu-product-list">
           {categoryData.map((element) => (
             <div key={element.id} className="menu-product-item">
-              <div className="menu-product-item__img">
+              <div className="menu-product-item__img" onClick={()=>handleCategory(element.id)}>
                 <img src={element.thumbNail} alt="" />
               </div>
               <div className="menu-product-item__info">

@@ -252,7 +252,7 @@ export default function cart() {
         },
       })
     );
-    // router.reload();
+    router.reload();
   };
 
   const handleCloseDelete = (id: number) => {
@@ -275,7 +275,7 @@ export default function cart() {
           },
         })
       );
-    // router.reload();
+    router.reload();
   };
 
   const [modalOpen, setModalOpen] = useRecoilState(countModalState);

@@ -175,6 +175,10 @@ div.container {
   padding: 0 10px;
 }
 
+.search-latest .search-latest-keywords .keywords p {
+  margin: 0;
+}
+
 .search-latest .search-latest-keywords .keywords img {
   width: 10px;
   height: 10px;
