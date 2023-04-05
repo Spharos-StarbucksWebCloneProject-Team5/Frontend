@@ -1,0 +1,85 @@
+#shipping-header {
+  background-color: var(--color-white);
+  margin: 100px 0px 15px 0px;
+  padding: 0px 20px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+#shipping-header :nth-child(1) {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0px;
+}
+
+#shipping-header :nth-child(2) {
+  text-decoration-line: none;
+}
+
+#shipping-header :nth-child(2) span {
+  margin: 0;
+  color: var(--color-light-green);
+  font-weight: normal;
+  font-size: 14px;
+}
+
+#shipping-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 0 20px;
+  padding: 15px 0;
+}
+
+#shipping-list input {
+  margin: 4px 0;
+  width: 15px;
+  height: 15px;
+  border: 1px;
+  accent-color: var(--color-light-green);
+}
+
+#shipping-list a {
+  color: var(--color-gray-text);
+  text-decoration-line: none;
+  font-size: 0.9rem;
+}
+
+#shipping-list .shipping-info {
+  width: 80%;
+  word-wrap: break-word;
+}
+
+#shipping-list .shipping-info .shipping-name {
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+}
+
+#shipping-list .shipping-info .name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+#shipping-list .shipping-info .is-primary {
+  width: 25px;
+  font-size: 4px;
+  font-weight: 200;
+  text-align: center;
+  margin: 0px 10px;
+  background-color: rgba(167, 255, 236, 0.507);
+  color: var(--color-light-green);
+  border-radius: 2px;
+}
+
+#shipping-list .shipping-info p {
+  margin: 5px 0px;
+  font-size: 0.9rem;
+}
+
+#shipping-list .shipping-info :nth-child(n+4) {
+  font-size: 0.8rem;
+  color: var(--color-gray-text);
+  margin: 5px 0px;
+}

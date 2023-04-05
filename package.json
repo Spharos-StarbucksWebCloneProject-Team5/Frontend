@@ -1,0 +1,43 @@
+{
+  "name": "spharos-next-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "local": "env-cmd -f .env.localhost next dev -p 6600",
+    "dev": "env-cmd -f .env.dev next dev -p 6600",
+    "devlocal": "env-cmd -f .env.devlocal next dev -p 6600",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/font": "13.2.3",
+    "@types/node": "18.14.6",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "axios": "^1.3.4",
+    "env-cmd": "^10.1.0",
+    "eslint": "8.35.0",
+    "eslint-config-next": "13.2.3",
+    "framer-motion": "^10.10.0",
+    "moment": "^2.29.4",
+    "next": "13.2.3",
+    "react": "18.2.0",
+    "react-cookie": "^4.1.1",
+    "react-countdown": "^2.3.5",
+    "react-dom": "18.2.0",
+    "react-idle-timer": "^5.5.3",
+    "react-image-size": "^2.0.2",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-modal-sheet": "^1.10.2",
+    "recoil": "^0.7.7",
+    "recoil-persist": "^4.2.0",
+    "styled-components": "^5.3.9",
+    "sweetalert2": "^11.7.3",
+    "swiper": "^9.1.1",
+    "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26"
+  }
+}
