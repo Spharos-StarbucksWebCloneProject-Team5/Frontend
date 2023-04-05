@@ -5,7 +5,6 @@ import { allCartListState, cartIsCheckState, countModalState } from "@/state/ato
 import { cartListState } from "@/state/atom/cartState";
 import { freezeCartListState } from "@/state/atom/cartState";
 
-import { loginModalState } from "@/state/atom/loginModalState";
 import { userLoginState } from "@/state/atom/userLoginState";
 import {
   allCartType,
@@ -17,16 +16,19 @@ import {
 } from "@/types/cart/cartDataType";
 import axios from "axios";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 
 import { useCookies } from "react-cookie";
-import payment from "./payment";
 import CountModal from "@/components/ui/CountModal";
 import { cartPaymentState, cartBuyNowState } from "@/state/atom/paymentState";
+import CartTotal from "@/components/page/cart/CartTotal";
+import CartCheck from "@/components/page/cart/CartCheck";
+import CartProduct from "@/components/page/cart/CartProduct";
+import CartFreezeProduct from "@/components/page/cart/CartFreezeProduct";
+import CartTop from "@/components/page/cart/CartTop";
 
 export default function cart() {
   const { isLogin } = useRecoilValue(userLoginState);
@@ -65,33 +67,28 @@ export default function cart() {
       router.push("/login");
       //return;
     }
-    else{
+    else {
       axios
-      .get(`${baseUrl}/v1/api/carts/get`, {
-        headers: {
-          Authorization: `Bearer ${cookies.id}`,
-        },
-      })
-      .then((res) => {
-        setAllCartItems({ allCartList: res.data });
-        setCartItems({
-          cartList: res.data.filter(
-            (item: cartListType) => item.mainCategoryId !== 1
-          ),
+        .get(`${baseUrl}/v1/api/carts/get`, {
+          headers: {
+            Authorization: `Bearer ${cookies.id}`,
+          },
+        })
+        .then((res) => {
+          setAllCartItems({ allCartList: res.data });
+          setCartItems({
+            cartList: res.data.filter(
+              (item: cartListType) => item.mainCategoryId !== 1
+            ),
+          });
+          setFreezeCartItems({
+            freezeCartList: res.data.filter(
+              (item: cartListType) => item.mainCategoryId === 1
+            ),
+          });
         });
-        setFreezeCartItems({
-          freezeCartList: res.data.filter(
-            (item: cartListType) => item.mainCategoryId === 1
-          ),
-        });
-      });
     }
   }, []);
-
-  //useEffect(() => {
-    //console.log(cookies.id);
-    
-  //}, []);
 
   useEffect(() => {
     let check = true;
@@ -105,10 +102,6 @@ export default function cart() {
     freezeCartItems.freezeCartList.find((item) => item.checked === false)
       ? (freezeCheck = false)
       : (freezeCheck = true);
-
-    // allCartItems.allCartList.find((item) => item.checked === false)
-    //   ? (allCheck = false)
-    //   : (allCheck = true);
 
     check === true && freezeCheck === true
       ? (allCheck = true)
@@ -213,8 +206,8 @@ export default function cart() {
         (item: cartListType) => {
           checkedList.includes(item.cartId)
             ? setCheckedList(
-                checkedList.filter((item1) => item1 !== item.cartId)
-              )
+              checkedList.filter((item1) => item1 !== item.cartId)
+            )
             : setCheckedList([...checkedList, item.cartId]);
           return { ...item, checked: check };
         }
@@ -259,7 +252,7 @@ export default function cart() {
         },
       })
     );
-    router.reload();
+    // router.reload();
   };
 
   const handleCloseDelete = (id: number) => {
@@ -282,12 +275,12 @@ export default function cart() {
           },
         })
       );
-    router.reload();
+    // router.reload();
   };
 
   const [modalOpen, setModalOpen] = useRecoilState(countModalState);
   const [countCartId, setCountCartId] = useState<number>(0);
-  const clickProduct = (id:number) => {
+  const clickProduct = (id: number) => {
     router.push(`/products/${id}`)
   }
 
@@ -298,228 +291,56 @@ export default function cart() {
 
   return (
     <>
-    {modalOpen && (
-        <CountModal  cartId={countCartId} />
+      {modalOpen && (
+        <CountModal cartId={countCartId} />
       )}
       <Head>
         <title>Cart</title>
       </Head>
       <div className="cart-background">
-        <section className="ch-all" id="agree-main">
-          <div id="cart" className="padding-lr-20">
-            <p>장바구니</p>
-          </div>
-          <div className="box-select-delete">
-            <div className="advertising-info">
-              <div
-                className={isAllCheck ? "check-active" : "check-all"}
-                onClick={() => handleAllCartList(!isAllCheck)}
-              />
-              <label>전체 선택</label>
-            </div>
-            <div id="btn-cart-delete">
-              <div className="btn-delete-inner">
-                <p onClick={handleSelectDelete} id="select-delete">
-                  선택삭제
-                </p>
-                <p>|</p>
-                <p onClick={handleAllDelete}>전체삭제</p>
-              </div>
-            </div>
-          </div>
-          <MiddleLine />
-
-          <div className="advertising-info">
-            <div
-              id="product-normal"
-              className={isCheck ? "check-active" : "check-all"}
-              onClick={() => handleCartList(!isCheck)}
-            />
-            <label>일반 상품</label>
-          </div>
-          <MiddleLine />
-
-          {cartItems.cartList.map((element) => (
-            <div className="advertising-info box-cart" key={element.cartId}>
-              <div
-                id="select-product"
-                className={element.checked ? "check-active" : "check-all"}
-                onClick={() => handleCart(element.cartId, !element.checked)}
-              />
-              {/* <div className="check-all" /> */}
-              <div className="box-cart-product">
-                <div className="cart-product-info">
-                  <img
-                    className="img-cart-product"
-                    src={element.productThumbnail}
-                    alt="product"
-                  />
-                  <div className="cart-product-info-text" onClick={()=>clickProduct(element.productId)}>
-                    <p>{element.productName}</p>
-                    <p className="price-bold">
-                      {element.productPrice.toLocaleString("en")}원
-                    </p>
-                  </div>
-                  <img
-                    className="img-cart-close"
-                    src="./assets/images/icons/close.png"
-                    alt="close"
-                    onClick={() =>{ handleCloseDelete(element.cartId); clickProduct(element.productId)}}
-                  />
-                </div>
-                <div className="cart-product-quantity">
-                  <p>수량: {element.count}개</p>
-                </div>
-                <div className="text-order-amount">
-                  <p>주문 금액</p>
-                  <p>{(Number(element.productPrice) * Number(element.count))
-                 .toLocaleString("en")}원</p>
-                </div>
-                <div className="box-button">
-                  <button
-                    id="box-button-01"
-                    onClick={() => showModal(element.cartId)}
-                  >
-                    주문 수정
-                  </button>
-
-                  <button
-                    id="box-button-02"
-                    onClick={() => {
-                      setBuyNow(element.cartId);
-                      router.push(`/payment`);
-                    }}
-                  >
-                    바로 구매
-                  </button>
-                </div>
-              </div>
-            </div>
-                  ))}
-          <section>
-            <div className="cart-total-check">
-              <p>
-                상품 {cartCount}건 {cartPrice.toLocaleString("en")}원 + 배송비{" "}
-                {shipPrice}원 = 총{cartPrice + shipPrice}원
-              </p>
-              <p className="price-bold">무료배송</p>
-              <Link href="">더 담으러 가기</Link>
-            </div>
-          </section>
-
-          <MiddleLine />
-          <div className="advertising-info">
-            <div
-              id="product-normal"
-              className={isFreezeCheck ? "check-active" : "check-all"}
-              onClick={() => handleFreezeCartList(!isFreezeCheck)}
-            />
-            <label>냉동 상품</label>
-          </div>
-          <MiddleLine />
-          {freezeCartItems.freezeCartList.map((element) => (
-            <div className="advertising-info box-cart" key={element.cartId}>
-              <div
-                id="select-product"
-                className={element.checked ? "check-active" : "check-all"}
-                onClick={() =>
-                  handleFreezeCart(element.cartId, !element.checked)
-                }
-              />
-              <div className="box-cart-product">
-                <div className="cart-product-info">
-                  <img
-                    className="img-cart-product"
-                    src={element.productThumbnail}
-                    alt="product"
-                  />
-                  <div className="cart-product-info-text" onClick={()=>clickProduct(element.productId)}>
-                    <p>{element.productName}</p>
-                    <p className="price-bold">
-                      {element.productPrice.toLocaleString("en")}원
-                    </p>
-                  </div>
-                  <img
-                    className="img-cart-close"
-                    src="./assets/images/icons/close.png"
-                    alt="close"
-                    onClick={() => {handleCloseDelete(element.cartId); clickProduct(element.productId)}}
-                  />
-                </div>
-                <div className="cart-product-quantity">
-                  <p>수량: {element.count}개</p>
-                </div>
-                <div className="text-order-amount">
-                  <p>주문 금액</p>
-                  <p>{(Number(element.productPrice) * Number(element.count))
-                 .toLocaleString("en")}원</p>
-                </div>
-                <div className="box-button">
-                  <button
-                    id="box-button-01"
-                    onClick={() => showModal(element.cartId)}
-                  >
-                    주문 수정
-                  </button>
-                  <button
-                    id="box-button-02"
-                    onClick={() => {
-                      setBuyNow(element.cartId);
-                      router.push(`/payment`);
-                    }}
-                  >
-                    바로 구매
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section>
-
-        <section>
-          <div className="cart-total-check" id="agree-main">
-            <p>
-              상품 {freezeCartCount}건 {freezeCartPrice.toLocaleString("en")}원
-              + 배송비 {freezeShipPrice.toLocaleString("en")}원 = 총
-              {(freezeCartPrice + freezeShipPrice).toLocaleString("en")}원
-            </p>
-            <p className="price-bold">무료배송</p>
-            <Link href="">더 담으러 가기</Link>
-          </div>
-        </section>
-        <section className="cart-total-price-box">
-          <p className="cart-total-price-text">총 주문 금액</p>
-          <div className="product-price">
-            <p>상품 금액</p>
-            <p className="price-bold">{totalPrice.toLocaleString("en")}원</p>
-          </div>
-          <div className="discount-price">
-            <p>할인 금액</p>
-            <p className="price-bold">0원</p>
-          </div>
-          <div className="delivery-price">
-            <p>배송비</p>
-            <p className="price-bold">
-              {(shipPrice + freezeShipPrice).toLocaleString("en")}원
-            </p>
-          </div>
-          <hr className="middle-line" />
-          <div className="cart-total-price">
-            <p>최종 결제 금액</p>
-            <p id="cart-total-price">
-              {(totalPrice + shipPrice + freezeShipPrice).toLocaleString("en")}
-              원
-            </p>
-          </div>
-          <div className="cart-description">
-            <p>
-              장바구니에는 최대 20개까지 담을 수 있으며, 담긴 상품은 최대
-              2개월간 보관됩니다.
-              <br />
-              가격, 옵션 등 정보가 변경된 경우 주문이 불가할 수 있습니다.
-            </p>
-          </div>
-        </section>
+        <CartTop
+          isAllCheck={isAllCheck}
+          handleAllCartList={handleAllCartList}
+          handleSelectDelete={handleSelectDelete}
+          handleAllDelete={handleAllDelete}
+        />
+        <CartProduct
+          productType={"일반 상품"}
+          isCheck={isCheck}
+          cartItems={cartItems}
+          handleCartList={handleCartList}
+          handleCart={handleCart}
+          clickProduct={clickProduct}
+          handleCloseDelete={handleCloseDelete}
+          showModal={showModal}
+          setBuyNow={setBuyNow}
+        />
+        <CartCheck
+          cartCount={cartCount}
+          cartPrice={cartPrice}
+          shipPrice={shipPrice}
+        />
+        <CartFreezeProduct
+          productType={"냉동 상품"}
+          isCheck={isFreezeCheck}
+          freezeCartItems={freezeCartItems}
+          handleCartList={handleFreezeCartList}
+          handleCart={handleCart}
+          clickProduct={clickProduct}
+          handleCloseDelete={handleCloseDelete}
+          showModal={showModal}
+          setBuyNow={setBuyNow}
+        />
+        <CartCheck
+          cartCount={freezeCartCount}
+          cartPrice={freezeCartPrice}
+          shipPrice={freezeShipPrice}
+        />
+        <CartTotal
+          totalPrice={totalPrice}
+          shipPrice={shipPrice}
+          freezeShipPrice={freezeCartPrice}
+        />
       </div>
       <CartFooter
         count={totalCount}
@@ -527,8 +348,6 @@ export default function cart() {
         checked={checkedList}
         allItems={allCartItems}
       />
-
-      
     </>
   );
 }

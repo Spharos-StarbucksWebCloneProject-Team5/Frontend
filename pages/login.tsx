@@ -1,23 +1,18 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 import Config from "@/configs/config.export";
 
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
 
 import { LoginReq } from "@/types/UserRequest/Request";
-
 import { userLoginState } from "@/state/atom/userLoginState";
-import { useRecoilState } from "recoil";
-import { useRouter } from "next/router";
-import CloseButton from "@/components/ui/CloseButton";
 import LoginFooter from "@/components/page/login/LoginFooter";
-import Image from "next/image";
-import BackButton from "@/components/ui/BackButton";
 import BackButton2 from "@/components/ui/BackButton2";
-import { timerState } from "@/state/atom/timerState";
-import { useIdleTimer } from "react-idle-timer";
 
 
 export default function Login() {
@@ -89,12 +84,10 @@ export default function Login() {
           myLogin.setItem("nickname", res.data.data.name);
           setCookie("id", res.headers.accesstoken, { path: "/" });
           
-
           Swal.fire({
             icon: "success",
             text: `${myLogin.getItem("nickname")}님 Welcome!`,
           });
-          console.log(router);
           router.push("/");
         })
         .catch((err) => {

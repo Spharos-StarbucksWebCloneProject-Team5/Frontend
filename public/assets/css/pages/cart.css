@@ -2,6 +2,10 @@
   background-color: var(--color-gray-background);
 }
 
+.ch-all {
+  background-color: #fff;
+}
+
 #cart {
   margin-top: 110px;
   background-color: var(--color-white);
@@ -10,7 +14,7 @@
 #cart p {
   font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .padding-lr-20 {
@@ -142,9 +146,13 @@ input[type="checkbox"]:checked {
 }
 
 .box-cart-product .cart-product-info .img-cart-close {
-  width: 4%;
-  height: 13%;
+  width: 8%;
+  height: 15%;
   padding-top: 5px;
+}
+
+.cart-product-info-click {
+  display: flex;
 }
 
 .cart-product-info {
@@ -158,6 +166,7 @@ input[type="checkbox"]:checked {
 
 .cart-product-info-text p {
   margin-top: 0;
+  font-size: 0.9rem;
 }
 
 .price-bold {
@@ -222,12 +231,14 @@ input[type="checkbox"]:checked {
   display: flex;
   justify-content: space-between;
   height: 40px;
+  align-items: center;
 }
 
 .discount-price {
   display: flex;
   justify-content: space-between;
   height: 40px;
+  align-items: center;
 }
 
 .delivery-price {
@@ -235,6 +246,7 @@ input[type="checkbox"]:checked {
   justify-content: space-between;
   height: 40px;
   margin-bottom: 20px;
+  align-items: center;
 }
 
 .cart-total-price {
@@ -423,7 +435,7 @@ input[type="checkbox"]:checked {
   position: fixed;
   z-Index: 9999;
   top: 0px;
-  background-color: white; 
-  height: 100vh; 
+  background-color: white;
+  height: 100vh;
   width: 100%;
 }
