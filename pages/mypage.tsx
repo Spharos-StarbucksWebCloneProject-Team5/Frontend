@@ -26,6 +26,26 @@ export default function mypage() {
     console.log("Click Button");
   }
 
+  function orderListClick() {
+    const nowDate = new Date()
+    const agoDate = new Date()
+    //agoDate.setMonth(agoDate.getMonth()-3)
+    axios.get(`${baseUrl}/v1/api/payments/get`,
+      {
+        headers:{
+          Authorization: `Bearer ${cookies.id}`,
+        }
+      }
+    )
+    .then((res) => {
+      console.log(res);
+      if(res.data.length ===0 ){
+        push('/orderList')
+      }
+      push('/orderListItem')
+    }); 
+  }
+
   useEffect(() => {
     const myLogin = cookies.id;
     if (!myLogin && !isLogin) {
@@ -89,7 +109,7 @@ export default function mypage() {
         <div className="bottom-service-list">
           <p>서비스</p>
         </div>
-        <div className="bottom-service" onClick={btnClick}>
+        <div className="bottom-service" onClick={orderListClick}>
           <img
             src="assets/images/icons/service/shopping-list.png"
             alt="shopping-list"

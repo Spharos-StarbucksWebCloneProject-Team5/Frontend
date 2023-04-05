@@ -26,7 +26,7 @@ export default function Login() {
   const baseUrl = Config().baseUrl;
   const [loginData, setLoginData] = useRecoilState(userLoginState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
-  //const [count, setCount] = useRecoilState(timerState);
+  
 
   const [inputData, setInputData] = useState<LoginReq>({
     email: "",
@@ -53,7 +53,7 @@ export default function Login() {
   function kakaoLogin() {
     console.log(window.Kakao.Auth);
     window.Kakao.Auth.authorize({
-      redirectUri: `http://3.36.128.190:6600/kakao`, 
+      redirectUri: `http://3.36.128.190:80/kakao`, 
     });
     //loginHandler
   }
@@ -64,7 +64,7 @@ export default function Login() {
     if (inputData.email === "" || inputData.password === "") {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
+        title: "Oops",
         text: "이메일과 비밀번호를 입력해주세요!",
       });
       return;
