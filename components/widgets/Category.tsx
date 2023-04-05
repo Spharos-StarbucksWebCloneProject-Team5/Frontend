@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   MenuDataType,
   filterDataType,
-  menuListDepth2,
+  middleCategoryList,
 } from "@/types/filter/filterTypes";
 import Config from "@/configs/config.export";
 import axios from "axios";
@@ -17,7 +17,7 @@ export default function Category() {
   const [filterData, setFilterData] = useState<filterDataType[]>([]);
   const [menuList, setMenuList] = useState<MenuDataType[]>([]);
   const [categoryList, setCategoryList] = useState<MenuDataType[]>([]);
-  const [menuListDepth2, setMenuListDepth2] = useState<menuListDepth2[]>([]);
+  const [middleCategoryList, setMiddleCategoryList] = useState<middleCategoryList[]>([]);
 
   //카테고리 데이터 받아옴
   useEffect(() => {
@@ -27,31 +27,32 @@ export default function Category() {
     });
     axios.get(`${baseUrl}/v1/api/categories/middle`).then((res) => {
       console.log(res.data);
-      setMenuListDepth2(res.data);
+      setMiddleCategoryList(res.data);
     });
-    console.log("필터데이터"+filterData);
   }, []);
 
-
+  //카테고리 페이지로 라우팅
   useEffect(() => {
-    //console.log("필터링데이터", filterData);
+                                                                                                           
     let queryUrl = "";
-    filterData.forEach((item) => {
+    filterData.map((item) => {
       queryUrl += `&${item.key}=${item.value}`;
     });
     router.push(`/listview?category=${router.query.category}${queryUrl}`);
-    console.log("필터데이터"+filterData.length);
+    //console.log("필터데이터"+filterData.length);
   }, [filterData]);
-
 
   useEffect(() => {
     setMenuList(
-      menuListDepth2.find(
+      middleCategoryList.find(
         (item) => item.id.toString() === router.query.category
       )?.data || []
     ); 
+    
   }, [router]);
 
+                 
+  
   return (
     <>
       <FilterMenuList

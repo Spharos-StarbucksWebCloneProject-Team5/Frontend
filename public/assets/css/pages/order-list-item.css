@@ -1,0 +1,35 @@
+
+.order-detail-page {
+
+  display: flex;
+}
+
+.order-detail-page-date {
+  
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  font-size: 1.1rem;
+}
+
+
+.order-detail-img img{
+
+  transform: rotate(180deg);
+  width: 20px;
+  margin: 20px 20px;
+
+}
+
+.order-detail-page-date p{
+
+  font-weight: bold;
+}
+
+.order-detail-page p{
+
+  color: rgb(138, 138, 138);
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
