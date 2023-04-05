@@ -16,36 +16,76 @@ export default function ProductListView() {
   const [page, setPage] = useState(0);
   const [queryUrl, setQueryUrl] = useState<string>("");
 
+  const [subCategory, setSubCategory] = useState<string>("");
+
   const router = useRouter();
 
   //Category.tsx에서 push 받은 쿼리로 url 만들고 상품 필터
   useEffect(() => {
-    console.log(router.query)
-    let url = ''
-    if(router.query.category && !router.query.subCategory){
-      url = `category=${router.query.category}`
-    } else if(router.query.category && router.query.subCategory){
-      url = `category=${router.query.category}&subCategory=${router.query.subCategory}` 
+
+    console.log(router.query);
+    let url = "";
+    if (router.query.category && !router.query.subCategory) {
+      url = `category=${router.query.category}`;
+    } else if (router.query.category && router.query.subCategory) {
+      if (router.query.subCategory.length <= 1) {
+        //길이가 1
+        url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
+      } else {
+        //길이 2이상
+        let myStr =  router.query.subCategory.toString().replace(",","")
+        console.log("subcategory " +myStr);
+        //console.log(typeof router.query.subCategory);
+
+        // if(typeof router.query.subCategory === 'string'){
+        //setSubCategory(myStr);
+        var step;
+        for (step = 0; step < myStr.length-1; step++) {
+          let str = myStr.substring(step,step+1)
+          console.log("숫자 "+str)
+            //axios(`${baseUrl}/v1/api/categories/?${str}&pageNum=0`).then((res) => {
+            //console.log(res.data)
+            //setPageData(res.data);
+            //setProductData(res.data.content);
+          //});
+        }
+        // }
+
+        //   axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
+        //     console.log(res.data)
+        //     setPageData(res.data);
+        //     setProductData(res.data.content);
+        //   });
+
+        // return;
+      }
+
     } else {
       url = ``;
     }
     setQueryUrl(url);
 
-    console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
+
+    //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
 
     axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
-      console.log(res.data)
+      console.log(res.data);
+
       setPageData(res.data);
       setProductData(res.data.content);
     });
   }, [router.query]);
 
   const fetchData = () => {
-    console.log(queryUrl)
-    axios(`${baseUrl}/v1/api/categories/?${queryUrl}&pageNum=${page + 1}`).then((res) => {
-      setPageData(res.data);
-      setProductData([...productData, ...res.data.content]);
-    });
+
+    console.log(queryUrl);
+    axios(`${baseUrl}/v1/api/categories/?${queryUrl}&pageNum=${page + 1}`).then(
+      (res) => {
+        setPageData(res.data);
+        setProductData([...productData, ...res.data.content]);
+      }
+    );
+
     setPage(page + 1);
   };
 
