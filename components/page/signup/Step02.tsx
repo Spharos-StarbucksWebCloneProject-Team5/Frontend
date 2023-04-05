@@ -127,7 +127,13 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             ...inputData,
             userEmail: "",
           });
-          alert(err.response.data.massage);
+          Swal.fire({
+            icon: "error",
+            text: `${err.response.data.massage}`,
+            customClass: {
+              confirmButton: "swal-confirm-button",
+            },
+          });
           setErrMsg({ ...errMsg, emailErr: "" });
           return;
         }
@@ -187,7 +193,9 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             className={inputData.isUserConfirm ? "isDisable" : ""}
             disabled={inputData.isUserConfirm}
           />
-          <div className="email-confirm-button">
+          {
+            confirmView ? null :
+            <div className="email-confirm-button">
             <p>{errMsg.emailErr}</p>
             <button
               type="button"
@@ -198,6 +206,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
               이메일인증
             </button>
           </div>
+          }
         </div>
         {confirmView && (
           <div id="id-password-input" className="confirmkey">
