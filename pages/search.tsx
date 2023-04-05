@@ -72,9 +72,13 @@ export default function search() {
     router.push(`/search/${tagSlice}`);
   };
 
-  useEffect(() => {
-    console.log(recentSearch.length)
-  }, [])
+  const searchClick = (keyword: string) => {
+    if(keyword[0] === '#'){
+      router.push(`/search/${keyword.split('#')[1]}`);
+      return;
+    }
+    router.push(`/search/${keyword}`);
+  }
 
   return (
     <>
@@ -112,8 +116,8 @@ export default function search() {
                 ? recentSearch
                   .slice(0)
                   .reverse()
-                  .map((item) => (
-                    <div className="keywords" key={item}>
+                  .map((item, idx) => (
+                    <div className="keywords" key={idx} onClick={() => searchClick(item)}>
                       {item}
                       <img
                         src="assets/images/icons/close.png"
@@ -123,7 +127,9 @@ export default function search() {
                   ))
                 : ""}
             </div>
-            <MiddleLine />
+            <MiddleLine 
+              gutterSize={15}
+            />
             <div className="delete-keywords">
               <button onClick={allDelete}>전체삭제</button>
             </div>

@@ -259,7 +259,7 @@ export default function cart() {
         },
       })
     );
-    location.reload();
+    router.reload();
   };
 
   const handleCloseDelete = (id: number) => {
@@ -282,7 +282,7 @@ export default function cart() {
           },
         })
       );
-    location.reload();
+    router.reload();
   };
 
   const [modalOpen, setModalOpen] = useRecoilState(countModalState);

@@ -30,6 +30,7 @@ export default function Header() {
   const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [isLogin, setIsLogin] = useRecoilState(userLoginState);
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
+  const [useStateCookie, setUseStateCookie] = useState();
 
   const handleLogout = () => {
     Swal.fire({
@@ -82,31 +83,34 @@ export default function Header() {
       }
     });
   };
-  if (cookies.id) {
-    axios
-      .get(`${baseUrl}/v1/api/carts/get`, {
+
+  useEffect(() => {
+    setUseStateCookie(cookies.id)
+    if (useStateCookie) {
+      axios.get(`${baseUrl}/v1/api/carts/get`, {
         headers: {
-          Authorization: `Bearer ${cookies.id}`,
+          Authorization: `Bearer ${useStateCookie}`,
         },
-      })
-      .then((res) => {
+      }).then((res) => {
         setCartCnt(res.data.length);
       });
-  }
+    }
+  }, [cookies.id]);
 
   return (
     <header>
       {router.pathname === "/shippingAddressChange" ||
-      router.pathname === "/shippingAddressModify/[shippingAddressId]" ||
-      router.pathname === "/shippingAddressRegister" ? (
+        router.pathname === "/shippingAddressModify/[shippingAddressId]" ||
+        router.pathname === "/shippingAddressRegister" ? (
         <HeaderTopShipping />
       ) : (
         <div className="header-top">
           <div className="menu-icon">
             {router.pathname === "/cart" ||
-            router.pathname === "/shippingAddress" ||
-            router.pathname === "/signup" ||
-            router.pathname === "/products/[productId]" ? (
+              router.pathname === "/shippingAddress" ||
+              router.pathname === "/signup" ||
+              router.pathname === "/search/[search]" ||
+              router.pathname === "/products/[productId]" ? (
               <BackButton />
             ) : router.pathname === "/listview" ? (
               <BackButton2 />
@@ -127,7 +131,10 @@ export default function Header() {
                 <img src="/assets/images/icons/search.svg" />
               </li>
               <li onClick={() => router.push("/cart")}>
-                {cookies.id ? <p className="cart-badge">{cartCnt}</p> : ""}
+                {
+                  useStateCookie ?
+                    <p className="cart-badge">{cartCnt}</p> : null
+                }
                 <img src="/assets/images/icons/shopping-cart.svg" />
               </li>
               {isLogin.isLogin ? (
@@ -144,16 +151,16 @@ export default function Header() {
         </div>
       )}
       {router.pathname === "/" ||
-      router.pathname === "/event" ||
-      router.pathname === "/best" ||
-      router.pathname === "/mypage" ? (
+        router.pathname === "/event" ||
+        router.pathname === "/best" ||
+        router.pathname === "/mypage" ? (
         <div className="header-bottom">
           <nav>
             <ul>
               {navBottomData &&
                 navBottomData.map((nav) =>
                   nav.link === "/event?category=1" ||
-                  nav.link === "/best?category=1" ? (
+                    nav.link === "/best?category=1" ? (
                     <li
                       key={nav.id}
                       className={

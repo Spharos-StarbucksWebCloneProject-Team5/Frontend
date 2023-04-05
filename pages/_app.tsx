@@ -1,7 +1,6 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { ReactElement, ReactNode, useState } from "react";
 import { RecoilRoot } from "recoil";
 

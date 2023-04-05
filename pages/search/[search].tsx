@@ -27,8 +27,7 @@ export default function SearchResult() {
 
   const fetchData = () => {
     axios(
-      `${baseUrl}/v1/api/categories/event?keyword=${query.search}&pageNum=${
-        page + 1
+      `${baseUrl}/v1/api/categories/event?keyword=${query.search}&pageNum=${page + 1
       }`
     ).then((res) => {
       setPageData(res.data);
@@ -39,34 +38,39 @@ export default function SearchResult() {
   };
 
   return (
-    <section>
-      <div className="sort-box">
-        <select name="sort" className="sort">
-          <option value="">신상품순</option>
-          <option value="">추천순</option>
-          <option value="">낮은가격순</option>
-          <option value="">높은가격순</option>
-        </select>
+    <>
+      <div className="header-search-result">
+        <p>"{query.search}"의 검색결과</p>
       </div>
-      <InfiniteScroll
-        dataLength={productData.length}
-        next={fetchData}
-        style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
-        hasMore={pageData?.pageNum !== pageData?.totalPage ? true : false}
-        loader={<h4></h4>}
-      >
-        <div className="product-list">
-          <div className="event-product-list">
-            {productData &&
-              productData.map((item: productAllType) => (
-                <ProductListCard
-                  key={item.productId}
-                  productId={item.productId}
-                />
-              ))}
-          </div>
+      <section>
+        <div className="sort-box">
+          <select name="sort" className="sort-search-result">
+            <option value="">신상품순</option>
+            <option value="">추천순</option>
+            <option value="">낮은가격순</option>
+            <option value="">높은가격순</option>
+          </select>
         </div>
-      </InfiniteScroll>
-    </section>
+        <InfiniteScroll
+          dataLength={productData.length}
+          next={fetchData}
+          style={{ display: "flex", flexDirection: "column-reverse" }} //To put endMessage and loader to the top.
+          hasMore={pageData?.pageNum !== pageData?.totalPage ? true : false}
+          loader={<h4></h4>}
+        >
+          <div className="product-list">
+            <div className="event-product-list">
+              {productData &&
+                productData.map((item: productAllType) => (
+                  <ProductListCard
+                    key={item.productId}
+                    productId={item.productId}
+                  />
+                ))}
+            </div>
+          </div>
+        </InfiniteScroll>
+      </section>
+    </>
   );
 }
