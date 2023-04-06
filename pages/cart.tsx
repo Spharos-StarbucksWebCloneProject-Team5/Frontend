@@ -233,8 +233,8 @@ export default function cart() {
   };
 
   const handleAllDelete = () => {
-   
     //모든 카트 아이템 삭제 처리
+    console.log(`&&&&&&&&&${cookies.id}`)
     axios.put(`${baseUrl}/v1/api/carts/delete`, {
       headers: {
         Authorization: `Bearer ${cookies.id}`,
@@ -252,7 +252,7 @@ export default function cart() {
         },
       })
     );
-    // router.reload();
+     router.reload();
   };
 
   const handleCloseDelete = (id: number) => {
@@ -275,7 +275,7 @@ export default function cart() {
           },
         })
       );
-    // router.reload();
+     router.reload();
   };
 
   const [modalOpen, setModalOpen] = useRecoilState(countModalState);
@@ -325,7 +325,7 @@ export default function cart() {
           isCheck={isFreezeCheck}
           freezeCartItems={freezeCartItems}
           handleCartList={handleFreezeCartList}
-          handleCart={handleCart}
+          handleCart={handleFreezeCart}
           clickProduct={clickProduct}
           handleCloseDelete={handleCloseDelete}
           showModal={showModal}
