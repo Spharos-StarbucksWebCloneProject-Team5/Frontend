@@ -83,6 +83,7 @@ header {
 
 .header-top nav ul li {
   list-style: none;
+  position: relative;
   margin: 0 8px;
 }
 
@@ -174,4 +175,17 @@ header {
 .header-sub nav ul li a {
   text-decoration: none;
   color: #6e6e6e;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -20px;
+  left: 10px;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  background-color: var(--color-light-green);
+  color: white;
+  padding: 3px 7px;
+  z-index: 800;
 }
