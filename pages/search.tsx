@@ -10,6 +10,7 @@ import { tagData } from "@/datas/tagData";
 import CloseButton from "@/components/ui/CloseButton";
 import MiddleLine from "@/components/ui/MiddleLine";
 import Swal from "sweetalert2";
+import CloseButton2 from "@/components/ui/CloseButton2";
 
 export default function search() {
   const baseUrl = Config().baseUrl;
@@ -46,26 +47,30 @@ export default function search() {
   //엔터키 눌렀을 때
   const enterHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
     //e.preventDefault();
+    // if (e.key === "Enter") {
+    //   if (search.length !== 0) {
+    //     setRecentSearch([...recentSearch, search]);
+    //     router.push(`/search/${search}`);
+    //   }else{
+    //     //e.preventDefault();
+    //     Swal.fire({
+    //       icon: "info",
+    //       text: "검색어를 입력해 주세요.",
+    //     });
+    //   }
+    //   if (recentSearch.includes(search)) {
+    //     setRecentSearch([
+    //       ...recentSearch.filter((item) => item !== search),
+    //       search,
+    //     ]);
+    //   } else setRecentSearch([...recentSearch, search]);
+    //   router.push(`/search/${search}`);
+    // }
     if (e.key === "Enter") {
-      if (search.length !== 0) {
-        setRecentSearch([...recentSearch, search]);
-        router.push(`/search/${search}`);
-      }else{
-        e.preventDefault();
-        Swal.fire({
-          icon: "info",
-          text: "검색어를 입력해 주세요.",
-        });
-      }
-      if (recentSearch.includes(search)) {
-        setRecentSearch([
-          ...recentSearch.filter((item) => item !== search),
-          search,
-        ]);
-      } else setRecentSearch([...recentSearch, search]);
-      
-      //router.push(`/search/${search}`);
+      e.preventDefault();
+      buttonHandle()
     }
+
   };
 
   //선택 삭제
@@ -82,6 +87,12 @@ export default function search() {
     setRecentSearch([...recentSearch, tag]);
     const tagSlice = tag.slice(1);
     router.push(`/search/${tagSlice}`);
+    if (recentSearch.includes(tag)) {
+      setRecentSearch([
+        ...recentSearch.filter((item) => item !== tag),
+        tag,
+      ]);
+    }
   };
 
   const searchClick = (keyword: string) => {
@@ -90,6 +101,7 @@ export default function search() {
       return;
     }
     router.push(`/search/${keyword}`);
+    
   }
 
   return (
@@ -111,7 +123,7 @@ export default function search() {
               <img src="assets/images/icons/search.svg" />
             </li>
             <li>
-              <CloseButton />
+              <CloseButton2 />
             </li>
           </ul>
         </div>

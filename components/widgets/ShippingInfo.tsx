@@ -32,6 +32,7 @@ export default function ShippingInfo() {
   }
 
   const handleShippingAddressChange = () => {
+
     router.push("/shippingAddressChange")
   }
 
@@ -55,9 +56,11 @@ export default function ShippingInfo() {
         setIsPrimaryShippingAddress(res.data);
       });
     }
-    setIsShippingId(isPrimaryShippingAddress?.id)
   }, []);
 
+  useEffect(() => {
+    setIsShippingId(isPrimaryShippingAddress.id)
+  }, [isPrimaryShippingAddress]);
   return (
     <section className="padding-lr-20">
       <div id="payment">
