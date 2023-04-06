@@ -33,7 +33,7 @@ export default function Category() {
 
   //카테고리 페이지로 라우팅
   useEffect(() => {
-                                                                                                           
+
     let queryUrl = "";
     filterData.map((item) => {
       queryUrl += `&${item.key}=${item.value}`;
@@ -51,7 +51,6 @@ export default function Category() {
     
   }, [router]);
 
-                 
   
   return (
     <>
@@ -60,13 +59,6 @@ export default function Category() {
         filterFile={filterData}
         setFilter={setFilterData}
       />
-      {/* {menuList.length > 0 && (
-        <FilterMenuList
-          data={menuList}
-          filterFile={filterData}
-          setFilter={setFilterData}
-        />
-      )} */}
     </>
   );
 }

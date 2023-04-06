@@ -21,6 +21,7 @@ export default function ProductListView() {
 
   //Category.tsx에서 push 받은 쿼리로 url 만들고 상품 필터
   useEffect(() => {
+    setProductData([]);
     console.log(router.query);
     let url = "";
     if (router.query.category && !router.query.subCategory) {
@@ -30,37 +31,19 @@ export default function ProductListView() {
         //길이가 1
         url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
       } else {
-        //길이 2이상
-        let myStr =  router.query.subCategory.toString().replace(",","")
-        console.log("subcategory " +myStr);
-        //console.log(typeof router.query.subCategory);
-
-        // if(typeof router.query.subCategory === 'string'){
-        //setSubCategory(myStr);
-        var step;
-        for (step = 0; step < myStr.length-1; step++) {
-          let str = myStr.substring(step,step+1)
-          console.log("숫자 "+str)
-            //axios(`${baseUrl}/v1/api/categories/?${str}&pageNum=0`).then((res) => {
-            //console.log(res.data)
-            //setPageData(res.data);
-            //setProductData(res.data.content);
-          //});
+        console.log("서브카테고리 내용", router.query.subCategory);
+        if(Array.isArray(router.query.subCategory)){
+           console.log("서브카테고리 내용", router.query.subCategory)
+           router.query.subCategory.map((item) => {
+            fetchMoreData(router.query.category as string,item as string)
+          });
+          return;
         }
-        // }
-
-        //   axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
-        //     console.log(res.data)
-        //     setPageData(res.data);
-        //     setProductData(res.data.content);
-        //   });
-
-        // return;
       }
     } else {
       url = ``;
     }
-    setQueryUrl(url);
+    // setQueryUrl(url);
 
     //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
 
@@ -81,6 +64,12 @@ export default function ProductListView() {
     );
     setPage(page + 1);
   };
+
+  const fetchMoreData = async (categoryId:string ,subCategoryId:string) => {
+    const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=0`)
+    console.log('array list get',data.data);
+    setProductData([...productData, ...data.data.content]);
+  }
 
   // useEffect(() => {
   //   console.log(router.query);
@@ -133,9 +122,9 @@ export default function ProductListView() {
         <div className="product-list">
           <div className="event-product-list">
             {productData &&
-              productData.map((item: productAllType) => (
+              productData.map((item: productAllType, idx:number) => (
                 <ProductListCard
-                  key={item.productId}
+                  key={idx}
                   productId={item.productId}
                 />
               ))}
