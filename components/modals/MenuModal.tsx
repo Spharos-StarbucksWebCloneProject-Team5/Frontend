@@ -30,6 +30,12 @@ export default function MenuModal() {
     router.push(path);
     setIsMenuModalOpen(false);
   };
+
+  const handelCategory = (id: number) => {
+    router.push(`/listview?category=${id}`);
+    setIsMenuModalOpen(false);
+  }
+
   if (!isMenuModalOpen) return null;
 
   return (
@@ -62,7 +68,7 @@ export default function MenuModal() {
         <div className="menu-product-list">
           {categoryData.map((element) => (
             <div key={element.id} className="menu-product-item">
-              <div className="menu-product-item__img">
+              <div className="menu-product-item__img" onClick={() => handelCategory(element.id)}>
                 <img src={element.thumbNail} alt="" />
               </div>
               <div className="menu-product-item__info">
