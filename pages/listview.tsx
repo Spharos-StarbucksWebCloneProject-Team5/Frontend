@@ -115,7 +115,7 @@ export default function ProductListView() {
 
   return (
     <section>
-      <div className="sort-box">
+      <div className="sort-box-listview">
         <select name="sort" className="sort">
           <option value="">신상품순</option>
           <option value="">추천순</option>
