@@ -42,6 +42,13 @@
   padding-right: 5%;
 }
 
+.sort-box-listview {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5%;
+  margin-bottom: 20px;
+}
+
 .sort {
   margin-top: 140px;
   border: none;

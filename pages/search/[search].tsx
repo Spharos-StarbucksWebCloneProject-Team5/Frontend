@@ -51,6 +51,12 @@ export default function SearchResult() {
             <option value="">높은가격순</option>
           </select>
         </div>
+        {
+          !productData &&
+          <div>
+            <p>검색 결과가 없습니다.</p>
+          </div>
+        }
         <InfiniteScroll
           dataLength={productData.length}
           next={fetchData}
