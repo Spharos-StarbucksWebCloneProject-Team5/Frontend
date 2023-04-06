@@ -75,6 +75,7 @@ export default function ModifyCountModal(props: {
 
   return (
     <>
+      <div className="countModifyModal">
       <div className="count-modal-header">
         <div className="menu-icon">
         </div>
@@ -89,7 +90,6 @@ export default function ModifyCountModal(props: {
           </ul>
         </nav>
       </div>
-      <div className="countModifyModal">
         <div className="advertising-info box-cart cart-quantity-margin-top">
           <div className="box-cart-product cart-quantity-padding-left">
             <div className="cart-product-info">

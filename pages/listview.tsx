@@ -27,21 +27,19 @@ export default function ProductListView() {
     if (router.query.category && !router.query.subCategory) {
       url = `category=${router.query.category}`;
       setPage(0)
-      
+
     } else if (router.query.category && router.query.subCategory) {
       if (router.query.subCategory.length <= 1) {
         //길이가 1
         setPage(0)
         url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
-        
+
       } else {
         setPage(0)
-        console.log("서브카테고리 내용", router.query.subCategory);
-        if(Array.isArray(router.query.subCategory)){
-           setProductData([])
-           console.log("서브카테고리 내용", router.query.subCategory)
-           router.query.subCategory.map((item) => {
-            fetchMoreData(router.query.category as string,item as string)
+        if (Array.isArray(router.query.subCategory)) {
+          setProductData([])
+          router.query.subCategory.map((item) => {
+            fetchMoreData(router.query.category as string, item as string)
           });
           return;
         }
@@ -49,9 +47,6 @@ export default function ProductListView() {
     } else {
       url = ``;
     }
-    // setQueryUrl(url);
-
-    //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
 
     axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
       console.log(res.data);
@@ -61,24 +56,20 @@ export default function ProductListView() {
   }, [router.query]);
 
   const fetchData = () => {
-
-    console.log(page)
     let url = "";
     if (router.query.category && !router.query.subCategory) {
       url = `category=${router.query.category}`;
-      
+
     } else if (router.query.category && router.query.subCategory) {
       if (router.query.subCategory.length <= 1) {
         //길이가 1
         url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
-        
+
       } else {
-        console.log("서브카테고리 내용", router.query.subCategory);
         let newPage = page + 1;
-        if(Array.isArray(router.query.subCategory)){
-           console.log("서브카테고리 내용", router.query.subCategory)
-           router.query.subCategory.map((item) => {
-            fetchMoreDataPage(router.query.category as string,item as string, newPage)
+        if (Array.isArray(router.query.subCategory)) {
+          router.query.subCategory.map((item) => {
+            fetchMoreDataPage(router.query.category as string, item as string, newPage)
           });
           setPage(newPage)
           return;
@@ -87,9 +78,6 @@ export default function ProductListView() {
     } else {
       url = ``;
     }
-    // setQueryUrl(url);
-
-    //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
 
     axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=${page + 1}`).then(
       (res) => {
@@ -100,41 +88,46 @@ export default function ProductListView() {
     setPage(page + 1);
   };
 
-  const fetchMoreData = async (categoryId:string ,subCategoryId:string) => {
-    console.log(page)
+  const fetchMoreData = async (categoryId: string, subCategoryId: string) => {
     const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=${page}`)
-    console.log('array list get',data.data);
     setProductData([...productData, ...data.data.content]);
   }
 
-  const fetchMoreDataPage = async (categoryId:string ,subCategoryId:string, page:number) => {
-    console.log(page)
+  const fetchMoreDataPage = async (categoryId: string, subCategoryId: string, page: number) => {
     const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=${page}`)
-    console.log('array list get',data.data);
     setProductData([...productData, ...data.data.content]);
   }
+
+  console.log(router.query.category)
 
   return (
     <section>
-      <div className="sort-box-listview">
-        <select name="sort" className="sort">
+      {
+        router.query.category === "1" || 
+        router.query.category === "2" || 
+        router.query.category === "3" ?
+        <div className="sort-box-listview change-margin">
+          {/* <select name="sort" className="sort">
           <option value="">신상품순</option>
           <option value="">추천순</option>
           <option value="">낮은가격순</option>
           <option value="">높은가격순</option>
-        </select>
+        </select> */}
+        </div>
+        : <div className="sort-box-listview">
       </div>
+      }
       <InfiniteScroll
         dataLength={productData.length}
         next={fetchData}
         style={{ display: "flex", flexDirection: "column-reverse" }}
-        hasMore={ page > pageData ? false : true}
+        hasMore={page > pageData ? false : true}
         loader={<h4></h4>}
       >
         <div className="product-list">
           <div className="event-product-list">
             {productData &&
-              productData.map((item: productAllType, idx:number) => (
+              productData.map((item: productAllType, idx: number) => (
                 <ProductListCard
                   key={idx}
                   productId={item.productId}
