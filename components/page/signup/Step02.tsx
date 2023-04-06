@@ -68,7 +68,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             ...errMsg,
             passwordErr: "비밀번호는 25자리 이하로 입력해주세요.",
           });
-        } else if (value.length < 9) {
+        } else if (value.length < 8) {
           setErrMsg({
             ...errMsg,
             passwordErr: "비밀번호는 8자리 이상으로 입력해주세요.",

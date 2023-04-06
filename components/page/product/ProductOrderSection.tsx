@@ -126,8 +126,6 @@ export default function ProductOrderSection(props: {
       router.push("/login");
       return;
     } else {
-      console.log("productorder " + props.productId);
-      console.log("productorder " + count);
       axios
         .post(
           `${baseUrl}/v1/api/carts`,
@@ -227,55 +225,49 @@ export default function ProductOrderSection(props: {
                 <div className={myStyle.greyboxWrap}>
                   <div className={myStyle.greybox}>
                     <div className={myStyle.title}>{props.productName}</div>
-
                     <div className={myStyle.QtyCountWrap}>
                       <div className={myStyle.QtyCount}>
-                        <div
-                          className={
-                            count === 1
-                              ? myStyle.QtyCountDisabled
-                              : myStyle.QtyCount
-                          }
+                        <div className={count === 1 ? myStyle.disabled : ""}
                         >
-                          <div className="order-count">
-                            <Image
-                              src="/assets/images/icons/minus.png"
-                              onClick={minusCount}
-                              width={20}
-                              height={20}
-                              alt="-Button"
-                            />
-                            <p>{count}</p>
-                            <Image
-                              src="/assets/images/icons/add.png"
-                              onClick={addCount}
-                              width={20}
-                              height={20}
-                              alt="+Button"
-                            />
-                          </div>
+                          <Image
+                            src="/assets/images/icons/minus.png"
+                            onClick={minusCount}
+                            width={20}
+                            height={20}
+                            alt="-Button"
+                          />
+                        </div>
+                        {count}
+                        <div>
+                          <Image
+                            src="/assets/images/icons/add.png"
+                            onClick={addCount}
+                            width={20}
+                            height={20}
+                            alt="+Button"
+                          />
                         </div>
                       </div>
-                      <div className={myStyle.priceBold}>
-                        {props.productPrice.toLocaleString("en")}원
-                      </div>
+                    <div className={myStyle.priceBold}>
+                      {props.productPrice.toLocaleString("en")}원
                     </div>
                   </div>
                 </div>
               </div>
-
-              <Separator color="lightgrey" gutter={0.6} />
-
-              <div className={myStyle.bottomPriceWrap}>
-                합계{" "}
-                <span className={myStyle.rightBottomBoldPrice}>
-                  {totalPrice.toLocaleString("en")}원
-                </span>
-              </div>
             </div>
-          </Sheet.Content>
-        </Sheet.Container>
-      </Sheet>
+
+            <Separator color="lightgrey" gutter={0.6} />
+
+            <div className={myStyle.bottomPriceWrap}>
+              합계{" "}
+              <span className={myStyle.rightBottomBoldPrice}>
+                {totalPrice.toLocaleString("en")}원
+              </span>
+            </div>
+          </div>
+        </Sheet.Content>
+      </Sheet.Container>
+    </Sheet >
     </>
   );
 }
@@ -291,32 +283,36 @@ const SuccessViewModal = (props: {
   return (
     <>
       <SuccessModalWarp>
-        <div className={myStyle.notiWrap}>
-          <div>
-            <p>장바구니에 추가되었습니다.</p>
-            <Image
-              src="/assets/images/icons/close.png"
-              alt="close"
-              width={20}
-              height={20}
-              onClick={() => props.setIsModalOpen(false)}
-            />
-          </div>
-          <div className={myStyle.buttonWrap}>
-            <ButtonUi
-              type="button"
-              text="장바구니로 이동"
-              size="medium"
-              colorType="secondary"
-              link="/cart"
-            />
-            <ButtonUi
-              type="button"
-              text="상품 더보기"
-              size="medium"
-              colorType="primary"
-              link="/listview?category=0"
-            />
+        <div className={myStyle.productSuccessWrap}>
+          <div className={myStyle.notiWrap}>
+            <div className={myStyle.noti}>
+              <div className="noti-text">
+                <p>장바구니에 추가되었습니다.</p>
+                <Image
+                  src="/assets/images/icons/close.png"
+                  alt="close"
+                  width={20}
+                  height={20}
+                  onClick={() => props.setIsModalOpen(false)}
+                />
+              </div>
+              <div className={myStyle.buttonWrap}>
+                <ButtonUi
+                  type="button"
+                  text="장바구니로 이동"
+                  size="medium"
+                  colorType="secondary"
+                  link="/cart"
+                />
+                <ButtonUi
+                  type="button"
+                  text="상품 더보기"
+                  size="medium"
+                  colorType="primary"
+                  link="/listview?category=0"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </SuccessModalWarp>
@@ -324,13 +320,13 @@ const SuccessViewModal = (props: {
   );
 };
 const SuccessModalWarp = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  width: 100%
-  height: 100%
-  z-index: 890;
-  padding: 0;
-  margin: 0;
-`;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0,0,0,0.5);
+        width: 100%
+        height: 100%
+        z-index: 890;
+        padding: 0;
+        margin: 0;
+        `;
