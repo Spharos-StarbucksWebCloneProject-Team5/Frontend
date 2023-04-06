@@ -8,6 +8,7 @@ import {
   paymentState,
   payingState,
 } from "@/state/atom/paymentState";
+import { shippingState } from "@/state/atom/shippingState";
 import { userLoginState } from "@/state/atom/userLoginState";
 import { buyType } from "@/types/cart/cartDataType";
 import { productBuyType } from "@/types/product/fetchDataType";
@@ -33,6 +34,8 @@ export default function payment() {
   const [sbCardCheck, setSbCardCheck] = useState<boolean>(true); //스벅 체크
   const [creditCardCheck, setCreditCardCheck] = useState<boolean>(false); //신카 체크
   const [payData, setPayData] = useRecoilState(paymentState); //결제내역 저장(새고 시 날라가면 안됨)
+  const [isShippingId, setIsShippingId] = useRecoilState(shippingState);//배송지 선택여부 체크
+
 
   //const [recoilList,setRecoilList] = useState<string[]>([""])
 
@@ -126,7 +129,14 @@ export default function payment() {
 
   //결제 처리
   const buyHandler = () => {
-    //결제 디비 등록
+    if(isShippingId===0){
+      Swal.fire({
+        icon: "warning",
+        text: "배송지를 선택해주세요.",
+      });
+    }
+    else{
+      //결제 디비 등록
     productData.map((item) => {
       axios.post(
         `${baseUrl}/v1/api/payments`,
@@ -174,7 +184,6 @@ export default function payment() {
       });
     }
     //recoil에서 삭제
-
     setCartListPay([]);
     setCartPay(0);
     setBuyPay({
@@ -188,6 +197,9 @@ export default function payment() {
       confirmButtonText: `확인`,
     });
     router.push("/paymentInfo");
+
+    }
+    
   };
 
   const sbCheckHandler = (check: boolean) => {

@@ -115,12 +115,14 @@ const modifyPassword = () => {
       setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." });
       return;
     }
-    //이메일 인증
+    
+    //이메일 확인
     axios
-      .post(`${baseUrl}/api/v1/users/email`, { email: inputData.email })
+      .post(`${baseUrl}/api/v1/mail/email`, { to: inputData.email })
+
       .then((res) => {
-        console.log(res.data.result);
-        if (res.data.result === "success") {
+        console.log(res);
+        if (res.data === "메일 인증 요청") {
           setDuplicateView(true);
           setConfirmView(true);
           setErrMsg({ ...errMsg, emailErr: "" });
@@ -147,20 +149,14 @@ const modifyPassword = () => {
           return;
         }
       });
-
-    axios
-      .post(`${baseUrl}/api/v1/email`, { to: inputData.email })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+   
   };
 
   const handleConfirmKey = () => {
     console.log(confirmKey);
     // 서버에 키값 확인
     axios
-      .post(`${baseUrl}/api/v1/email-confirm`, { code: confirmKey })
+      .post(`${baseUrl}/api/v1/mail/email-confirm`, { code: confirmKey })
       .then((res) => {
         console.log(res);
         // 키값이 일치하면 인증완료, 암호
@@ -202,7 +198,9 @@ const modifyPassword = () => {
             //className={inputData.isUserConfirm ? "isDisable" : ""}
             //disabled={inputData.isUserConfirm}
           />
-          <div className="email-confirm-button">
+          {
+            confirmView ? null :
+            <div className="email-confirm-button">
             <p>{errMsg.emailErr}</p>
             <button
               type="button"
@@ -213,6 +211,7 @@ const modifyPassword = () => {
               이메일인증
             </button>
           </div>
+          }
         </div>
         {confirmView && (
           <div id="id-password-input" className="confirmkey">

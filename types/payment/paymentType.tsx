@@ -1,5 +1,5 @@
 export interface paymentType {
-  date: Date,
+  date: string,
   payStatus: number,
   productId: number,
   productName: string,

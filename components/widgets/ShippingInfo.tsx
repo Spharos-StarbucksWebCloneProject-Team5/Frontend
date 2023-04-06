@@ -6,13 +6,26 @@ import axios from "axios";
 
 import Config from "@/configs/config.export";
 import { ShippingAddressRes } from "@/types/shippingAddress/shipAddressDataType";
+import { useRecoilState } from "recoil";
+import { shippingState } from "@/state/atom/shippingState";
 
 export default function ShippingInfo() {
   const router = useRouter();
   const [cookies] = useCookies(["id"]);
   const baseUrl = Config().baseUrl;
 
-  const [isPrimaryShippingAddress, setIsPrimaryShippingAddress] = useState<ShippingAddressRes>();
+  const [isPrimaryShippingAddress, setIsPrimaryShippingAddress] = useState<ShippingAddressRes>({
+    id: 0,
+    receiver: "",
+    nickname:"",
+    choiceMain: false,
+    zipCode:0,
+    address: "",
+    detailAddress: "",
+    shippingPhone1: "",
+    shippingPhone2: "",
+    shippingMemo: ""})
+  const [isShippingId, setIsShippingId] = useRecoilState(shippingState);
 
   const handleButton = () => {
     router.push("/shippingAddressRegister")
@@ -42,6 +55,7 @@ export default function ShippingInfo() {
         setIsPrimaryShippingAddress(res.data);
       });
     }
+    setIsShippingId(isPrimaryShippingAddress?.id)
   }, []);
 
   return (

@@ -21,31 +21,6 @@ export default function mypage() {
     shipping: 0,
     deliveryCompleted: 0
   });
-
-  function btnClick() {
-    console.log("Click Button");
-  }
-
-  function orderListClick() {
-    const nowDate = new Date()
-    const agoDate = new Date()
-    //agoDate.setMonth(agoDate.getMonth()-3)
-    axios.get(`${baseUrl}/v1/api/payments/get`,
-      {
-        headers:{
-          Authorization: `Bearer ${cookies.id}`,
-        }
-      }
-    )
-    .then((res) => {
-      console.log(res);
-      if(res.data.length ===0 ){
-        push('/orderList')
-      }
-      push('/orderListItem')
-    }); 
-  }
-
   useEffect(() => {
     const myLogin = cookies.id;
     if (!myLogin && !isLogin) {
@@ -66,6 +41,51 @@ export default function mypage() {
       })
     }
   }, []);
+
+  function btnClick() {
+    console.log("Click Button");
+  }
+
+  function orderListClick() {
+
+  const nowDate = new Date().toISOString()
+  const sliceNowDate = nowDate.substring(0,10)
+  
+  const agoDate = new Date()
+  agoDate.setMonth(agoDate.getMonth() - 3);
+  const agoISo = agoDate.toISOString()
+  const sliceAgoDate = agoISo.substring(0,10)
+
+  // const nowYear = nowDate.getFullYear();
+  // const nowMonth = nowDate.getMonth()
+  // const nowDay = nowDate.getDate()
+  // const joinNowDate = `${nowYear}-${nowMonth}-${nowDay}`
+  //const agoDate = new Date()
+  //agoDate.setMonth(nowDate.getMonth() - 2);
+  // const agoYear = agoDate.getFullYear();
+  // const agoMonth = agoDate.getMonth()
+  // const agoDay = agoDate.getDate()
+  // const joinAgoDate = `${agoYear}-${agoMonth}-${agoDay}`
+
+  console.log(`nowDate ${sliceAgoDate}`) 
+  
+  axios.get(`${baseUrl}/v1/api/payments/get?startDate=${sliceAgoDate}&endDate=${sliceNowDate}`,
+      {
+        headers:{
+          Authorization: `Bearer ${cookies.id}`,
+        }
+      }
+    )
+    .then((res) => {
+      console.log(res);
+      if(res.data.length ===0 ){
+        push('/orderList')
+      }
+      push('/orderListItem')
+    }); 
+  }
+
+  
 
   return (
     <>

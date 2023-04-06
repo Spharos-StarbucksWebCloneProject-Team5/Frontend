@@ -233,6 +233,7 @@ export default function cart() {
   };
 
   const handleAllDelete = () => {
+   
     //모든 카트 아이템 삭제 처리
     axios.put(`${baseUrl}/v1/api/carts/delete`, {
       headers: {
@@ -244,7 +245,6 @@ export default function cart() {
   const handleSelectDelete = () => {
     //선택 카트 아이템 삭제 처리
 
-    console.log(checkedList);
     checkedList.map((item) =>
       axios.put(`${baseUrl}/v1/api/carts/` + item, {
         headers: {

@@ -21,11 +21,11 @@ export default function CartTop(props: {
         </div>
         <div id="btn-cart-delete">
           <div className="btn-delete-inner">
-            <p onClick={()=>props.handleSelectDelete} id="select-delete">
+            <p onClick={()=>props.handleSelectDelete()} id="select-delete">
               선택삭제
             </p>
             <p>|</p>
-            <p onClick={()=>props.handleAllDelete}>전체삭제</p>
+            <p onClick={()=>props.handleAllDelete()}>전체삭제</p>
           </div>
         </div>
       </div>

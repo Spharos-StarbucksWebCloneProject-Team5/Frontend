@@ -9,10 +9,35 @@ export default function orderListItem() {
   const baseUrl = Config().baseUrl;
   const [paymentData, setPaymentData] = useState<paymentType[]>()
 
+
+  
+
+
+
+  const nowDate = new Date()
+  const nowYear = nowDate.getFullYear();
+  const nowMonth = nowDate.getMonth()+1
+  const nowMonth1 = nowMonth >= 10 ? nowMonth : "0" + nowMonth; //month 두자리로 출력
+  
+  const nowDay = nowDate.getDate()
+  const nowDay1 = nowDay >= 10 ? nowDay : "0" + nowDay; //day 두자리로 출력
+  const joinNowDate = `${nowYear}-${nowMonth1}-${nowDay1}`
+ 
+  const agoDate = new Date()
+  agoDate.setMonth(agoDate.getMonth() - 3);
+  const agoYear = agoDate.getFullYear();``
+  const agoMonth = agoDate.getMonth()+1
+  const agonMonth1 = agoMonth >= 10 ? agoMonth : "0" + agoMonth; //month 두자리로 출력
+  const agoDay = agoDate.getDate()
+  const agoDay1 = agoDay >= 10 ? agoDay : "0" + agoDay; //day 두자리로 출력
+  const joinAgoDate = `${agoYear}-${agonMonth1}-${agoDay1}`
+
+  console.log(`joinAgoDate ${joinAgoDate}`)
+
   useEffect(() => {
     axios
-      .get(
-        `${baseUrl}/v1/api/payments/get?startDate=2023-01-05&endDate=2023-04-05`,
+      (
+        `${baseUrl}/v1/api/payments/get?startDate=${joinAgoDate}&endDate=${joinNowDate}`,
         {
           headers: {
             Authorization: `Bearer ${cookies.id}`,
@@ -21,33 +46,13 @@ export default function orderListItem() {
       )
       .then((res) => {
         console.log(res.data);
-        //setPaymentData()
+        setPaymentData(res.data)
       });
   }, []);
 
   return (
     <div className="container">
-      <header>
-        <div className="header-top">
-          <div className="menu-icon">
-            <img src="assets/images/icons/left-chevron.svg" alt="" />
-          </div>
-          <h1>온라인 스토어</h1>
-          <nav>
-            <ul>
-              <li>
-                <img src="assets/images/icons/search.svg" />
-              </li>
-              <li>
-                <img src="assets/images/icons/shopping-cart.svg" />
-              </li>
-              <li>
-                <img src="assets/images/icons/close.svg" />
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      
       <form className="order-list-page-form">
         <div className="order-list-page-title">
           <h1>주문 내역</h1>
@@ -55,35 +60,39 @@ export default function orderListItem() {
         <div className="order-list-page-date">
           <p>전체</p>
           <div className="order-list-page">
-            <p>2022.04.01~2023.03.31</p>
+            <p>{joinAgoDate}~{joinNowDate}</p>
             <div className="order-img">
-              <img src="assets/images/icons/left-chevron.svg" alt="" />
+              <img src="/assets/images/icons/left.png" alt="" />
             </div>
           </div>
         </div>
+        {paymentData?.map(item=>(<>
         <div className="order-detail-page-date">
-          <p>2023-03-28</p>
+          <p>{item.date.substring(0,10)}</p>
           <div className="order-detail-page">
             <p>주문 상세</p>
             <div className="order-detail-img">
-              <img src="assets/images/icons/left-chevron.svg" alt="" />
+              <img src="/assets/images/icons/left.png" alt="" />
             </div>
           </div>
         </div>
-        <div className="order-product-card-wrap">
+          <div className="order-product-card-wrap">
           <div className="order-product-card-inner">
             <div className="order-product-card-left">
-              <img src="assets/images/pic/커티스 머그1.png" alt="" />
+              <img src={item.productThumbnail} alt="" />
             </div>
             <div className="order-product-card-right">
-              <p className="order-product-title">주문취소</p>
-              <p>23 커티스 쿨릭 레드 머그 355ml</p>
+              <p className="order-product-title">{item.payStatus===1?"주문완료":item.payStatus===0?"주문취소":""}</p>
+              <p>{item.productName}</p>
               <p className="order-product-price">
-                34,000원<span>1개</span>
+              {item.productPrice.toLocaleString("en")}원<span>{item.count}개</span>
               </p>
             </div>
           </div>
         </div>
+        </>
+        )) }
+        
       </form>
     </div>
   );
