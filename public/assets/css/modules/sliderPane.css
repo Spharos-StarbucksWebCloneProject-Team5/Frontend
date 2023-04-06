@@ -1,0 +1,11 @@
+.slide-pane__overlay {
+  padding: 0px !important;
+  height: 100vh !important;
+  z-index: 999;
+  // no-scroll
+  overflow: hidden;
+}
+
+.slide-pane__content {
+  padding: 0px !important;
+}

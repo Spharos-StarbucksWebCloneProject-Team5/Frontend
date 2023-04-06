@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import Separator from "../ui/Separator";
+import SlidingPane from "react-sliding-pane";
+import "react-sliding-pane/dist/react-sliding-pane.css";
 
 export default function MenuModal() {
   const baseUrl = Config().baseUrl;
@@ -39,7 +41,16 @@ export default function MenuModal() {
   if (!isMenuModalOpen) return null;
 
   return (
-    <div className={isMenuModalOpen ? "modal menu-slide-right" : "modal"}>
+
+    <SlidingPane
+      className="slide-modalWrap"
+      from="left"
+      width="100%"
+      isOpen={isMenuModalOpen}
+      onRequestClose={handleClose}
+      hideHeader={true}
+    >
+    
       <div className="welcome">
         <div className="welcome-top">
           <div className="welcome-back-button" onClick={handleClose}>
@@ -113,6 +124,6 @@ export default function MenuModal() {
           </div>
         </div>
       </section>
-    </div>
+  </SlidingPane>
   );
 }
