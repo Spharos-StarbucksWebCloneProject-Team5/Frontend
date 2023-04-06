@@ -26,10 +26,12 @@ export default function ProductListView() {
     let url = "";
     if (router.query.category && !router.query.subCategory) {
       url = `category=${router.query.category}`;
+      
     } else if (router.query.category && router.query.subCategory) {
       if (router.query.subCategory.length <= 1) {
         //길이가 1
         url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
+        
       } else {
         console.log("서브카테고리 내용", router.query.subCategory);
         if(Array.isArray(router.query.subCategory)){
@@ -55,7 +57,7 @@ export default function ProductListView() {
   }, [router.query]);
 
   const fetchData = () => {
-    console.log(queryUrl);
+    console.log(router.asPath)
     axios(`${baseUrl}/v1/api/categories/?${queryUrl}&pageNum=${page + 1}`).then(
       (res) => {
         setPageData(res.data);
@@ -70,37 +72,6 @@ export default function ProductListView() {
     console.log('array list get',data.data);
     setProductData([...productData, ...data.data.content]);
   }
-
-  // useEffect(() => {
-  //   console.log(router.query);
-  //   if (router.query.categoryId !== "0") {
-  //     //메인카테고리
-  //     setProductData(
-  //       productData.filter(
-  //         (item) => item.mainCategoryId.toString() === router.query.categoryId
-  //       )
-  //     );
-  //   }
-  //   if (router.query.subCategory !== "15") {
-  //     //롤케이크
-  //     setProductData(
-  //       productData.filter(
-  //         (item) => item.mainCategoryId === 1 && item.middleCategoryId === 1
-  //       )
-  //     );
-  //   }
-  //   if (Array.isArray(router.query.subCategoryId)) {
-  //     // router.query.subCategoryId.map((item) =>
-  //     //   setSubCategory([...subCategory, item])
-  //     // );
-  //     router.query.subCategoryId.map((item) => {
-  //       console.log(item);
-  //       subCategory.includes(item)
-  //         ? subCategory.filter((c) => c !== item)
-  //         : setSubCategory([...subCategory, item]);
-  //     });
-  //   }
-  // }, [router.query]);
 
   return (
     <section>
