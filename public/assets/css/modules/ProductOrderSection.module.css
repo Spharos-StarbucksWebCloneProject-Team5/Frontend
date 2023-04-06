@@ -1,7 +1,7 @@
 .productOrderSection {
   position: fixed;
   bottom: 0;
-  z-index: 999;
+  z-index: 800;
   width: 100%;
   background: #fff;
   box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.05);
@@ -12,7 +12,7 @@
 .productOrderSectionOpen {
   position: fixed;
   bottom: 0;
-  z-index: 999;
+  z-index: 800;
   width: 100%;
   background: #fff;
   box-sizing: border-box;
@@ -26,6 +26,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .productOrderSectionOpenBottomWrap img {
   width: 5vw;
   opacity: 0.6;
@@ -35,6 +36,7 @@
 .greyWrap {
   padding: 0px 1rem 1.5rem;
 }
+
 .greyboxWrap {
   width: 100%;
   padding: 1rem;
@@ -72,19 +74,9 @@
   height: auto;
 }
 
-.order-count{
-  display: flex;
-  align-items: center;
-}
-
-.order-count p{
-  font-size: 1.3rem;
-  margin: 0 10px;
-}
-
 .disabled {
   opacity: 0.3;
-  cursor: not-allowed
+  cursor: not-allowed;
 }
 
 .priceBold {
@@ -106,11 +98,53 @@
   padding-left: 10px;
 }
 
-.notiWrap .buttonWrap{
-  padding: 0.5rem 1rem;
-  display: flex;
+.productSuccessWrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
+  height: 100vh;
+  z-index: 890;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.notiWrap {
+  position: fixed;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 880;
+}
+
+.notiWrap .noti {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box !important;
+}
+
+.notiWrap .noti p {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.notiWrap .buttonWrap {
+  padding: 0.5rem 1rem 1rem 1rem;
+  width: 100%;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box !important;
+}
+
+.noti-text {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

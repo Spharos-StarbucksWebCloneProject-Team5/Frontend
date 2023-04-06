@@ -285,6 +285,7 @@ export default function cart() {
   }
 
   const showModal = (cartId: number) => {
+    document.body.style.overflow = "hidden";
     setModalOpen(!modalOpen);
     setCountCartId(cartId);
   };

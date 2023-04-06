@@ -47,7 +47,7 @@ const modifyPassword = () => {
   const [duplicateView, setDuplicateView] = useState<boolean>(false);
   const [confirmTime, setConfirmTime] = useState<number>();
   const [cookies, setCookie, removeCookie] = useCookies(["id"]);
-  const [inputData, setInputData] = useState<findPasswordType>({email:"", password: "",isUserConfirm:false});
+  const [inputData, setInputData] = useState<findPasswordType>({ email: "", password: "", isUserConfirm: false });
 
   const [errMsg, setErrMsg] = useState<SignupErrType>({
     emailErr: "",
@@ -97,8 +97,8 @@ const modifyPassword = () => {
       [name]: value,
     });
   };
-  
-  const handleModify = () =>{
+
+  const handleModify = () => {
     axios.put(`${baseUrl}/api/v1/users/modify`, {
       email: inputData.email,
       password: inputData.password,
@@ -115,7 +115,7 @@ const modifyPassword = () => {
       setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." });
       return;
     }
-    
+
     //이메일 확인
     axios
       .post(`${baseUrl}/api/v1/mail/email`, { to: inputData.email })
@@ -149,7 +149,7 @@ const modifyPassword = () => {
           return;
         }
       });
-   
+
   };
 
   const handleConfirmKey = () => {
@@ -195,22 +195,22 @@ const modifyPassword = () => {
             onChange={handleChange}
             value={inputData.email}
             required={true}
-            //className={inputData.isUserConfirm ? "isDisable" : ""}
-            //disabled={inputData.isUserConfirm}
+          //className={inputData.isUserConfirm ? "isDisable" : ""}
+          //disabled={inputData.isUserConfirm}
           />
           {
             confirmView ? null :
-            <div className="email-confirm-button">
-            <p>{errMsg.emailErr}</p>
-            <button
-              type="button"
-              onClick={handleEmailConfirm}
-              className={inputData.isUserConfirm ? "isDisable" : ""}
-              disabled={inputData.isUserConfirm}
-            >
-              이메일인증
-            </button>
-          </div>
+              <div className="email-confirm-button">
+                <p>{errMsg.emailErr}</p>
+                <button
+                  type="button"
+                  onClick={handleEmailConfirm}
+                  className={inputData.isUserConfirm ? "isDisable" : ""}
+                  disabled={inputData.isUserConfirm}
+                >
+                  이메일인증
+                </button>
+              </div>
           }
         </div>
         {confirmView && (
@@ -263,11 +263,13 @@ const modifyPassword = () => {
           <p>{errMsg.confirmPasswordErr}</p>
         </div>
       </form>
-      <StButton
+      <section className="submit-container">
+        <StButton
           buttonText="왼료"
           textSize="1.1rem"
           handler={handleModify}
         />
+      </section>
     </>
   );
 };
