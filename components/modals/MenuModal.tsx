@@ -53,8 +53,7 @@ export default function MenuModal() {
     
       <div className="welcome">
         <div className="welcome-top">
-          <div className="welcome-back-button" onClick={handleClose}>
-            {/* <img src="assets/images/icons/close.svg" /> */}
+          <div className="welcome-back-button" onClick={() => {handleClose(); document.body.style.overflow = "unset";}}>
             <Image
               src="/assets/images/icons/close.png"
               width={23}

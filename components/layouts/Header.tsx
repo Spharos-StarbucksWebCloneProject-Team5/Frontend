@@ -109,7 +109,7 @@ export default function Header() {
             ) : router.pathname === "/payment" ? (
               <BackButton3 />
             ) : (
-              <div onClick={() => setIsMenuModalOpen(true)}>
+              <div onClick={() => {setIsMenuModalOpen(true); document.body.style.overflow = "hidden";}}>
                 <img src="/assets/images/icons/menu.svg" alt="" />
               </div>
             )}
