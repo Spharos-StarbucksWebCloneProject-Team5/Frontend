@@ -16,7 +16,6 @@ export default function FilterMenuList(props: {
   const [categoryMiddle, setCategoryMiddle] = useState<MenuDataType[]>();
   const [categoryId, setCategoryId] = useState<number>(0);
   const [subCategoryId, setSubCategoryId] = useState<number[]>([]);
-  const [priceId, setPriceId] = useState<number>(0);
 
   const handleAddQuery = (item: MenuDataType) => {
     if (item.key === "category" && item.id === 0) {//전체 메뉴
@@ -35,23 +34,32 @@ export default function FilterMenuList(props: {
       axios.get(`${baseUrl}/v1/api/categories/middle`).then((res) => {
         setCategoryMiddle(res.data[item.id-1].data);
       });
-      console.log("123",item)
-      // if (props.filterFile.find((data) => data.id === item.id)) {
-      //   console.log("123",props.filterFile)
-      //   props.setFilter(props.filterFile.filter((data) => data.id !== item.id));
-      //   return;
-      // }
 
     } else if (item.key === "subCategory" && item.id !== 0 ) {//전체x인 subCategory
-      let subQuery = subCategoryId.map(item2=> item2? "&subCategory="+item2 :"").join("")
-      
-      console.log("subQuery    "+ subQuery)
-      router.push(`/listview?category=${categoryId}${subQuery}`);
-      
+     
+      setSubCategoryId([...subCategoryId,
+        item.id
+      ]);
       return;
     }
   }
-  const handlePrice = (id: number) => {};
+
+  const handleDeleteQuery = (item: MenuDataType) => {
+
+    if (item.key === "subCategory" && item.id !== 0) {
+      setSubCategoryId(subCategoryId.filter((data) => data !== item.id));
+      return;
+    }
+  };
+
+  useEffect(()=>{
+    let queryUrl = "";
+      subCategoryId.map((item) => {
+        queryUrl += `&subCategory=${item}`;
+      });
+      router.push(`/listview?category=${categoryId}${queryUrl}`);
+      
+  },[subCategoryId])
 
   useEffect(() => {
     axios.get(`${baseUrl}/v1/api/categories/main`).then((res) => {
@@ -83,14 +91,14 @@ export default function FilterMenuList(props: {
                 key={item.id}
                 className={subCategoryId.includes(item.id) ? "active" : ""}
                 onClick={() =>{subCategoryId.includes(item.id)
-                  ? setSubCategoryId(subCategoryId.filter(item2=>item2!==item.id))
-                  : subCategoryId.push(item.id); handleAddQuery(item)} }
+                  ? handleDeleteQuery(item)
+                  : handleAddQuery(item)} }
               >
                 <p>{item.name}</p>
               </li>
             ))}
         </ul>
-        <ul className="allProducts-ul">
+        {/* <ul className="allProducts-ul">
           {menuListDepth3 &&
             menuListDepth3.map((item) => (
               <li
@@ -101,7 +109,7 @@ export default function FilterMenuList(props: {
                 <p>{item.name}</p>
               </li>
             ))}
-        </ul>
+        </ul> */}
       </nav>
     </div>
   );

@@ -28,6 +28,14 @@ export default function ShippingAddressInfo() {
     shippingMemo: "",
   });
 
+  let isMain = 0
+allShippingAddress.map(item=> {
+ 
+    if(item.choiceMain === true){
+      isMain = 1
+    }
+  })
+  
   const handleShippingAddressAdd = () => {
     axios.post(`${baseUrl}/v1/api/shippingAddress`,
       {
@@ -39,7 +47,7 @@ export default function ShippingAddressInfo() {
         shippingPhone1: shippingAddressModify.shippingPhone1,
         shippingPhone2: shippingAddressModify.shippingPhone2,
         shippingMemo: shippingAddressModify.shippingMemo,
-        choiceMain: shippingAddressModify.choiceMain,
+        choiceMain: isMain? shippingAddressModify.choiceMain: true,
       },
       {
         withCredentials: true,
@@ -133,7 +141,11 @@ export default function ShippingAddressInfo() {
             </select>
           </div>
           <div className="save-shipping">
-            <input type="checkbox" name="choiceMain" onChange={handleCheck} /><span>기본 배송지로 저장합니다.</span>
+            {(isMain)? <><input type="checkbox" name="choiceMain" onChange={handleCheck} />
+            <span>기본 배송지로 저장합니다.</span></>
+            :<><input type="checkbox"  name="choiceMain" onChange={handleCheck}  checked disabled/>
+            <span>기본 배송지로 저장합니다.</span> </>}
+            
           </div>
         </div>
       </section>

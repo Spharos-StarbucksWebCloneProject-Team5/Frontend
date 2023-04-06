@@ -32,8 +32,8 @@ export default function ProductListCard(props: { productId: number }) {
             <Image
               src={data.thumbnail}
               alt={data.description}
-              width={160}
-              height={160}
+              width={170}
+              height={170}
               priority
             />
           </div>

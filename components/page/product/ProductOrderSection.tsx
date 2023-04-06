@@ -17,6 +17,7 @@ import ButtonUi from "@/components/ui/ButtonUi";
 
 import { buyNowState } from "@/state/atom/paymentState";
 import { userLoginState } from "@/state/atom/userLoginState";
+import { cartState } from "@/state/atom/cartState";
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -141,6 +142,7 @@ export default function ProductOrderSection(props: {
         )
         .then((res) => {
           console.log(res);
+          setCartCnt(cartCnt+1)
           Swal.fire({
             toast: true,
             text: "장바구니에 상품을 담았습니다.",
@@ -160,7 +162,8 @@ export default function ProductOrderSection(props: {
   };
 
   let totalPrice = count * props.productPrice;
-
+  const [cartCnt, setCartCnt] = useRecoilState(cartState);
+  
   return (
     <>
       <SuccessViewModal

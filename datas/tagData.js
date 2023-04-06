@@ -5,11 +5,11 @@ export const tagData = [
   },
   {
     id: 2,
-    name: "#리유저블",
+    name: "#글라스",
   },
   {
     id: 3,
-    name: "#도트머그",
+    name: "#케이스",
   },
   {
     id: 4,
@@ -17,10 +17,10 @@ export const tagData = [
   },
   {
     id: 5,
-    name: "#그린코어",
+    name: "#에코백",
   },
   {
     id: 6,
-    name: "#핸드 데스크",
+    name: "#텀블러",
   },
 ];

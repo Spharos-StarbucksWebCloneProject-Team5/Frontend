@@ -42,11 +42,6 @@ export default function Header() {
     }).then((result) => {
       console.log(cookies.id);
       if (result.isConfirmed) {
-        // axios.post(`${baseUrl}/api/v1/users/logout`, {
-        //   headers: {
-        //     Authorization: `Bearer ${cookies.id}`,
-        //   },
-        // });
         setIsLogin({
           userId: "",
           accessToken: "",
@@ -65,10 +60,6 @@ export default function Header() {
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
-            // const b = Swal.getHtmlContainer().querySelector("b");
-            // timerInterval = setInterval(() => {
-            //   b.textContent = Swal.getTimerLeft();
-            // }, 100);
           },
           willClose: () => {
             clearInterval(timerInterval);
@@ -95,7 +86,7 @@ export default function Header() {
         setCartCnt(res.data.length);
       });
     }
-  }, [cookies.id]);
+  }, [cookies.id,cartCnt]);
 
   return (
     <header>

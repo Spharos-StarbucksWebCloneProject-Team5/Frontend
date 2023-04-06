@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 export default function ProductListView() {
   const baseUrl = Config().baseUrl;
 
-  const [pageData, setPageData] = useState<pageProductType>();
+  const [pageData, setPageData] = useState<number>(0);
   const [productData, setProductData] = useState<productAllType[]>([]);
   const [page, setPage] = useState(0);
   const [queryUrl, setQueryUrl] = useState<string>("");
@@ -21,97 +21,98 @@ export default function ProductListView() {
 
   //Category.tsx에서 push 받은 쿼리로 url 만들고 상품 필터
   useEffect(() => {
+    setProductData([]);
     console.log(router.query);
     let url = "";
     if (router.query.category && !router.query.subCategory) {
       url = `category=${router.query.category}`;
+      setPage(0)
+      
     } else if (router.query.category && router.query.subCategory) {
       if (router.query.subCategory.length <= 1) {
         //길이가 1
+        setPage(0)
         url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
+        
       } else {
-        //길이 2이상
-        let myStr =  router.query.subCategory.toString().replace(",","")
-        console.log("subcategory " +myStr);
-        //console.log(typeof router.query.subCategory);
-
-        // if(typeof router.query.subCategory === 'string'){
-        //setSubCategory(myStr);
-        var step;
-        for (step = 0; step < myStr.length-1; step++) {
-          let str = myStr.substring(step,step+1)
-          console.log("숫자 "+str)
-            //axios(`${baseUrl}/v1/api/categories/?${str}&pageNum=0`).then((res) => {
-            //console.log(res.data)
-            //setPageData(res.data);
-            //setProductData(res.data.content);
-          //});
+        setPage(0)
+        console.log("서브카테고리 내용", router.query.subCategory);
+        if(Array.isArray(router.query.subCategory)){
+           setProductData([])
+           console.log("서브카테고리 내용", router.query.subCategory)
+           router.query.subCategory.map((item) => {
+            fetchMoreData(router.query.category as string,item as string)
+          });
+          return;
         }
-        // }
-
-        //   axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
-        //     console.log(res.data)
-        //     setPageData(res.data);
-        //     setProductData(res.data.content);
-        //   });
-
-        // return;
       }
     } else {
       url = ``;
     }
-    setQueryUrl(url);
+    // setQueryUrl(url);
 
     //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
 
     axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
       console.log(res.data);
-      setPageData(res.data);
       setProductData(res.data.content);
+      setPageData(res.data.content.totalPage);
     });
   }, [router.query]);
 
   const fetchData = () => {
-    console.log(queryUrl);
-    axios(`${baseUrl}/v1/api/categories/?${queryUrl}&pageNum=${page + 1}`).then(
+
+    console.log(page)
+    let url = "";
+    if (router.query.category && !router.query.subCategory) {
+      url = `category=${router.query.category}`;
+      
+    } else if (router.query.category && router.query.subCategory) {
+      if (router.query.subCategory.length <= 1) {
+        //길이가 1
+        url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
+        
+      } else {
+        console.log("서브카테고리 내용", router.query.subCategory);
+        let newPage = page + 1;
+        if(Array.isArray(router.query.subCategory)){
+           console.log("서브카테고리 내용", router.query.subCategory)
+           router.query.subCategory.map((item) => {
+            fetchMoreDataPage(router.query.category as string,item as string, newPage)
+          });
+          setPage(newPage)
+          return;
+        }
+      }
+    } else {
+      url = ``;
+    }
+    // setQueryUrl(url);
+
+    //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
+
+    axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=${page + 1}`).then(
       (res) => {
-        setPageData(res.data);
         setProductData([...productData, ...res.data.content]);
+        setPageData(res.data.content.totalPage);
       }
     );
     setPage(page + 1);
   };
 
-  // useEffect(() => {
-  //   console.log(router.query);
-  //   if (router.query.categoryId !== "0") {
-  //     //메인카테고리
-  //     setProductData(
-  //       productData.filter(
-  //         (item) => item.mainCategoryId.toString() === router.query.categoryId
-  //       )
-  //     );
-  //   }
-  //   if (router.query.subCategory !== "15") {
-  //     //롤케이크
-  //     setProductData(
-  //       productData.filter(
-  //         (item) => item.mainCategoryId === 1 && item.middleCategoryId === 1
-  //       )
-  //     );
-  //   }
-  //   if (Array.isArray(router.query.subCategoryId)) {
-  //     // router.query.subCategoryId.map((item) =>
-  //     //   setSubCategory([...subCategory, item])
-  //     // );
-  //     router.query.subCategoryId.map((item) => {
-  //       console.log(item);
-  //       subCategory.includes(item)
-  //         ? subCategory.filter((c) => c !== item)
-  //         : setSubCategory([...subCategory, item]);
-  //     });
-  //   }
-  // }, [router.query]);
+  const fetchMoreData = async (categoryId:string ,subCategoryId:string) => {
+    console.log(page)
+    const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=${page}`)
+    console.log('array list get',data.data);
+    setProductData([...productData, ...data.data.content]);
+  }
+
+  const fetchMoreDataPage = async (categoryId:string ,subCategoryId:string, page:number) => {
+    console.log(page)
+    const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=${page}`)
+    console.log('array list get',data.data);
+    setProductData([...productData, ...data.data.content]);
+  }
 
   return (
     <section>
@@ -127,15 +128,15 @@ export default function ProductListView() {
         dataLength={productData.length}
         next={fetchData}
         style={{ display: "flex", flexDirection: "column-reverse" }}
-        hasMore={pageData?.pageNum !== pageData?.totalPage ? true : false}
+        hasMore={ page > pageData ? false : true}
         loader={<h4></h4>}
       >
         <div className="product-list">
           <div className="event-product-list">
             {productData &&
-              productData.map((item: productAllType) => (
+              productData.map((item: productAllType, idx:number) => (
                 <ProductListCard
-                  key={item.productId}
+                  key={idx}
                   productId={item.productId}
                 />
               ))}

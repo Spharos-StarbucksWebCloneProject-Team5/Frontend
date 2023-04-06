@@ -30,6 +30,7 @@
     "react-image-size": "^2.0.2",
     "react-infinite-scroll-component": "^6.1.0",
     "react-modal-sheet": "^1.10.2",
+    "react-sliding-pane": "^7.3.0",
     "recoil": "^0.7.7",
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.9",
