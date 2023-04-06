@@ -30,7 +30,7 @@ export default function search() {
     if (search.length !== 0) {
       setRecentSearch([...recentSearch, search]);
       router.push(`/search/${search}`);
-    }else{
+    } else {
       Swal.fire({
         icon: "info",
         text: "검색어를 입력해 주세요.",
@@ -42,7 +42,7 @@ export default function search() {
         search,
       ]);
     }
-    
+
   };
   //엔터키 눌렀을 때
   const enterHandle = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -67,10 +67,10 @@ export default function search() {
     //   router.push(`/search/${search}`);
     // }
     if (e.key === "Enter") {
+
       e.preventDefault();
       buttonHandle()
     }
-
   };
 
   //선택 삭제
@@ -96,7 +96,7 @@ export default function search() {
   };
 
   const searchClick = (keyword: string) => {
-    if(keyword[0] === '#'){
+    if (keyword[0] === '#') {
       router.push(`/search/${keyword.split('#')[1]}`);
       return;
     }
@@ -140,8 +140,8 @@ export default function search() {
                   .slice(0)
                   .reverse()
                   .map((item, idx) => (
-                    <div className="keywords" key={idx} onClick={() => searchClick(item)}>
-                      {item}
+                    <div className="keywords" key={idx}>
+                      <p onClick={() => searchClick(item)}>{item}</p>
                       <img
                         src="assets/images/icons/close.png"
                         onClick={() => handleDelete(item)}
@@ -150,8 +150,9 @@ export default function search() {
                   ))
                 : ""}
             </div>
-            <MiddleLine 
+            <MiddleLine
               gutterSize={15}
+              gutterSize2={10}
             />
             <div className="delete-keywords">
               <button onClick={allDelete}>전체삭제</button>

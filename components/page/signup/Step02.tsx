@@ -117,7 +117,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             confirmButton: "swal-confirm-button",
           },
         });
-        setConfirmTime(Date.now() + 30000);
+        setConfirmTime(Date.now() + 180000);
       })
       .catch((err) => {
         console.log(err.response);

@@ -22,7 +22,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Swal from "sweetalert2";
 
 import { useCookies } from "react-cookie";
-import CountModal from "@/components/ui/CountModal";
+import CountModal from "@/components/modals/CountModal";
 import { cartPaymentState, cartBuyNowState } from "@/state/atom/paymentState";
 import CartTotal from "@/components/page/cart/CartTotal";
 import CartCheck from "@/components/page/cart/CartCheck";

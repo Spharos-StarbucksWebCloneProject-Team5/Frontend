@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { countModalState } from "@/state/atom/cartState";
 import { cartListType } from "@/types/cart/cartDataType";
 import cart from "@/pages/cart";
-import CloseButton from "./CloseButton";
+import CloseButton from "../ui/CloseButton";
 import { useRouter } from "next/router";
 import { useCookies } from "react-cookie";
 

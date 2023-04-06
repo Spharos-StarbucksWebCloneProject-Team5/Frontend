@@ -43,19 +43,24 @@ export default function SearchResult() {
         <p>"{query.search}"의 검색결과</p>
       </div>
       <section>
-        <div className="sort-box">
-          <select name="sort" className="sort-search-result">
-            <option value="">신상품순</option>
-            <option value="">추천순</option>
-            <option value="">낮은가격순</option>
-            <option value="">높은가격순</option>
-          </select>
-        </div>
         {
-          !productData &&
-          <div>
-            <p>검색 결과가 없습니다.</p>
+          productData.length !== 0 ?
+          <div className="sort-box">
+            <select name="sort" className="sort-search-result">
+              <option value="">신상품순</option>
+              <option value="">추천순</option>
+              <option value="">낮은가격순</option>
+              <option value="">높은가격순</option>
+            </select>
           </div>
+          : null
+        }
+        {
+          productData.length === 0 ?
+            <div className="none-search-result">
+              <p>검색 결과가 없습니다.</p>
+            </div>
+            : null
         }
         <InfiniteScroll
           dataLength={productData.length}

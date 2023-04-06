@@ -165,7 +165,7 @@ div.container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  
+
 }
 
 .search-latest .search-latest-keywords .keywords {
@@ -214,7 +214,7 @@ div.container {
   border-radius: 10px;
 }
 
-.none-recent-search{
+.none-recent-search {
   margin: 100px 0;
 }
 
@@ -223,18 +223,27 @@ div.container {
   text-align: center;
 }
 
-.header-search-result{
+.header-search-result {
   box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.2);
   margin-top: 60px;
   background: #fff;
   height: 50px;
-  z-index: 999;
+  z-index: 333;
   width: 100%;
   position: absolute;
   vertical-align: middle;
+  top: 5px;
 }
 
-.header-search-result p{
+.header-search-result p {
   margin: 0;
   padding: 15px 20px;
+}
+
+.none-search-result {
+  margin-top: 200px;
+}
+
+.none-search-result p {
+  text-align: center;
 }
