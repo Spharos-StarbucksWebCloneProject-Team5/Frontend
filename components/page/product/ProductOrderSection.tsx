@@ -71,12 +71,12 @@ export default function ProductOrderSection(props: {
     if (count === 1) {
       Swal.fire({
         toast: true,
-        text: '최소 수량은 1개 입니다.',
-        position: 'top',
+        text: "최소 수량은 1개 입니다.",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
-        color: "#067040"
+        color: "#067040",
       });
       return;
     }
@@ -89,12 +89,12 @@ export default function ProductOrderSection(props: {
     if (count === 3) {
       Swal.fire({
         toast: true,
-        text: '최대 수량은 5개 입니다.',
-        position: 'top',
+        text: "최대 수량은 3개 입니다.",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: true,
-        color: "#067040"
+        color: "#067040",
       });
       return;
     } else {
@@ -125,32 +125,37 @@ export default function ProductOrderSection(props: {
       router.push("/login");
       return;
     } else {
-      axios.post(
-        `${baseUrl}/v1/api/carts`,
-        {
-          productId: props.productId,
-          count: count,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${cookies.id}`,
+      console.log("productorder " + props.productId);
+      console.log("productorder " + count);
+      axios
+        .post(
+          `${baseUrl}/v1/api/carts`,
+          {
+            productId: props.productId,
+            count: count,
           },
-        }
-      ).then((res) => {
-        Swal.fire({
-          toast: true,
-          text: '장바구니에 상품을 담았습니다.',
-          position: 'top',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          color: "#067040"
-        });
-        setSuccessModal(true);
-        setIsOpen(false);
-      })
-        .catch(err => {
+          {
+            //withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${cookies.id}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            toast: true,
+            text: "장바구니에 상품을 담았습니다.",
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            color: "#067040",
+          });
+          setSuccessModal(true);
+          setIsOpen(false);
+        })
+        .catch((err) => {
           console.log(err);
         });
     }
@@ -172,7 +177,13 @@ export default function ProductOrderSection(props: {
         {!isOpen ? <OrderToggleButton onClick={handleOpen} /> : null}
 
         {!isOpen ? (
-          <ButtonUi type="button" text="구매하기" handler={handleOpen} size="large" colorType="primary" />
+          <ButtonUi
+            type="button"
+            text="구매하기"
+            handler={handleOpen}
+            size="large"
+            colorType="primary"
+          />
         ) : (
           <div className={myStyle.productOrderSectionOpenBottomWrap}>
             <Image
@@ -216,23 +227,29 @@ export default function ProductOrderSection(props: {
 
                     <div className={myStyle.QtyCountWrap}>
                       <div className={myStyle.QtyCount}>
-                        <div className={count === 1 ? myStyle.QtyCountDisabled : myStyle.QtyCount}>
+                        <div
+                          className={
+                            count === 1
+                              ? myStyle.QtyCountDisabled
+                              : myStyle.QtyCount
+                          }
+                        >
                           <div className="order-count">
-                          <Image
-                            src="/assets/images/icons/minus.png"
-                            onClick={minusCount}
-                            width={20}
-                            height={20}
-                            alt="-Button"
-                          />
-                          <p>{count}</p>
-                          <Image
-                            src="/assets/images/icons/add.png"
-                            onClick={addCount}
-                            width={20}
-                            height={20}
-                            alt="+Button"
-                          />
+                            <Image
+                              src="/assets/images/icons/minus.png"
+                              onClick={minusCount}
+                              width={20}
+                              height={20}
+                              alt="-Button"
+                            />
+                            <p>{count}</p>
+                            <Image
+                              src="/assets/images/icons/add.png"
+                              onClick={addCount}
+                              width={20}
+                              height={20}
+                              alt="+Button"
+                            />
                           </div>
                         </div>
                       </div>
@@ -260,9 +277,13 @@ export default function ProductOrderSection(props: {
   );
 }
 
-const SuccessViewModal = (props: { isModalOpen: boolean, setIsModalOpen: Dispatch<SetStateAction<boolean>> }) => {
-
-  if (!props.isModalOpen) { return null; }
+const SuccessViewModal = (props: {
+  isModalOpen: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+}) => {
+  if (!props.isModalOpen) {
+    return null;
+  }
 
   return (
     <>
@@ -295,11 +316,10 @@ const SuccessViewModal = (props: { isModalOpen: boolean, setIsModalOpen: Dispatc
             />
           </div>
         </div>
-
       </SuccessModalWarp>
     </>
-  )
-}
+  );
+};
 const SuccessModalWarp = styled.div`
   position: absolute;
   top: 0;
