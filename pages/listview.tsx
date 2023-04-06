@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 export default function ProductListView() {
   const baseUrl = Config().baseUrl;
 
-  const [pageData, setPageData] = useState<pageProductType>();
+  const [pageData, setPageData] = useState<number>(0);
   const [productData, setProductData] = useState<productAllType[]>([]);
   const [page, setPage] = useState(0);
   const [queryUrl, setQueryUrl] = useState<string>("");
@@ -26,15 +26,19 @@ export default function ProductListView() {
     let url = "";
     if (router.query.category && !router.query.subCategory) {
       url = `category=${router.query.category}`;
+      setPage(0)
       
     } else if (router.query.category && router.query.subCategory) {
       if (router.query.subCategory.length <= 1) {
         //길이가 1
+        setPage(0)
         url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
         
       } else {
+        setPage(0)
         console.log("서브카테고리 내용", router.query.subCategory);
         if(Array.isArray(router.query.subCategory)){
+           setProductData([])
            console.log("서브카테고리 내용", router.query.subCategory)
            router.query.subCategory.map((item) => {
             fetchMoreData(router.query.category as string,item as string)
@@ -51,24 +55,61 @@ export default function ProductListView() {
 
     axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`).then((res) => {
       console.log(res.data);
-      setPageData(res.data);
       setProductData(res.data.content);
+      setPageData(res.data.content.totalPage);
     });
   }, [router.query]);
 
   const fetchData = () => {
-    console.log(router.asPath)
-    axios(`${baseUrl}/v1/api/categories/?${queryUrl}&pageNum=${page + 1}`).then(
+
+    console.log(page)
+    let url = "";
+    if (router.query.category && !router.query.subCategory) {
+      url = `category=${router.query.category}`;
+      
+    } else if (router.query.category && router.query.subCategory) {
+      if (router.query.subCategory.length <= 1) {
+        //길이가 1
+        url = `category=${router.query.category}&subCategory=${router.query.subCategory}`;
+        
+      } else {
+        console.log("서브카테고리 내용", router.query.subCategory);
+        let newPage = page + 1;
+        if(Array.isArray(router.query.subCategory)){
+           console.log("서브카테고리 내용", router.query.subCategory)
+           router.query.subCategory.map((item) => {
+            fetchMoreDataPage(router.query.category as string,item as string, newPage)
+          });
+          setPage(newPage)
+          return;
+        }
+      }
+    } else {
+      url = ``;
+    }
+    // setQueryUrl(url);
+
+    //console.log(`${baseUrl}/v1/api/categories/?${url}&pageNum=0`)
+
+    axios(`${baseUrl}/v1/api/categories/?${url}&pageNum=${page + 1}`).then(
       (res) => {
-        setPageData(res.data);
         setProductData([...productData, ...res.data.content]);
+        setPageData(res.data.content.totalPage);
       }
     );
     setPage(page + 1);
   };
 
   const fetchMoreData = async (categoryId:string ,subCategoryId:string) => {
-    const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=0`)
+    console.log(page)
+    const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=${page}`)
+    console.log('array list get',data.data);
+    setProductData([...productData, ...data.data.content]);
+  }
+
+  const fetchMoreDataPage = async (categoryId:string ,subCategoryId:string, page:number) => {
+    console.log(page)
+    const data = await axios(`${baseUrl}/v1/api/categories/?category=${categoryId}&subCategory=${subCategoryId}&pageNum=${page}`)
     console.log('array list get',data.data);
     setProductData([...productData, ...data.data.content]);
   }
@@ -87,7 +128,7 @@ export default function ProductListView() {
         dataLength={productData.length}
         next={fetchData}
         style={{ display: "flex", flexDirection: "column-reverse" }}
-        hasMore={pageData?.pageNum !== pageData?.totalPage ? true : false}
+        hasMore={ page > pageData ? false : true}
         loader={<h4></h4>}
       >
         <div className="product-list">
