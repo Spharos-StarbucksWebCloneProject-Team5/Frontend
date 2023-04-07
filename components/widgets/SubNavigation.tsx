@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 export default function SubNavigation() {
-
   const router = useRouter()
   const baseUrl = Config().baseUrl;
 
@@ -25,10 +24,11 @@ export default function SubNavigation() {
     axios(subName)
       .then(res => {
         setSubNavBottomData(res.data)
+        console.log(res.data)
       })
-
-  }, [router.pathname])
-
+      
+    }, [router.pathname])
+    
   return (
     <>
       <div className="header-sub">

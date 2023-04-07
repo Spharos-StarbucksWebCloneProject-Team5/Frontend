@@ -36,7 +36,6 @@ export default function FilterMenuList(props: {
       });
 
     } else if (item.key === "subCategory" && item.id !== 0 ) {//전체x인 subCategory
-     
       setSubCategoryId([...subCategoryId,
         item.id
       ]);
@@ -45,7 +44,6 @@ export default function FilterMenuList(props: {
   }
 
   const handleDeleteQuery = (item: MenuDataType) => {
-
     if (item.key === "subCategory" && item.id !== 0) {
       setSubCategoryId(subCategoryId.filter((data) => data !== item.id));
       return;
@@ -68,7 +66,6 @@ export default function FilterMenuList(props: {
     });
   }, []);
 
-  // console.log('filterfile',props.filterFile);
   return (
     <div className="header-sub">
       <nav>
@@ -78,7 +75,7 @@ export default function FilterMenuList(props: {
               <li
                 key={item.id}
                 onClick={() => handleAddQuery(item)}
-                className={item.id === categoryId ? "active" : ""}
+                className={router.query.category === String(item.id) ? "active" : ""}
               >
                 <p>{item.name}</p>
               </li>

@@ -235,7 +235,7 @@ export default function cart() {
   const handleAllDelete = () => {
     //모든 카트 아이템 삭제 처리
     console.log(`&&&&&&&&&${cookies.id}`)
-    axios.put(`${baseUrl}/v1/api/carts/delete`, {
+    axios.post(`${baseUrl}/v1/api/carts/delete`, {
       headers: {
         Authorization: `Bearer ${cookies.id}`,
       },

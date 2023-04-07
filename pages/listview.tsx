@@ -107,12 +107,6 @@ export default function ProductListView() {
         router.query.category === "2" || 
         router.query.category === "3" ?
         <div className="sort-box-listview change-margin">
-          {/* <select name="sort" className="sort">
-          <option value="">신상품순</option>
-          <option value="">추천순</option>
-          <option value="">낮은가격순</option>
-          <option value="">높은가격순</option>
-        </select> */}
         </div>
         : <div className="sort-box-listview">
       </div>

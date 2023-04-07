@@ -25,15 +25,18 @@ export default function MenuModal() {
   }, []);
 
   const handleClose = () => {
+    document.body.style.overflow = "unset";
     setIsMenuModalOpen(false);
   };
 
   const handlePushClose = (path: string) => {
+    document.body.style.overflow = "unset";
     router.push(path);
     setIsMenuModalOpen(false);
   };
 
   const handelCategory = (id: number) => {
+    document.body.style.overflow = "unset";
     router.push(`/listview?category=${id}`);
     setIsMenuModalOpen(false);
   }
@@ -53,7 +56,7 @@ export default function MenuModal() {
     
       <div className="welcome">
         <div className="welcome-top">
-          <div className="welcome-back-button" onClick={() => {handleClose(); document.body.style.overflow = "unset";}}>
+          <div className="welcome-back-button" onClick={() => handleClose()}>
             <Image
               src="/assets/images/icons/close.png"
               width={23}
@@ -69,7 +72,7 @@ export default function MenuModal() {
       </div>
       <section className="section-top">
         <div className="all-product">
-          <div onClick={() => {handlePushClose("/listview?category=0"); document.body.style.overflow = "unset";}}>
+          <div onClick={() => handlePushClose("/listview?category=0")}>
             전체 상품 보기
             <img src="./assets/images/icons/arrow-point-to-right.png" alt="" />
           </div>
