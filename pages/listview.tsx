@@ -98,8 +98,6 @@ export default function ProductListView() {
     setProductData([...productData, ...data.data.content]);
   }
 
-  console.log(router.query.category)
-
   return (
     <section>
       {

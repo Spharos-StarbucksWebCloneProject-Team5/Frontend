@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
-import { shippingPayment } from "@/types/shippingAddress/shipAddressDataType"
+import {shippingPayment} from "@/types/shippingAddress/shipAddressDataType"
 
 export default function mypage() {
   const { push } = useRouter();
@@ -15,78 +15,68 @@ export default function mypage() {
 
   const { isLogin } = useRecoilValue(userLoginState);
   const [cookies] = useCookies(["id"]);
-  const [shipStatus, setShipStatus] = useState<shippingPayment>({
+  const [shipStatus,setShipStatus] = useState<shippingPayment>({
     preparingProduct: 0,
     preparingForDelivery: 0,
     shipping: 0,
     deliveryCompleted: 0
   });
-
+  
   function btnClick() {
     console.log("Click Button");
   }
-
+  
   function orderListClick() {
+    
     const nowDate = new Date().toISOString()
-    const sliceNowDate = nowDate.substring(0, 10)
-
+    const sliceNowDate = nowDate.substring(0,10)
+    
     const agoDate = new Date()
     agoDate.setMonth(agoDate.getMonth() - 3);
     const agoISo = agoDate.toISOString()
-    const sliceAgoDate = agoISo.substring(0, 10)
-
-    // const nowYear = nowDate.getFullYear();
-    // const nowMonth = nowDate.getMonth()
-    // const nowDay = nowDate.getDate()
-    // const joinNowDate = `${nowYear}-${nowMonth}-${nowDay}`
-    //const agoDate = new Date()
-    //agoDate.setMonth(nowDate.getMonth() - 2);
-    // const agoYear = agoDate.getFullYear();
-    // const agoMonth = agoDate.getMonth()
-    // const agoDay = agoDate.getDate()
-    // const joinAgoDate = `${agoYear}-${agoMonth}-${agoDay}`
-
-    useEffect(() => {
-      const myLogin = cookies.id;
-      if (!myLogin && !isLogin) {
-        Swal.fire({
-          icon: "warning",
-          text: "로그인이 필요합니다!",
-        });
-        push("/login");
-        return;
-      } else {
-        axios.get(`${baseUrl}/v1/api/payments/shipping`, {
-          headers: {
-            Authorization: `Bearer ${cookies.id}`,
-          },
-        }).then(res => {
-          console.log(res)
-          setShipStatus(res.data)
-        })
-      }
-    }, []);
-
+    const sliceAgoDate = agoISo.substring(0,10)
+    
     axios.get(`${baseUrl}/v1/api/payments/get?startDate=${sliceAgoDate}&endDate=${sliceNowDate}`,
-      {
+    {
+      headers:{
+        Authorization: `Bearer ${cookies.id}`,
+      }
+    }
+    )
+    .then((res) => {
+      console.log(res);
+      if(res.data.length ===0 ){
+        push('/orderList')
+      }
+      push('/orderListItem')
+    }); 
+  }
+  
+  const handleOrderListItem = () =>{
+    push('/orderListItem')
+  }
+
+  useEffect(() => {
+    const myLogin = cookies.id;
+    if (!myLogin && !isLogin) {
+      Swal.fire({
+        icon: "warning",
+        text: "로그인이 필요합니다!",
+      });
+      push("/login");
+      return;
+    } else {
+      axios.get(`${baseUrl}/v1/api/payments/shipping`, {
         headers: {
           Authorization: `Bearer ${cookies.id}`,
-        }
-      }
-    )
-      .then((res) => {
-        console.log(res);
-        if (res.data.length === 0) {
-          push('/orderList');
-        }
-        push('/orderListItem');
-      });
-  }
-
-  const handleOrderListItem = () => {
-    push("/orderListItem");
-  }
-
+        },
+      }).then(res=>{
+        console.log(res)
+        setShipStatus(res.data)
+      })
+    }
+  }, []);
+  
   return (
     <>
       <Head>

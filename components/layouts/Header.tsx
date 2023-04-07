@@ -101,6 +101,7 @@ export default function Header() {
               router.pathname === "/shippingAddress" ||
               router.pathname === "/signup" ||
               router.pathname === "/modifyPassword" ||
+              router.pathname === "/orderListItem" ||
               router.pathname === "/search/[search]" ||
               router.pathname === "/products/[productId]" ? (
               <BackButton />
