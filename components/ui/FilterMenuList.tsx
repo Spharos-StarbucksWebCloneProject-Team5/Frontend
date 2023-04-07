@@ -30,14 +30,15 @@ export default function FilterMenuList(props: {
       setCategoryId(item.id);
       setSubCategoryId([]);
       setCategoryMiddle([]);
-
+      
+      if(item.id === 1 || item.id === 2 || item.id === 3){
       axios.get(`${baseUrl}/v1/api/categories/middle`).then((res) => {
-        setCategoryMiddle(res.data[item.id-1].data);
-      });
-
-    } else if (item.key === "subCategory" && item.id !== 0 ) {//전체x인 subCategory
+          setCategoryMiddle(res.data[item.id - 1].data);
+        });
+      }
+    } else if (item.key === "subCategory" && item.id !== 0) {//전체x인 subCategory
       setSubCategoryId([...subCategoryId,
-        item.id
+      item.id
       ]);
       return;
     }
@@ -50,14 +51,14 @@ export default function FilterMenuList(props: {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     let queryUrl = "";
-      subCategoryId.map((item) => {
-        queryUrl += `&subCategory=${item}`;
-      });
-      router.push(`/listview?category=${categoryId}${queryUrl}`);
-      
-  },[subCategoryId])
+    subCategoryId.map((item) => {
+      queryUrl += `&subCategory=${item}`;
+    });
+    router.push(`/listview?category=${categoryId}${queryUrl}`);
+
+  }, [subCategoryId])
 
   useEffect(() => {
     axios.get(`${baseUrl}/v1/api/categories/main`).then((res) => {
@@ -87,9 +88,11 @@ export default function FilterMenuList(props: {
               <li
                 key={item.id}
                 className={subCategoryId.includes(item.id) ? "active" : ""}
-                onClick={() =>{subCategoryId.includes(item.id)
+                onClick={() => {
+                  subCategoryId.includes(item.id)
                   ? handleDeleteQuery(item)
-                  : handleAddQuery(item)} }
+                  : handleAddQuery(item)
+                }}
               >
                 <p>{item.name}</p>
               </li>

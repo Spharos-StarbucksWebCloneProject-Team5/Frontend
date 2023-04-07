@@ -31,12 +31,12 @@
   margin: 0;
 }
 
-.shipping-info-button{
+.shipping-info-button {
   display: flex;
   justify-content: center;
 }
 
-.shipping-info-button button{
+.shipping-info-button button {
   border-radius: 20px;
   width: 30%;
   height: 35px;
@@ -169,11 +169,14 @@
 .payment-total-won {
   font-size: 1.3rem;
   margin: -5px;
+  display: flex;
+  align-items: center;
 }
 
 .pay-info-right-img {
   transform: rotate(-91deg);
   width: 20px;
+  height: 25px;
   margin: 15px;
 }
 
@@ -197,6 +200,8 @@
 /*상세정보 확인*/
 .pay-info-btn-list {
   margin: 50px 25px;
+  display: flex;
+  justify-content: center;
 }
 
 /*상세정보 확인버튼*/
@@ -211,6 +216,7 @@
   margin-bottom: 50px;
   color: #01A862;
   border-color: #01A862;
+  margin-right: 10px;
 }
 
 /*메인으로 가기 버튼*/

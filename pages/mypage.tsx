@@ -1,12 +1,15 @@
-import Config from "@/configs/config.export";
-import { userLoginState } from "@/state/atom/userLoginState";
-import axios from "axios";
-import Head from "next/head";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+
+import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useRecoilValue } from "recoil";
 import Swal from "sweetalert2";
+
+import Config from "@/configs/config.export";
+
+import { userLoginState } from "@/state/atom/userLoginState";
 import {shippingPayment} from "@/types/shippingAddress/shipAddressDataType"
 
 export default function mypage() {
@@ -27,7 +30,6 @@ export default function mypage() {
   }
   
   function orderListClick() {
-    
     const nowDate = new Date().toISOString()
     const sliceNowDate = nowDate.substring(0,10)
     
