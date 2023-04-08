@@ -8,7 +8,7 @@
 대형 쇼핑 웹사이트의 로직을 이해하기 위해서 프로젝트를 시작했습니다.
 
 ## 👨‍👨‍👧‍👦 팀소개
-|![image](https://user-images.githubusercontent.com/77527453/230077465-eedbcd1e-953b-4598-831d-e60bf491c292.png)|![image](https://user-images.githubusercontent.com/77527453/230077505-4555456d-3a8c-42ae-bdde-ac37a72ab8e6.png)|
+|![image](https://user-images.githubusercontent.com/77527453/230077465-eedbcd1e-953b-4598-831d-e60bf491c292.png)|![image](https://user-images.githubusercontent.com/125328258/230703862-b7245628-d8ef-4700-bbdf-30e5a851cba5.png)|
 |:------:|:------:|
 |손원호|이시현|
 |[@swh9122](https://github.com/swh9122)|[@sihyun3109](https://github.com/sihyun3109)|
@@ -16,13 +16,18 @@
 
 ## ⚒개발 환경
 ### 📚사용 기술 스택 & 아키텍처
-![Java](https://img.shields.io/badge/Java%2011-007ACC?style=for-the-badge&logo=Java&logoColor=white)
-![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white)
+
 
 ### 🗃️사용 도구
-![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-000000?style=for-the-badge&logo=IntelliJ%20IDEA&logoColor=white)
-![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white)
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/Visual Studio Code-#007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white)
+
 
 ### 📄협업방식
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)
