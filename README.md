@@ -8,17 +8,18 @@
 대형 쇼핑 웹사이트의 로직을 이해하기 위해서 프로젝트를 시작했습니다.
 
 ## 👨‍👨‍👧‍👦 팀소개
-|![image](https://user-images.githubusercontent.com/77527453/230077465-eedbcd1e-953b-4598-831d-e60bf491c292.png)|![image](https://user-images.githubusercontent.com/125328258/230703862-b7245628-d8ef-4700-bbdf-30e5a851cba5.png)|
+|![image](https://user-images.githubusercontent.com)|![image](https://user-images.githubusercontent.com/125328258/230703862-b7245628-d8ef-4700-bbdf-30e5a851cba5.png)|
 |:------:|:------:|
 |손원호|이시현|
 |[@swh9122](https://github.com/swh9122)|[@sihyun3109](https://github.com/sihyun3109)|
-|- 상품 도메인</br>- 카테고리 도메인</br>- 검색 기능</br>- 페이징 처리</br>- Redis Cache|- 쿠폰 도메인</br>- 유저 도메인</br>- Spring Security</br>- OAuth2.0</br>- JWT</br>- Mail Sender</br>|- 카트 도메인</br>- 페이먼트 도메인</br>-배송지 도메인</br>-이벤트 도메인|
+|- 상품 도메인</br>- 카테고리 도메인</br>- 검색 기능</br>- 페이징 처리</br>- Redis Cache|- 장바구니 화면 </br>- 결제 화면 </br>- 주문내역 화면 </br>- 검색 화면 </br>- JWT</br>- Mail Sender</br>|- 카트 도메인</br>- 페이먼트 도메인</br>-배송지 도메인</br>-이벤트 도메인|
 
 ## ⚒개발 환경
 ### 📚사용 기술 스택 & 아키텍처
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white)
+![Recoil](https://img.shields.io/badge/Recoil-000000?style=for-the-badge&logo=Recoil&logoColor=white)
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white)
@@ -26,7 +27,7 @@
 
 
 ### 🗃️사용 도구
-![Visual Studio Code](https://img.shields.io/badge/Visual Studio Code-#007ACC?style=for-the-badge&logo=Visual Studio Code&logoColor=white)
+![VisualStudioCode](https://img.shields.io/badge/VisualStudioCode-007ACC?style=for-the-badge&logo=VisualStudioCode&logoColor=white)
 
 
 ### 📄협업방식
