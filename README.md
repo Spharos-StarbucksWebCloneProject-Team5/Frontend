@@ -8,7 +8,7 @@
 대형 쇼핑 웹사이트의 로직을 이해하기 위해서 프로젝트를 시작했습니다.
 
 ## 👨‍👨‍👧‍👦 팀소개
-|![image](https://user-images.githubusercontent.com)|![image](https://user-images.githubusercontent.com/125328258/230703862-b7245628-d8ef-4700-bbdf-30e5a851cba5.png)|
+|![image](https://user-images.githubusercontent.com/19218495/231025606-2c413c14-0561-438f-a41c-85e007cbd8fa.png)|![image](https://user-images.githubusercontent.com/125328258/230703862-b7245628-d8ef-4700-bbdf-30e5a851cba5.png)|
 |:------:|:------:|
 |손원호|이시현|
 |[@swh9122](https://github.com/swh9122)|[@sihyun3109](https://github.com/sihyun3109)|
